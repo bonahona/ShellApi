@@ -1,0 +1,8 @@
+{
+  "Routes": {
+    "/TestRoute/":{
+      "Controller": "Controller",
+      "Action": "Action"
+    }
+  }
+}
