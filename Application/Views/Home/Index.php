@@ -2,8 +2,18 @@
 <div class="row">
     <div class="col-lg-6 col-md-12">
         <dl>
-            <dd>Inherits:</dd>
-            <dl><a href="#">Object</a></dl>
+            <dt>Inherits:</dt>
+            <dd><a href="#">Object</a></dd>
+
+            <dt>Implements:</dt>
+            <dd>
+                <a href="#">IComparable</a>,
+                <a href="#">IEnumerable</a>,
+            </dd>
+            <dt>Namespace:</dt>
+            <dd>
+                <a href="#">Bona.Json</a>
+            </dd>
         </dl>
     </div>
 </div>
@@ -74,5 +84,81 @@
                 </tbody>
             </table>
         </div>
+    </div>
+</div>
+
+<h2>C++ test</h2>
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <pre class="sh_cpp">
+            <?php echo $this->Html->SafeHtml('
+#include <iostream>
+
+int main() {
+    std::cout << "Hello World!" << std::endl;
+    std::cin.get();
+    return 0;
+}
+                ');?>
+        </pre>
+    </div>
+</div>
+
+<h2>C# test</h2>
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <pre class="sh_csharp">
+            <?php echo $this->Html->SafeHtml('
+public static List<T> QueryForDevices<T>() where T : InputDeviceBase
+{
+    var result = new List<T>();
+
+    foreach(var device in CurrentInputDevices) {
+        if( device is T) {
+            result.Add((T)device);
+        }
+    }
+
+    return result;
+}
+
+private static List<TrackedComponent> FilterComponentsOnHardware()
+{
+    var result = new List<TrackedComponent>();
+
+    var components = GameObject.FindObjectsOfType<TrackedComponent>();
+    foreach(var component in components) {
+        result.Add(component);
+    }
+
+    return result;
+}
+                ');?>
+        </pre>
+    </div>
+</div>
+
+
+<h2>Php test</h2>
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <pre class="sh_php">
+            <?php echo $this->Html->SafeHtml('
+protected function DebugDontCacheModels()
+{
+    // Read debug data from the log
+    $dontCacheModels = false;
+    if($this->ApplicationConfig !== false) {
+        if (array_key_exists(\'Debug\', $this->ApplicationConfig)) {
+            if (array_key_exists(\'DontCacheModels\', $this->ApplicationConfig[\'Debug\'])) {
+                $dontCacheModels = $this->ApplicationConfig[\'Debug\'][\'DontCacheModels\'];
+            }
+        }
+    }
+
+    return $dontCacheModels;
+}
+                ');?>
+        </pre>
     </div>
 </div>

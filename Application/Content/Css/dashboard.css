@@ -103,3 +103,19 @@ body {
     display: inline-block;
     border-radius: 50%;
 }
+
+.dark-blue
+{
+    background-color: #404360;
+}
+
+.navbar-inverse .navbar-nav .light-grey,
+.navbar-inverse .light-grey
+{
+    color: #dddddd;
+}
+
+.btn-margin-right
+{
+    margin-right: 0.5em;
+}

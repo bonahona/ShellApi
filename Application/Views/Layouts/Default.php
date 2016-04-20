@@ -13,31 +13,36 @@
 
     <?php echo $this->Html->Css('bootstrap.min.css');?>
     <?php echo $this->Html->Css('dashboard.css');?>
+    <?php echo $this->Html->Css('sh_style.css');?>
 
 </head>
 
 <body>
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top dark-blue">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Documentation </a> <span class="navbar-brand">|</span> <a class="navbar-brand" href="http://fyrvall.com">Fyrvall.com</a>
+            <a class="navbar-brand light-grey" href="/">Documentation </a> <span class="navbar-brand">|</span> <a class="navbar-brand light-grey" href="http://fyrvall.com">Fyrvall.com</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <?php if($this->IsLoggedIn()):?>
-                    <li><a href="#">Log out</a></li>
+                    <li><a class="light-grey" href="/User/Logout">Log out</a></li>
                 <?php endif;?>
             </ul>
             <form class="navbar-form navbar-right">
                 <input type="text" class="form-control" placeholder="Search...">
             </form>
+            <?php if($this->IsLoggedIn()):?>
+                <ul class="nav navbar-nav navbar-left">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configurations <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/ProjectLanguages/">Project Languages</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            <?php endif;?>
         </div>
     </div>
 </nav>
@@ -45,24 +50,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Reports</a></li>
-                <li><a href="#">Analytics</a></li>
-                <li><a href="#">Export</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li><a href="">Nav item</a></li>
-                <li><a href="">Nav item again</a></li>
-                <li><a href="">One more nav</a></li>
-                <li><a href="">Another nav item</a></li>
-                <li><a href="">More navigation</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li><a href="">Nav item again</a></li>
-                <li><a href="">One more nav</a></li>
-                <li><a href="">Another nav item</a></li>
-            </ul>
+            <?php echo $this->PartialView('Sidebar', array('Sidebar' => $Sidebar));?>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <?php echo $this->PartialView('Breadcrumbs');?>
@@ -73,5 +61,10 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <?php echo $this->Html->Js('bootstrap.min.js');?>
+<?php echo $this->Html->Js('dashboard.js');?>
+<?php echo $this->Html->Js('sh_main.min.js');?>
+<?php echo $this->Html->Js('sh_cpp.min.js');?>
+<?php echo $this->Html->Js('sh_csharp.min.js');?>
+<?php echo $this->Html->Js('sh_php.min.js');?>
 </body>
 </html>

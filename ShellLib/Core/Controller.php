@@ -100,8 +100,6 @@ class Controller
             die('Partial view missing ' . $partialViewName);
         }
 
-        $this->BeforeRender();
-
         if($partialViewVars != null){
             if(is_array($partialViewVars)) {
                 foreach ($partialViewVars as $key => $var) {

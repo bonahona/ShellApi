@@ -1,8 +1,8 @@
 {
   "Routes": {
-    "/TestRoute/":{
-      "Controller": "Controller",
-      "Action": "Action"
+    "/Admin/":{
+      "Controller": "User",
+      "Action": "Login"
     }
   }
 }
