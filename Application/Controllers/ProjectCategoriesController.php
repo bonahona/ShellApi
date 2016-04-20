@@ -15,7 +15,7 @@ class ProjectCategoriesController extends BackendController
     {
         $this->Title = "Create Project Categories";
 
-        if($this->IsLoggedIn() && !$this->Data->IsEmpty()){
+        if($this->IsPost() && !$this->Data->IsEmpty()){
             $projectCategory = $this->Data->Parse('ProjectCategory', $this->Models->ProjectCategory);
             $projectCategory->Save();
             return $this->Redirect('/ProjectCategories');
@@ -36,7 +36,7 @@ class ProjectCategoriesController extends BackendController
 
         $projectCategory = $this->Models->ProjectCategory->Find($id);
 
-        if($this->IsLoggedIn() && !$this->Data->IsEmpty()){
+        if($this->IsPost() && !$this->Data->IsEmpty()){
             $projectCategory = $this->Data->DbParse('ProjectCategory', $this->Models->ProjectCategory);
             $projectCategory->Save();
             return $this->Redirect('/ProjectCategories/');
