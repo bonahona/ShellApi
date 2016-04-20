@@ -52,8 +52,8 @@ class ProjectLanguagesController extends BackendController
     public function DeleteConfirm($id)
     {
         if(empty($id)){
-            return $this->HttpNotFound();
-        }
+        return $this->HttpNotFound();
+    }
 
         $this->Title = 'Delete Project Language';
 
