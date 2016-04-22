@@ -11,8 +11,8 @@
                     <tr>
                         <th class="col-lg-1">Id</th>
                         <th class="col-lg-2">Name</th>
-                        <th class="col-lg-1">Language</th>
                         <th class="col-lg-5">Description</th>
+                        <th class="col-lg-1">Language</th>
                         <th class="col-lg-1">Active</th>
                         <th class="col-lg-2">&nbsp;</th>
                     </tr>
@@ -21,9 +21,11 @@
                     <?php foreach($projectCategory->Projects as $project):?>
                         <tr>
                             <td><?php echo $project->Id;?></td>
-                            <td><?php echo $project->ProjectName;?></td>
+                            <td>
+                                <a href="<?php echo "/Projects/Details/$project->ProjectName";?>"><?php echo $project->ProjectName;?></a>
+                            </td>
+                            <td><?php echo $project->ShortDescription;?></td>
                             <td><?php echo $project->ProjectLanguage->DisplayName;?></td>
-                            <td></td>
                             <td><?php echo $project->IsActive;?></td>
                             <td>
                                 <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/ProjectsBackend/Description/$project->Id";?>"><span class="glyphicon glyphicon glyphicon-align-left"</a>
