@@ -136,6 +136,17 @@ class Model
         $this->ModelCollection->Delete($this);
     }
 
+    public function Object()
+    {
+        $result = array();
+
+        foreach($this->Properties as $key => $value){
+            $result[$key] = $value;
+        }
+
+        return $result;
+    }
+
     protected function CreateReferenceName($columnName)
     {
         if(endsWith($columnName, 'Id')){

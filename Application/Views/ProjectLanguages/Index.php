@@ -21,8 +21,8 @@
                             <td><?php echo $projectLanguage->ClassName;?></td>
                             <td><?php echo $projectLanguage->IsActive;?></td>
                             <td>
-                                <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/ProjectLanguages/Edit/$projectLanguage->Id";?>"><span class="glyphicon glyphicon-pencil"</a>
-                                <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/ProjectLanguages/DeleteConfirm/$projectLanguage->Id";?>"><span class="glyphicon glyphicon-trash"</a>
+                                <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/ProjectLanguages/Edit/$projectLanguage->Id";?>"><span class="glyphicon glyphicon-pencil"</span></a>
+                                <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/ProjectLanguages/DeleteConfirm/$projectLanguage->Id";?>"><span class="glyphicon glyphicon-trash"</span></a>
                             </td>
                         </tr>
                     <?php endforeach;?>

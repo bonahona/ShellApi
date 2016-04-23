@@ -65,6 +65,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <?php echo $this->Html->Js('bootstrap.min.js');?>
 <?php echo $this->Html->Js('dashboard.js');?>
+<?php if($this->IsLoggedIn()):?>
+    <?php echo $this->Html->Js('dashboard_admin.js');?>
+<?php endif;?>
 <?php echo $this->Html->Js('sh_main.min.js');?>
 <?php echo $this->Html->Js('sh_cpp.min.js');?>
 <?php echo $this->Html->Js('sh_csharp.min.js');?>

@@ -28,9 +28,9 @@
                             <td><?php echo $project->ProjectLanguage->DisplayName;?></td>
                             <td><?php echo $project->IsActive;?></td>
                             <td>
-                                <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/ProjectsBackend/Description/$project->Id";?>"><span class="glyphicon glyphicon glyphicon-align-left"</a>
-                                <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/ProjectsBackend/Edit/$project->Id";?>"><span class="glyphicon glyphicon-pencil"</a>
-                                <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/ProjectsBackend/DeleteConfirm/$project->Id";?>"><span class="glyphicon glyphicon-trash"</a>
+                                <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/ProjectsBackend/Description/$project->Id";?>"><span class="glyphicon glyphicon glyphicon-align-left"</span></a>
+                                <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/ProjectsBackend/Edit/$project->Id";?>"><span class="glyphicon glyphicon-pencil"</span></a>
+                                <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/ProjectsBackend/DeleteConfirm/$project->Id";?>"><span class="glyphicon glyphicon-trash"</span></a>
                             </td>
                         </tr>
                     <?php endforeach;?>

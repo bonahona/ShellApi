@@ -11,9 +11,15 @@ class ModelCollection implements ICollection
     public $ModelCache;
     public $ModelName;
 
-    public function Create()
+    public function Create($defaultValues = array())
     {
-        return new $this->ModelName($this);
+        $result = new $this->ModelName($this);
+
+        foreach($defaultValues as $key => $value){
+            $result->$key = $value;
+        }
+
+        return $result;
     }
 
     public function Find($id)

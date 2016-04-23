@@ -19,8 +19,8 @@
                         <td><?php echo $projectCategory->Name;?></td>
                         <td><?php echo $projectCategory->IsActive;?></td>
                         <td>
-                            <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/ProjectCategories/Edit/$projectCategory->Id";?>"><span class="glyphicon glyphicon-pencil"</a>
-                            <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/ProjectCategories/DeleteConfirm/$projectCategory->Id";?>"><span class="glyphicon glyphicon-trash"</a>
+                            <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/ProjectCategories/Edit/$projectCategory->Id";?>"><span class="glyphicon glyphicon-pencil"</span></a>
+                            <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/ProjectCategories/DeleteConfirm/$projectCategory->Id";?>"><span class="glyphicon glyphicon-trash"</span></a>
                         </td>
                     </tr>
                 <?php endforeach;?>
