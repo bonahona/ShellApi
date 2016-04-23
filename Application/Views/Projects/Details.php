@@ -69,7 +69,7 @@
                         <th class="col-lg-2">&nbsp;</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="see-also-links-body">
                     <?php foreach($SeeAlsoLinks as $seeAlsoLink):?>
                         <tr>
                             <td><?php echo $seeAlsoLink->Id;?></td>
@@ -77,7 +77,7 @@
                             <td><?php echo $seeAlsoLink->Link;?></td>
                             <td>
 
-                                <button type="button" class="btn btn-md btn-default" data-toggle="modal" data-target="#confirmdialog_<?php echo "$seeAlsoLink->Id";?>">
+                                <button type="button" class="delete-see-also-link btn btn-md btn-default" link-target="/SeeAlsoLinks/Delete/<?php echo $seeAlsoLink->Id;?>">
                                     <span class="glyphicon glyphicon-trash"</span>
                                 </button>
                             </td>
@@ -99,11 +99,15 @@
         <?php foreach($SeeAlsoLinks as $seeAlsoLink):?>
             <div class="row">
                 <div class="col-lg-4">
-                    <a href="<?php echo $seeAlsoLink->Link;?>">
+                    <a target="_blank" href="<?php echo $seeAlsoLink->Link;?>">
                         <?php echo $seeAlsoLink->DisplayName;?>
                     </a>
                 </div>
             </div>
         <?php endforeach;?>
     <?php endif;?>
+<?php endif;?>
+
+<?php if($this->IsLoggedIn()):?>
+    <?php echo $this->PartialView('SeeAlsoLinkDialog');?>
 <?php endif;?>

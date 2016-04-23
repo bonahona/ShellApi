@@ -22,7 +22,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <?php echo $this->Form->Submit('Create', array('attributes' => array('class' => 'ajax-link btn btn-md btn-primary')));?>
+                    <?php echo $this->Form->Submit('Create', array('attributes' => array('class' => 'see-also-link btn btn-md btn-primary')));?>
                 </div>
             <?php echo $this->Form->End();?>
         </div>

@@ -10,4 +10,22 @@ class SeeAlsoLinksController extends BackendController
             return $this->Json($seeAlsoLink->Object());
         }
     }
+
+    public function Delete($id)
+    {
+        if(empty($id)){
+            $this->HttpNotFound();
+        }
+
+        if($this->IsPost()){
+            $seeAlsoLink = $this->Models->SeeAlsoLink->Find($id);
+            if($seeAlsoLink == null){
+                return $this->HttpNotFound();
+            }
+
+            $seeAlsoLink->Delete();
+        }
+
+        return $this->Json(array());
+    }
 }
