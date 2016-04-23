@@ -1,58 +1,93 @@
-<h1 class="page-header"><?php echo $Project->ProjectName;?></h1>
+<h1 class="page-header"><?php echo $ProjectClass->ClassName;?></h1>
+<div class="row">
+    <div class="col-lg-6 col-md-12">
+        <dl>
+            <?php if($ProjectClass->BaseClass != null):?>
+                <dt>Inherits:</dt>
+                <dd>
+                    <a href="#">Object</a>
+                </dd>
+            <?php endif;?>
 
+            <?php if(count($ProjectClass->InheritInterfaces) > 0):?>
+                <dt>Implements:</dt>
+                <dd>
+                    <a href="#">IComparable</a>,
+                    <a href="#">IEnumerable</a>,
+                </dd>
+            <?php endif;?>
+
+            <?php if(empty($ProjectClass->Namespace)):?>
+                <dt>Namespace:</dt>
+                <dd>Bona.Json</dd>
+            <?php endif;?>
+        </dl>
+    </div>
+</div>
+<h2>Description</h2>
 <div class="row">
     <div class="col-lg-8">
-        <?php echo $Project->Description;?>
+        <?php echo $ProjectClass->Description;?>
     </div>
 </div>
 
-<h2>Classes</h2>
+<h2>Public methods</h2>
 <div class="row">
     <div class="col-lg-12 col-md-12">
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <?php if($this->IsLoggedIn()):?>
-                        <th class="col-lg-2">Name</th>
-                        <th class="col-lg-8">Description</th>
-                        <th class="col-lg-2">&nbsp;</th>
-                    <?php else:?>
-                        <th class="col-lg-2">Name</th>
-                        <th class="col-lg-10">Description</th>
-                    <?php endif;?>
+                    <th class="col-lg-2">Name</th>
+                    <th class="col-lg-2">Type</th>
+                    <th class="col-lg-8">Description</th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach($Project->ProjectClasses as $projectClass):?>
-                    <tr>
-                        <?php if($this->IsLoggedIn()):?>
-                            <td><?php echo $this->Html->Link("/Projects/Details/$Project->ProjectName", $projectClass->ClassName);?></td>
-                            <td><?php echo $projectClass->ShortDescription;?></td>
-                            <td>
-                                <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Classes/Description/$projectClass->Id";?>"><span class="glyphicon glyphicon-align-left"</a>
-                                <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Classes/Edit/$projectClass->Id";?>"><span class="glyphicon glyphicon-pencil"</a>
-                                <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Classes/DeleteConfirm/$projectClass->Id";?>"><span class="glyphicon glyphicon-trash"</a>
-                            </td>
-                        <?php else:?>
-                            <td><?php echo $this->Html->Link("/Projects/Details/$Project->ProjectName", $projectClass->ClassName);?></td>
-                            <td><?php echo $projectClass->ShortDescription;?></td>
-                        <?php endif;?>
-                    </tr>
-                <?php endforeach;?>
+                <tr>
+                    <td><a href="#">GetName()</a></td>
+                    <td><a href="#">String</a></td>
+                    <td>Gets the naem of the object</td>
+                </tr>
+                <tr>
+                    <td><a href="#">TestMethod()</a></td>
+                    <td><a href="#">String</a></td>
+                    <td>Gets the naem of the object</td>
+                </tr>
+                <tr>
+                    <td><a href="#">TestMethod(String)</a></td>
+                    <td><a href="#">String</a></td>
+                    <td>Gets the naem of the object</td>
+                </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 
-<?php if($this->IsLoggedIn()):?>
-    <div class="row">
-        <div class="col-lg-8">
-            <a class="btn btn-md btn-default" href="<?php echo "/Classes/Create/$Project->Id";?>">Create class</a>
+<h2>Properties</h2>
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th class="col-lg-2">Name</th>
+                    <th class="col-lg-2">Type</th>
+                    <th class="col-lg-8">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><a href="#">Name</a></td>
+                    <td><a href="#">String</a></td>
+                    <td>Internal name</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-<?php endif;?>
+</div>
 
 <?php if($this->IsLoggedIn()):?>
     <h3>Documents</h3>
@@ -73,7 +108,9 @@
                     <?php foreach($Documents as $document):?>
                         <tr>
                             <td><?php echo $document->Id;?></td>
-                            <td><?php echo $document->PageTitle;?></td>
+                            <td>
+                                <?php echo $this->Html->Link("/Projects/Details/$Project->ProjectName/Documents/$document->NavigationTitle", $document->PageTitle);?>
+                            </td>
                             <td><?php echo $document->NavigationTitle;?></td>
                             <td>
                                 <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Documents/Content/$document->Id";?>"><span class="glyphicon glyphicon-align-left"</a>
@@ -90,7 +127,7 @@
 
     <div class="row">
         <div class="col-lg-8">
-            <a class="btn btn-md btn-default" href="<?php echo "/Documents/Create/Project/$Project->Id";?>">Create document</a>
+            <a class="btn btn-md btn-default" href="<?php echo "/Documents/Create/Class/$Project->Id";?>">Create document</a>
         </div>
     </div>
 
@@ -100,7 +137,7 @@
         <ul>
             <?php foreach($Documents as $document):?>
                 <li>
-                    <?php echo $this->Html->Link('A', 'B');?>
+                    <?php echo $this->Html->Link("/Projects/Details/$Project->ProjectName/Documents/$document->NavigationTitle", $document->PageTitle);?>
                 </li>
             <?php endforeach;?>
         </ul>
@@ -164,3 +201,4 @@
 <?php if($this->IsLoggedIn()):?>
     <?php echo $this->PartialView('SeeAlsoLinkDialog');?>
 <?php endif;?>
+

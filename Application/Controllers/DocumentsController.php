@@ -22,6 +22,9 @@ class DocumentsController extends BackendController
             if($this->StringEquals($type, 'Project')){
                 $project = $this->Models->Project->Find($id);
                 return $this->Redirect("/Projects/Details/$project->ProjectName");
+            }else if($this->StringEquals($type, 'Class')){
+                $projectClass = $this->Models->ProjectClass->Find($id);
+                return $this->Redirect('/Projects/Details/' . $projectClass->Project->ProjectName . '/Classes/' . $projectClass->ClassName);
             }else{
                 return $this->Redirect('/Documents/');
             }

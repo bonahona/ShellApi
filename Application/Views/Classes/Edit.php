@@ -17,6 +17,10 @@
             <?php echo $this->Form->Input('Namespace', array('attributes' => array('class' => 'form-control')));?>
         </div>
         <div class="form-group">
+            <label>ExternalSource</label>
+            <?php echo $this->Form->Input('ExternalSource', array('attributes' => array('class' => 'form-control')));?>
+        </div>
+        <div class="form-group">
             <label>Base class</label>
             <?php echo $this->Form->Select('BaseClassId', $Classes, array('key' => 'Id', 'value' => 'ClassName', 'attributes' => array('class' => 'form-control')));?>
         </div>
