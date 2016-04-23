@@ -1,6 +1,6 @@
 <?php
 
-function Url($url){
+function Url($url, $variables = array()){
     if(is_array($url)) {
 
         if (isset($url['vars']) && !empty($url['vars'])) {

@@ -19,10 +19,14 @@ class ProjectsController extends Controller
         if($project == null) {
             return $this->HttpNotFound();
         }
+
+        $documents = $this->Models->Document->Where(array('ProjectId' => $project->Id));
+        $this->Set('Documents', $documents);
+
         $seeAlsoLinks = $this->Models->SeeAlsoLink->Where(array('ProjectId' => $project->Id));
         $this->Set('SeeAlsoLinks', $seeAlsoLinks);
 
-        // For the logged in create new see aslo link modal window
+        // For the logged in create new see also link modal window
         if($this->IsLoggedIn()){
             $this->Set('SeeAlsoLink', $this->Models->SeeAlsoLink->Create(array('ProjectId' => $project->Id)));
         }
