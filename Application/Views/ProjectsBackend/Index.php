@@ -4,7 +4,7 @@
     <h3>Category: <?php echo $projectCategory->Name;?></h3>
 
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>

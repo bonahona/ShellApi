@@ -4,7 +4,7 @@
     <?php if(count($projectCategory->Projects) > 0):?>
         <h3><?php echo $projectCategory->Name;?></h3>
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <?php if($this->IsLoggedin()):?>

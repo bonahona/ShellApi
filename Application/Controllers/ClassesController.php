@@ -27,7 +27,7 @@ class ClassesController extends BackendController
             $this->Set('Project', $project);
 
             $class = $this->Models->ProjectClass->Create(array('ProjectId' => $projectId));
-            $this->Set('Class', $class);
+            $this->Set('ProjectClass', $class);
 
             return $this->View();
         }

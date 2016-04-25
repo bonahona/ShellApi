@@ -9,12 +9,47 @@
                 </dd>
             <?php endif;?>
 
-            <?php if(count($ProjectClass->InheritInterfaces) > 0):?>
-                <dt>Implements:</dt>
-                <dd>
-                    <a href="#">IComparable</a>,
-                    <a href="#">IEnumerable</a>,
-                </dd>
+            <?php if($this->IsLoggedIn()):?>
+                <h3>Implements</h3>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Class</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach($ProjectClass->InheritInterfaces as $inheritInterface):?>
+                                <tr>
+                                    <td><?php echo $inheritInterface->Id;?></td>
+                                    <td><?php echo $inheritInterface->InheritInterfaceId->ClassName;?></td>
+                                    <td>
+                                        <a href="#" class="btn btn-md btn-default"><span class="glyphicon glyphicon-trash"></span></a>
+                                    </td>
+                                </tr>
+                            <?php endforeach;?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-8">
+                        <button class="btn btn-md btn-default">Create new interface</button>
+                    </div>
+                </div>
+            <?php else:?>
+                <?php if(count($ProjectClass->InheritInterfaces) > 0):?>
+                    <dt>Implements:</dt>
+                    <dd>
+                        <a href="#">IComparable</a>,
+                        <a href="#">IEnumerable</a>,
+                    </dd>
+                <?php endif;?>
             <?php endif;?>
 
             <?php if(empty($ProjectClass->Namespace)):?>
@@ -30,6 +65,13 @@
         <?php echo $ProjectClass->Description;?>
     </div>
 </div>
+<?php if($this->IsLoggedIn()):?>
+    <div class="row">
+        <div class="col-lg-12">
+            <a class="btn btn-md btn-default" href="<?php echo "/Classes/Description/$ProjectClass->Id";?>">Edit description</a>
+        </div>
+    </div>
+<?php endif;?>
 
 <h2>Public methods</h2>
 <div class="row">

@@ -10,7 +10,7 @@ abstract class BackendController extends Controller
         $this->Set('Sidebar', $this->GenerateSidebarData());
     }
 
-    public function GenerateSidebarData()
+    protected function GenerateSidebarData()
     {
         $result = array();
 
@@ -29,5 +29,14 @@ abstract class BackendController extends Controller
         );
 
         return $result;
+    }
+
+    protected function GetAccessModifierList()
+    {
+        return array(
+            1 => 'private',
+            2 => 'protected',
+            3 => 'public'
+        );
     }
 }
