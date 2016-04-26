@@ -119,3 +119,10 @@ body {
 {
     margin-right: 0.5em;
 }
+
+ul
+{
+    list-style-type: none;
+    list-style:none;
+    padding-left:0;
+}

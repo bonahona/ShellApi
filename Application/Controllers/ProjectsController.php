@@ -62,6 +62,8 @@ class ProjectsController extends Controller
         // For the logged in create new see also link modal window
         if($this->IsLoggedIn()){
             $this->Set('SeeAlsoLink', $this->Models->SeeAlsoLink->Create(array('ClassId' => $projectClass->Id)));
+            $this->Set('InheritInterface', $this->Models->InheritInterface->Create(array('ProjectClassId' => $projectClass->Id)));
+            $this->Set('Classes', $project->ProjectClasses);
         }
 
         $this->Set('Project', $project);

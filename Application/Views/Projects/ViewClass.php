@@ -39,7 +39,7 @@
 
                 <div class="row">
                     <div class="col-lg-8">
-                        <button class="btn btn-md btn-default">Create new interface</button>
+                        <button type="button" class="btn btn-md btn-default" data-toggle="modal" data-target="#implementsinheritancedialog">Create link</button>
                     </div>
                 </div>
             <?php else:?>
@@ -54,7 +54,7 @@
 
             <?php if(empty($ProjectClass->Namespace)):?>
                 <dt>Namespace:</dt>
-                <dd>Bona.Json</dd>
+                <dd><?php echo $ProjectClass->Namespace;?></dd>
             <?php endif;?>
         </dl>
     </div>
@@ -242,5 +242,6 @@
 
 <?php if($this->IsLoggedIn()):?>
     <?php echo $this->PartialView('SeeAlsoLinkDialog');?>
+    <?php echo $this->PartialView('ImplementsInheritanceDialog', array('Classes' => $Classes));?>
 <?php endif;?>
 
