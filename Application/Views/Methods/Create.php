@@ -18,17 +18,19 @@
         </div>
 
         <div class="form-group">
-            <label>Access ModifierId</label>
-            <?php echo $this->Form->Select('AccessModifierId', $AccessModifiers, array('attributes' => array('class' => 'form-control')));?>
-        </div>
-
-        <div class="form-group">
             <label>Return type</label>
             <?php echo $this->Form->Select('ReturnTypeId', $ProjectClasses, array('key' => 'Id', 'value' => 'ClassName', 'attributes' => array('class' => 'form-control')));?>
         </div>
-
         <div class="form-group">
-            <label>Project</label>
+            <div class="checkbox">
+                <label>
+                    <?php echo $this->Form->Bool('IsStatic');?>
+                    Is Static
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Class</label>
             <?php echo $this->Form->Select('ProjectClassId', $ProjectClasses, array('key' => 'Id', 'value' => 'ClassName', 'attributes' => array('class' => 'form-control')));?>
         </div>
 

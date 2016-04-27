@@ -81,39 +81,144 @@
     </div>
 <?php endif;?>
 
-<h2>Public methods</h2>
-<div class="row">
-    <div class="col-lg-12 col-md-12">
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th class="col-lg-2">Name</th>
-                    <th class="col-lg-2">Type</th>
-                    <th class="col-lg-8">Description</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><a href="#">GetName()</a></td>
-                    <td><a href="#">String</a></td>
-                    <td>Gets the naem of the object</td>
-                </tr>
-                <tr>
-                    <td><a href="#">TestMethod()</a></td>
-                    <td><a href="#">String</a></td>
-                    <td>Gets the naem of the object</td>
-                </tr>
-                <tr>
-                    <td><a href="#">TestMethod(String)</a></td>
-                    <td><a href="#">String</a></td>
-                    <td>Gets the naem of the object</td>
-                </tr>
-                </tbody>
-            </table>
+<?php if(count($PublicMethods)):?>
+    <h2>Public methods</h2>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <?php if($this->IsLoggedIn()):?>
+                            <th class="col-lg-2">Name</th>
+                            <th class="col-lg-2">Type</th>
+                            <th class="col-lg-6">Description</th>
+                            <th class="col-lg-2">&nbsp;</th>
+                        <?php else:?>
+                            <th class="col-lg-2">Name</th>
+                            <th class="col-lg-2">Type</th>
+                            <th class="col-lg-8">Description</th>
+                        <?php endif;?>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach($PublicMethods as $publicMethod):?>
+                        <tr>
+                            <?php if($this->IsLoggedIn()):?>
+                                <td><a href="#"><?php echo $publicMethod->MethodName;?></a></td>
+                                <td><a href="#"><?php echo $publicMethod->ReturnType->ClassName;?></a></td>
+                                <td><?php echo $publicMethod->ShortDescription;?></td>
+                                <td>
+                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Methods/Description/$publicMethod->Id";?>"><span class="glyphicon glyphicon-align-left"</a>
+                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Methods/Edit/$publicMethod->Id";?>"><span class="glyphicon glyphicon-pencil"</a>
+                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Methods/DeleteConfirm/$publicMethod->Id";?>"><span class="glyphicon glyphicon-trash"</a>
+                                </td>
+                            <?php else:?>
+                                <td><a href="#"><?php echo $publicMethod->MethodName;?></a></td>
+                                <td><a href="#"><?php echo $publicMethod->ReturnType->ClassName;?></a></td>
+                                <td><?php echo $publicMethod->ShortDescription;?></td>
+                            <?php endif;?>
+                        </tr>
+                    <?php endforeach;?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
+<?php endif;?>
+
+
+<?php if(count($ProtectedMethods)):?>
+    <h2>Protected methods</h2>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <?php if($this->IsLoggedIn()):?>
+                            <th class="col-lg-2">Name</th>
+                            <th class="col-lg-2">Type</th>
+                            <th class="col-lg-6">Description</th>
+                            <th class="col-lg-2">Description</th>
+                        <?php else:?>
+                            <th class="col-lg-2">Name</th>
+                            <th class="col-lg-2">Type</th>
+                            <th class="col-lg-8">Description</th>
+                        <?php endif;?>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach($ProtectedMethods as $protectedMethod):?>
+                        <tr>
+                            <?php if($this->IsLoggedIn()):?>
+                                <td><a href="#"><?php echo $protectedMethod->MethodName;?></a></td>
+                                <td><a href="#"><?php echo $protectedMethod->ReturnType->ClassName;?></a></td>
+                                <td><?php echo $protectedMethod->ShortDescription;?></td>
+                                <td>
+                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Methods/Description/$protectedMethod->Id";?>"><span class="glyphicon glyphicon-align-left"</a>
+                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Methods/Edit/$protectedMethod->Id";?>"><span class="glyphicon glyphicon-pencil"</a>
+                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Methods/DeleteConfirm/$protectedMethod->Id";?>"><span class="glyphicon glyphicon-trash"</a>
+                                </td>
+                            <?php else:?>
+                                <td><a href="#"><?php echo $protectedMethod->MethodName;?></a></td>
+                                <td><a href="#"><?php echo $protectedMethod->ReturnType->ClassName;?></a></td>
+                                <td><?php echo $protectedMethod->ShortDescription;?></td>
+                            <?php endif;?>
+                        </tr>
+                    <?php endforeach;?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<?php endif;?>
+
+<?php if(count($StaticMethods)):?>
+    <h2>Static methods</h2>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <?php if($this->IsLoggedIn()):?>
+                            <th class="col-lg-2">Name</th>
+                            <th class="col-lg-2">Type</th>
+                            <th class="col-lg-6">Description</th>
+                            <th class="col-lg-2">Description</th>
+                        <?php else:?>
+                            <th class="col-lg-2">Name</th>
+                            <th class="col-lg-2">Type</th>
+                            <th class="col-lg-8">Description</th>
+                        <?php endif;?>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach($StaticMethods as $staticMethods):?>
+                        <tr>
+                            <?php if($this->IsLoggedIn()):?>
+                                <td><a href="#"><?php echo $staticMethods->MethodName;?></a></td>
+                                <td><a href="#"><?php echo $staticMethods->ReturnType->ClassName;?></a></td>
+                                <td><?php echo $staticMethods->ShortDescription;?></td>
+                                <td>
+                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Methods/Description/$staticMethods->Id";?>"><span class="glyphicon glyphicon-align-left"</a>
+                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Methods/Edit/$staticMethods->Id";?>"><span class="glyphicon glyphicon-pencil"</a>
+                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Methods/DeleteConfirm/$staticMethods->Id";?>"><span class="glyphicon glyphicon-trash"</a>
+                                </td>
+                            <?php else:?>
+                                <td><a href="#"><?php echo $staticMethods->MethodName;?></a></td>
+                                <td><a href="#"><?php echo $staticMethods->ReturnType->ClassName;?></a></td>
+                                <td><?php echo $staticMethods->ShortDescription;?></td>
+                            <?php endif;?>
+                        </tr>
+                    <?php endforeach;?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<?php endif;?>
 
 <?php if($this->IsLoggedIn()):?>
     <div class="row">

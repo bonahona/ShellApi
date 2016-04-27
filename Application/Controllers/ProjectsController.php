@@ -64,6 +64,15 @@ class ProjectsController extends Controller
         $inheritInterfaces = $this->Models->InheritInterface->Where(array('ProjectClassId' => $projectClass->Id));
         $this->Set('InheritInterfaces', $inheritInterfaces);
 
+        $publicMethods = $this->Models->Method->Where(array('ProjectClassId' => $project->Id, 'AccessModifierId' => 3, 'IsStatic' => '0'));
+        $this->Set('PublicMethods', $publicMethods);
+
+        $protectedMethods = $this->Models->Method->Where(array('ProjectClassId' => $project->Id, 'AccessModifierId' => 2, 'IsStatic' => '0'));
+        $this->Set('ProtectedMethods', $protectedMethods);
+
+        $staticMethods = $this->Models->Method->Where(array('ProjectClassId' => $project->Id, 'IsStatic' => '1'));
+        $this->Set('StaticMethods', $staticMethods);
+
         $documents = $this->Models->Document->Where(array('ClassId' => $projectClass->Id));
         $this->Set('Documents', $documents);
 

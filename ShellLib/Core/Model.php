@@ -127,6 +127,12 @@ class Model
     public function Save()
     {
         $this->ModelCollection->Save($this);
+
+        // In case the Primary key has changed, we the references key need an update
+        foreach($this->References as $reference) {
+            $reference->PrimaryKey = $this->Properties[$reference->FieldName];
+        }
+
         $this->FlagAsSaved();
         $this->FlagAsClean();
     }
@@ -142,6 +148,28 @@ class Model
 
         foreach($this->Properties as $key => $value){
             $result[$key] = $value;
+        }
+
+        return $result;
+    }
+
+    public function References()
+    {
+        $result = array();
+
+        foreach($this->References as $key => $value){
+            $result[] = $key;
+        }
+
+        return $result;
+    }
+
+    public function ReverseReferences()
+    {
+        $result = array();
+
+        foreach($this->ReferenceCollections as $key => $value){
+            $result[] = $key;
         }
 
         return $result;
