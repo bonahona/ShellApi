@@ -363,7 +363,12 @@ class PdoDatabase implements IDatabaseDriver
 
         $params = array();
         foreach($values as $key => $value){
-            $params[] = &$values[$key];
+            echo "$key = $value";
+            if($value == '0'){
+                $params[] = null;
+            }else {
+                $params[] = $values[$key];
+            }
         }
 
         if(!$preparedStatement->execute($params)){
@@ -396,8 +401,10 @@ class PdoDatabase implements IDatabaseDriver
         // Create the required SQL
         $sqlStatement = "UPDATE $tableName SET $values WHERE $primaryKey=?";
 
+        var_dump($sqlStatement);
+
         if(!$preparedStatement = $this->Database->prepare($sqlStatement)){
-            echo "Failed to execute PDO statement";
+            echo "Failed to prepare PDO statement";
             var_dump($this->Database->errorInfo());
         }
 
@@ -410,10 +417,18 @@ class PdoDatabase implements IDatabaseDriver
 
         $params = array();
         foreach($values as $key => $value){
-            $params[] = $values[$key];
+            echo "$key = $value";
+            if($value == '0'){
+                $params[] = null;
+            }else {
+                $params[] = $values[$key];
+            }
         }
-        $params[] = $id;
 
-        $preparedStatement->execute($params);
+        $params[] = $id;
+        if(!$preparedStatement->execute($params)){
+            echo "Failed to execute PDO statement";
+            var_dump($this->Database->errorInfo());
+        }
     }
 }

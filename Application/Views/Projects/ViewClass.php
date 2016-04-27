@@ -22,11 +22,11 @@
                                 <th>&nbsp;</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <?php foreach($ProjectClass->InheritInterfaces as $inheritInterface):?>
+                            <tbody class="implements-inheritance-body">
+                            <?php foreach($InheritInterfaces as $inheritInterface):?>
                                 <tr>
                                     <td><?php echo $inheritInterface->Id;?></td>
-                                    <td><?php echo $inheritInterface->InheritInterfaceId->ClassName;?></td>
+                                    <td><?php echo $inheritInterface->InheritInterface->ClassName;?></td>
                                     <td>
                                         <a href="#" class="btn btn-md btn-default"><span class="glyphicon glyphicon-trash"></span></a>
                                     </td>
@@ -39,20 +39,27 @@
 
                 <div class="row">
                     <div class="col-lg-8">
-                        <button type="button" class="btn btn-md btn-default" data-toggle="modal" data-target="#implementsinheritancedialog">Create link</button>
+                        <button type="button" class="btn btn-md btn-default" data-toggle="modal" data-target="#inheritinterfacedialog">Create interface</button>
                     </div>
                 </div>
             <?php else:?>
-                <?php if(count($ProjectClass->InheritInterfaces) > 0):?>
+                <?php if(count($InheritInterfaces) > 0):?>
                     <dt>Implements:</dt>
                     <dd>
-                        <a href="#">IComparable</a>,
-                        <a href="#">IEnumerable</a>,
+                        <?php foreach($InheritInterfaces as $inheritInterface):?>
+                            <?php if($inheritInterface->InheritInterface->ExternalSource != ''):?>
+                                 <a target="_blank" href="<?php echo $inheritInterface->InheritInterface->ExternalSource;?>">
+                                     <?php echo $inheritInterface->InheritInterface->ClassName;?>
+                                 </a>,
+                            <?php else:?>
+                                <a href="#"><?php echo $inheritInterface->InheritInterface->ClassName;?></a>,
+                            <?php endif;?>
+                        <?php endforeach;?>
                     </dd>
                 <?php endif;?>
             <?php endif;?>
 
-            <?php if(empty($ProjectClass->Namespace)):?>
+            <?php if(!empty($ProjectClass->Namespace)):?>
                 <dt>Namespace:</dt>
                 <dd><?php echo $ProjectClass->Namespace;?></dd>
             <?php endif;?>
@@ -242,6 +249,6 @@
 
 <?php if($this->IsLoggedIn()):?>
     <?php echo $this->PartialView('SeeAlsoLinkDialog');?>
-    <?php echo $this->PartialView('ImplementsInheritanceDialog', array('Classes' => $Classes));?>
+    <?php echo $this->PartialView('InheritInterfaceDialog', array('Classes' => $Classes));?>
 <?php endif;?>
 

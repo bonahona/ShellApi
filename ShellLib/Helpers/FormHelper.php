@@ -152,6 +152,12 @@ class FormHelper
             $valueIndex = 'Value';
         }
 
+        if(isset($options['nullfield'])){
+            $useNullField = $options['nullfield'];
+        }else{
+            $useNullField = false;
+        }
+
         if(isset($options['attributes'])){
             $attributes = $this->ParseAttributes($options['attributes']);
         }else{
@@ -164,6 +170,15 @@ class FormHelper
         $id = $name;
         $name = $this->ParseName($name);
         $result = "<select id=\"$id\" name=\"$name\" $attributes>\n";
+
+
+        if($useNullField){
+            if(is_array($list)){
+                $result .= "<option value=\"-1\">-None-</option>\n";
+            }else{
+                $result .= "<option value=\"0\" selected=\"\">-None-</option>\n";
+            }
+        }
 
         foreach($list as $item){
 

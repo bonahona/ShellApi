@@ -22,7 +22,7 @@
         </div>
         <div class="form-group">
             <label>Base class</label>
-            <?php echo $this->Form->Select('BaseClassId', $Classes, array('key' => 'Id', 'value' => 'ClassName', 'attributes' => array('class' => 'form-control')));?>
+            <?php echo $this->Form->Select('BaseClassId', $Classes, array('key' => 'Id', 'value' => 'ClassName', 'nullfield' => true, 'attributes' => array('class' => 'form-control')));?>
         </div>
         <div class="form-group">
             <label>Project</label>

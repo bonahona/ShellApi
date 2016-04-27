@@ -83,6 +83,18 @@ class Collection implements IDataCollection
         return $result;
     }
 
+    public function WhereNot($conditions)
+    {
+        $result = new Collection();
+
+        foreach($this->m_items as $item){
+            if(!$this->CheckConditions($conditions, $item)){
+                $result->Add($item);
+            }
+        }
+        return $result;
+    }
+
     public function Any($conditions)
     {
         foreach($this->m_items as $item){

@@ -42,6 +42,14 @@ class ProjectsController extends Controller
         $seeAlsoLinks = $this->Models->SeeAlsoLink->Where(array('ProjectId' => $project->Id));
         $this->Set('SeeAlsoLinks', $seeAlsoLinks);
 
+        $publicClasses = $project->ProjectClasses->Where(array('ExternalSource' => ''));
+        $this->Set('PublicClasses', $publicClasses);
+
+        if($this->IsLoggedIn()){
+            $externalClasses = $project->ProjectClasses->WhereNot(array('ExternalSource' => ''));
+            $this->Set('ExternalClasses', $externalClasses);
+        }
+
         // For the logged in create new see also link modal window
         if($this->IsLoggedIn()){
             $this->Set('SeeAlsoLink', $this->Models->SeeAlsoLink->Create(array('ProjectId' => $project->Id)));
@@ -53,6 +61,9 @@ class ProjectsController extends Controller
 
     private function ViewClass($project, $projectClass)
     {
+        $inheritInterfaces = $this->Models->InheritInterface->Where(array('ProjectClassId' => $projectClass->Id));
+        $this->Set('InheritInterfaces', $inheritInterfaces);
+
         $documents = $this->Models->Document->Where(array('ClassId' => $projectClass->Id));
         $this->Set('Documents', $documents);
 
