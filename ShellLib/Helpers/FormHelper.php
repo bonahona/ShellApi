@@ -166,7 +166,6 @@ class FormHelper
 
         $value = $this->ParseValue($name);
 
-
         $id = $name;
         $name = $this->ParseName($name);
         $result = "<select id=\"$id\" name=\"$name\" $attributes>\n";
@@ -180,15 +179,16 @@ class FormHelper
             }
         }
 
-        foreach($list as $item){
-
-            if(is_array($list)) {
-                if ($item[$keyIndex] == $value) {
-                    $result .= "<option value=\"$item[$keyIndex]\" selected=\"\">$item[$valueIndex]</option>\n";
+        if(is_array($list)){
+            foreach($list as $key => $item) {
+                if ($key == $value) {
+                    $result .= "<option value=\"$key\" selected=\"\">$item</option>\n";
                 }else{
-                    $result .= "<option value=\"$item[$keyIndex]\" >$item[$valueIndex]</option>\n";
+                    $result .= "<option value=\"$key\" >$item</option>\n";
                 }
-            }else if($list instanceof Collection){
+            }
+        }else if($list instanceof Collection){
+            foreach($list as $item) {
                 $itemKey = $item->$keyIndex;
                 $itemValue = $item->$valueIndex;
 

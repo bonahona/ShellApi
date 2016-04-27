@@ -72,6 +72,7 @@
         <?php echo $ProjectClass->Description;?>
     </div>
 </div>
+
 <?php if($this->IsLoggedIn()):?>
     <div class="row">
         <div class="col-lg-12">
@@ -113,6 +114,14 @@
         </div>
     </div>
 </div>
+
+<?php if($this->IsLoggedIn()):?>
+    <div class="row">
+        <div class="col-lg-12">
+            <a class="btn btn-md btn-default" href="<?php echo "/Methods/Create/$ProjectClass->Id";?>">Create method</a>
+        </div>
+    </div>
+<?php endif;?>
 
 <h2>Properties</h2>
 <div class="row">
