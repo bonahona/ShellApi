@@ -73,6 +73,15 @@ class ProjectsController extends Controller
         $staticMethods = $this->Models->Method->Where(array('ProjectClassId' => $project->Id, 'IsStatic' => '1'));
         $this->Set('StaticMethods', $staticMethods);
 
+        $publicProperties =  $this->Models->Property->Where(array('ProjectClassId' => $project->Id, 'AccessModifierId' => 3, 'IsStatic' => '0'));
+        $this->Set('PublicProperties', $publicProperties);
+
+        $protectedProperties =  $this->Models->Property->Where(array('ProjectClassId' => $project->Id, 'AccessModifierId' => 2, 'IsStatic' => '0'));
+        $this->Set('ProtectedProperties', $protectedProperties);
+
+        $staticProperties =  $this->Models->Property->Where(array('ProjectClassId' => $project->Id, 'AccessModifierId' => 3, 'IsStatic' => '1'));
+        $this->Set('StaticProperties', $staticProperties);
+
         $documents = $this->Models->Document->Where(array('ClassId' => $projectClass->Id));
         $this->Set('Documents', $documents);
 
