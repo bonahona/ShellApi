@@ -19,21 +19,49 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach($Methods as $methods):?>
+                    <?php foreach($Methods as $method):?>
                         <tr>
                             <?php if($this->IsLoggedIn()):?>
-                                <td><a href="#"><?php echo $methods->MethodName;?></a></td>
-                                <td><a href="#"><?php echo $methods->ReturnType->ClassName;?></a></td>
-                                <td><?php echo $methods->ShortDescription;?></td>
                                 <td>
-                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Methods/Description/$methods->Id";?>"><span class="glyphicon glyphicon-align-left"</a>
-                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Methods/Edit/$methods->Id";?>"><span class="glyphicon glyphicon-pencil"</a>
-                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Methods/DeleteConfirm/$methods->Id";?>"><span class="glyphicon glyphicon-trash"</a>
+                                    <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $method->ProjectClass->ClassName . '/Properties/' . $method->MethodName;?>">
+                                        <?php echo $method->MethodName;?>
+                                    </a>
+                                </td>
+                                <td>
+                                    <?php if($method->ReturnType->ExternalSource === ''):?>
+                                        <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $method->ReturnType->ClassName;?>">
+                                            <?php echo $method->ReturnType->ClassName;?>
+                                        </a>
+                                    <?php else:?>
+                                        <a target="_blank" href="<?php echo $method->Type->ExternalSource;?>">
+                                            <?php echo $method->ReturnType->ClassName;?>
+                                        </a>
+                                    <?php endif;?>
+                                </td>
+                                <td><?php echo $method->ShortDescription;?></td>
+                                <td>
+                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Methods/Description/$method->Id";?>"><span class="glyphicon glyphicon-align-left"</a>
+                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Methods/Edit/$method->Id";?>"><span class="glyphicon glyphicon-pencil"</a>
+                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Methods/DeleteConfirm/$method->Id";?>"><span class="glyphicon glyphicon-trash"</a>
                                 </td>
                             <?php else:?>
-                                <td><a href="#"><?php echo $methods->MethodName;?></a></td>
-                                <td><a href="#"><?php echo $methods->ReturnType->ClassName;?></a></td>
-                                <td><?php echo $methods->ShortDescription;?></td>
+                                <td>
+                                    <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $method->ProjectClass->ClassName . '/Properties/' . $method->MethodName;?>">
+                                        <?php echo $method->MethodName;?>
+                                    </a>
+                                </td>
+                                <td>
+                                    <?php if($method->ReturnType->ExternalSource === ''):?>
+                                        <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $method->ReturnType->ClassName;?>">
+                                            <?php echo $method->ReturnType->ClassName;?>
+                                        </a>
+                                    <?php else:?>
+                                        <a target="_blank" href="<?php echo $method->Type->ExternalSource;?>">
+                                            <?php echo $method->ReturnType->ClassName;?>
+                                        </a>
+                                    <?php endif;?>
+                                </td>
+                                <td><?php echo $method->ShortDescription;?></td>
                             <?php endif;?>
                         </tr>
                     <?php endforeach;?>

@@ -59,13 +59,14 @@
                 <?php endif;?>
             <?php endif;?>
 
-            <?php if(!empty($ProjectClass->Namespace)):?>
+            <?php if(($ProjectClass->Namespace) !== ''):?>
                 <dt>Namespace:</dt>
                 <dd><?php echo $ProjectClass->Namespace;?></dd>
             <?php endif;?>
         </dl>
     </div>
 </div>
+
 <h2>Description</h2>
 <div class="row">
     <div class="col-lg-8">

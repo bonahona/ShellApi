@@ -19,21 +19,49 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach($Properties as $properties):?>
+                    <?php foreach($Properties as $property):?>
                         <tr>
                             <?php if($this->IsLoggedIn()):?>
-                                <td><a href="#"><?php echo $properties->PropertyName;?></a></td>
-                                <td><a href="#"><?php echo $properties->PropertyName;?></a></td>
-                                <td><?php echo $properties->ShortDescription;?></td>
                                 <td>
-                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Properties/Description/$properties->Id";?>"><span class="glyphicon glyphicon-align-left"</a>
-                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Properties/Edit/$properties->Id";?>"><span class="glyphicon glyphicon-pencil"</a>
-                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Properties/DeleteConfirm/$properties->Id";?>"><span class="glyphicon glyphicon-trash"</a>
+                                    <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $property->ProjectClass->ClassName . '/Properties/' . $property->PropertyName;?>">
+                                        <?php echo $property->PropertyName;?>
+                                    </a>
+                                </td>
+                                <td>
+                                    <?php if($property->Type->ExternalSource === ''):?>
+                                        <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $property->Type->ClassName;?>">
+                                            <?php echo $property->Type->ClassName;?>
+                                        </a>
+                                    <?php else:?>
+                                        <a target="_blank" href="<?php echo $property->Type->ExternalSource;?>">
+                                            <?php echo $property->Type->ClassName;?>
+                                        </a>
+                                    <?php endif;?>
+                                </td>
+                                <td><?php echo $property->ShortDescription;?></td>
+                                <td>
+                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Properties/Description/$property->Id";?>"><span class="glyphicon glyphicon-align-left"</a>
+                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Properties/Edit/$property->Id";?>"><span class="glyphicon glyphicon-pencil"</a>
+                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Properties/DeleteConfirm/$property->Id";?>"><span class="glyphicon glyphicon-trash"</a>
                                 </td>
                             <?php else:?>
-                                <td><a href="#"><?php echo $properties->PropertyName;?></a></td>
-                                <td><a href="#"><?php echo $properties->PropertyName;?></a></td>
-                                <td><?php echo $properties->ShortDescription;?></td>
+                                <td>
+                                    <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $property->ProjectClass->ClassName . '/Properties/' . $property->PropertyName;?>">
+                                        <?php echo $property->PropertyName;?>
+                                    </a>
+                                </td>
+                                <td>
+                                    <?php if($property->Type->ExternalSource === ''):?>
+                                        <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $property->Type->ClassName;?>">
+                                            <?php echo $property->Type->ClassName;?>
+                                        </a>
+                                    <?php else:?>
+                                        <a target="_blank" href="<?php echo $property->Type->ExternalSource;?>">
+                                            <?php echo $property->Type->ClassName;?>
+                                        </a>
+                                    <?php endif;?>
+                                </td>
+                                <td><?php echo $property->ShortDescription;?></td>
                             <?php endif;?>
                         </tr>
                     <?php endforeach;?>

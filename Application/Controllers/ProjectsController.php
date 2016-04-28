@@ -10,7 +10,7 @@ class ProjectsController extends Controller
         return $this->View();
     }
 
-    public function Details($projectName = '', $sectionType = '', $sectionName = '')
+    public function Details($projectName = '', $sectionType = '', $sectionName = '', $subsectionType = '', $subsectionName = '')
     {
         $this->Title = $projectName;
 
@@ -22,13 +22,16 @@ class ProjectsController extends Controller
 
         if($sectionType == ''){
             return $this->ViewProject($project);
-        }else if($this->StringEquals($sectionType, 'Classes') && $sectionName != ''){
+        }else if($this->StringEquals($sectionType, 'Classes') && $sectionName != '' && $subsectionType == ''){
             $projectClass = $this->Models->ProjectClass->Where(array('ProjectId' => $project->Id, 'ClassName' => $sectionName))->First();
             return $this->ViewClass($project, $projectClass);
         }else if($this->StringEquals($sectionType, 'Documents') && $sectionName != '') {
             $document = $this->Models->Document->Where(array('ProjectId' => $project->Id, 'NavigationTitle' => $sectionName))->First();
             return $this->ViewDocument($project, $document);
-        }else if($this->StringEquals($sectionType, 'Classes' && $sectionName != '')) {
+        }else if($this->StringEquals($sectionType, 'Classes') && $sectionName != '' && $this->StringEquals('Properties', $subsectionType) && $subsectionName != '') {
+            $projectClass = $this->Models->ProjectClass->Where(array('ProjectId' => $project->Id, 'ClassName' => $sectionName))->First();
+            $property = $this->Models->Property->Where(array('ProjectClassId' => $projectClass->Id, 'PropertyName' => $subsectionName))->First();
+            return $this->ViewProperty($project, $projectClass, $property);
         }else{
             return $this->HttpNotFound();
         }
@@ -110,13 +113,28 @@ class ProjectsController extends Controller
         return $this->View('ViewDocument');
     }
 
-    private function ViewMethod($project, $method)
+    private function ViewMethod($project, $projectClass, $method)
     {
         return $this->View('ViewMethod');
     }
 
-    private function ViewProperty($project, $property)
+    private function ViewProperty($project, $projectClass, $property)
     {
+        $this->Set('Project', $project);
+        $this->Set('ProjectClass', $projectClass);
+        $this->Set('Property', $property);
+
+        $documents = $this->Models->Document->Where(array('PropertyId' => $property->Id));
+        $this->Set('Documents', $documents);
+
+        $seeAlsoLinks = $this->Models->SeeAlsoLink->Where(array('PropertyId' => $property->Id));
+        $this->Set('SeeAlsoLinks', $seeAlsoLinks);
+
+        // For the logged in create new see also link modal window
+        if($this->IsLoggedIn()){
+            $this->Set('SeeAlsoLink', $this->Models->SeeAlsoLink->Create(array('PropertyId' => $projectClass->Id)));
+        }
+
         return $this->View('ViewProperty');
     }
 
