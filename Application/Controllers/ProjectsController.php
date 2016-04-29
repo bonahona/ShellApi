@@ -32,6 +32,10 @@ class ProjectsController extends Controller
             $projectClass = $this->Models->ProjectClass->Where(array('ProjectId' => $project->Id, 'ClassName' => $sectionName))->First();
             $property = $this->Models->Property->Where(array('ProjectClassId' => $projectClass->Id, 'PropertyName' => $subsectionName))->First();
             return $this->ViewProperty($project, $projectClass, $property);
+        }else if($this->StringEquals($sectionType, 'Classes') && $sectionName != '' && $this->StringEquals('Methods', $subsectionType) && $subsectionName != '') {
+            $projectClass = $this->Models->ProjectClass->Where(array('ProjectId' => $project->Id, 'ClassName' => $sectionName))->First();
+            $method = $this->Models->Method->Where(array('ProjectClassId' => $projectClass->Id, 'MethodName' => $subsectionName))->First();
+            return $this->ViewMethod($project, $projectClass, $method);
         }else{
             return $this->HttpNotFound();
         }

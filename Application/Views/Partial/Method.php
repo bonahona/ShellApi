@@ -23,7 +23,7 @@
                         <tr>
                             <?php if($this->IsLoggedIn()):?>
                                 <td>
-                                    <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $method->ProjectClass->ClassName . '/Properties/' . $method->MethodName;?>">
+                                    <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $method->ProjectClass->ClassName . '/Methods/' . $method->MethodName;?>">
                                         <?php echo $method->MethodName;?>
                                     </a>
                                 </td>
@@ -46,7 +46,7 @@
                                 </td>
                             <?php else:?>
                                 <td>
-                                    <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $method->ProjectClass->ClassName . '/Properties/' . $method->MethodName;?>">
+                                    <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $method->ProjectClass->ClassName . '/Methods/' . $method->MethodName;?>">
                                         <?php echo $method->MethodName;?>
                                     </a>
                                 </td>
