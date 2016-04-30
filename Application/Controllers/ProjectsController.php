@@ -119,6 +119,10 @@ class ProjectsController extends Controller
 
     private function ViewMethod($project, $projectClass, $method)
     {
+        $this->Set('Project', $project);
+        $this->Set('ProjectClass', $projectClass);
+        $this->Set('Method', $method);
+
         return $this->View('ViewMethod');
     }
 
