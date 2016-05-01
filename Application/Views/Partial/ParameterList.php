@@ -38,17 +38,4 @@
             <button type="button" class="btn btn-md btn-default" data-toggle="modal" data-target="#createparameterdialog">Create parameter</button>
         </div>
     </div>
-<?php else:?>
-    <?php if(count($Parameters) > 0):?>
-        <h3>See also</h3>
-        <?php foreach($SeeAlsoLinks as $seeAlsoLink):?>
-            <div class="row">
-                <div class="col-lg-4">
-                    <a target="_blank" href="<?php echo $seeAlsoLink->Link;?>">
-                        <?php echo $seeAlsoLink->DisplayName;?>
-                    </a>
-                </div>
-            </div>
-        <?php endforeach;?>
-    <?php endif;?>
 <?php endif;?>
