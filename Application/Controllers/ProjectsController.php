@@ -10,7 +10,7 @@ class ProjectsController extends Controller
         return $this->View();
     }
 
-    public function Details($projectName = '', $sectionType = '', $sectionName = '', $subsectionType = '', $subsectionName = '')
+    public function Details($projectName = '', $sectionType = '', $sectionName = '', $subsectionType = '', $subsectionName = '', $lowestType = '', $lowestName = '')
     {
         $this->Title = $projectName;
 
@@ -27,14 +27,23 @@ class ProjectsController extends Controller
             return $this->ViewClass($project, $projectClass);
         }else if($this->StringEquals($sectionType, 'Documents') && $sectionName != '') {
             $document = $this->Models->Document->Where(array('ProjectId' => $project->Id, 'NavigationTitle' => $sectionName))->First();
-            return $this->ViewDocument($project, $document);
-        }else if($this->StringEquals($sectionType, 'Classes') && $sectionName != '' && $this->StringEquals('Properties', $subsectionType) && $subsectionName != '') {
+            return $this->ViewDocument($project, null, null, null, $document);
+        }else if($this->StringEquals($sectionType, 'Classes') && $sectionName != '' && $this->StringEquals('Documents', $subsectionType) && $subsectionName != '') {
+            $projectClass = $this->Models->ProjectClass->Where(array('ProjectId' => $project->Id, 'ClassName' => $sectionName))->First();
+            $document = $this->Models->Document->Where(array('ClassId' => $projectClass->Id, 'NavigationTitle' => $subsectionName))->First();
+            return $this->ViewDocument($project, $projectClass, null, null, $document);
+        }else if($this->StringEquals($sectionType, 'Classes') && $sectionName != '' && $this->StringEquals('Properties', $subsectionType) && $subsectionName != '' && $lowestType == '') {
             $projectClass = $this->Models->ProjectClass->Where(array('ProjectId' => $project->Id, 'ClassName' => $sectionName))->First();
             $property = $this->Models->Property->Where(array('ProjectClassId' => $projectClass->Id, 'PropertyName' => $subsectionName))->First();
             return $this->ViewProperty($project, $projectClass, $property);
         }else if($this->StringEquals($sectionType, 'Classes') && $sectionName != '' && $this->StringEquals('Methods', $subsectionType) && $subsectionName != '') {
             $projectClass = $this->Models->ProjectClass->Where(array('ProjectId' => $project->Id, 'ClassName' => $sectionName))->First();
-            return $this->ViewMethod($project, $projectClass, $subsectionName);
+            return $this->ViewMethod($project, $projectClass, $subsectionName, $lowestType, $lowestName);
+        }else if($this->StringEquals($sectionType, 'Classes') && $sectionName != '' && $this->StringEquals('Properties', $subsectionType) && $subsectionName != '' && $this->StringEquals($lowestType, 'Documents') && $lowestName != '') {
+            $projectClass = $this->Models->ProjectClass->Where(array('ProjectId' => $project->Id, 'ClassName' => $sectionName))->First();
+            $property = $this->Models->Property->Where(array('ProjectClassId' => $projectClass->Id, 'PropertyName' => $subsectionName))->First();
+            $document = $this->Models->Document->Where(array('PropertyId' => $property->Id))->First();
+            return $this->ViewDocument($project, $projectClass, null, $property, $document);
         }else{
             return $this->HttpNotFound();
         }
@@ -50,6 +59,8 @@ class ProjectsController extends Controller
 
         $publicClasses = $project->ProjectClasses->Where(array('ExternalSource' => ''));
         $this->Set('PublicClasses', $publicClasses);
+
+        $this->Set('BreadCrumbs', $this->GenerateBreadCrumbs($project));
 
         if($this->IsLoggedIn()){
             $externalClasses = $project->ProjectClasses->WhereNot(array('ExternalSource' => ''));
@@ -94,6 +105,8 @@ class ProjectsController extends Controller
         $seeAlsoLinks = $this->Models->SeeAlsoLink->Where(array('ClassId' => $projectClass->Id));
         $this->Set('SeeAlsoLinks', $seeAlsoLinks);
 
+        $this->Set('BreadCrumbs', $this->GenerateBreadCrumbs($project, $projectClass));
+
         // For the logged in create new see also link modal window
         if($this->IsLoggedIn()){
             $this->Set('SeeAlsoLink', $this->Models->SeeAlsoLink->Create(array('ClassId' => $projectClass->Id)));
@@ -107,20 +120,31 @@ class ProjectsController extends Controller
         return $this->View('ViewClass');
     }
 
-    private function ViewDocument($project, $document)
+    private function ViewDocument($project, $class, $method, $property, $document)
     {
+        if($document == null){
+            return $this->HttpNotFound();
+        }
+
         $this->Title = $document->PageTitle;
 
         $this->Set('Project', $project);
         $this->Set('Document', $document);
+
+        $this->Set('BreadCrumbs', $this->GenerateBreadCrumbs($project, $class, $method, $property, $document));
+
         return $this->View('ViewDocument');
     }
 
-    private function ViewMethod($project, $projectClass, $methodName)
+    private function ViewMethod($project, $projectClass, $methodName, $lowestType = '', $lowestName = '')
     {
         // Dissect the parameter list
         $methodName = urldecode($methodName);
         $methodParse = explode('(', $methodName);
+
+        if(count($methodParse) == 0){
+            return$this->HttpNotFound();
+        }
 
         $methodName = $methodParse[0];
         $methodParametersString = str_replace(')', '', $methodParse[1]);
@@ -162,15 +186,23 @@ class ProjectsController extends Controller
             return $this->HttpNotFound();
         }
 
+        // Special case for methods. Now that one has been found we can check if a document is wanted
+        if($this->StringEquals($lowestType, 'Documents')){
+            $document = $this->Models->Document->Where(array('MethodId' => $foundMethod->Id, 'NavigationTitle' => $lowestName))->First();
+            return $this->ViewDocument($project, $projectClass, $foundMethod, null, $document);
+        }
+
         $this->Set('Project', $project);
         $this->Set('ProjectClass', $projectClass);
         $this->Set('Method', $foundMethod);
 
-        $documents = $this->Models->Document->Where(array('MethodId' => $method->Id));
+        $documents = $this->Models->Document->Where(array('MethodId' => $foundMethod->Id));
         $this->Set('Documents', $documents);
 
-        $seeAlsoLinks = $this->Models->SeeAlsoLink->Where(array('MethodId' => $method->Id));
+        $seeAlsoLinks = $this->Models->SeeAlsoLink->Where(array('MethodId' => $foundMethod->Id));
         $this->Set('SeeAlsoLinks', $seeAlsoLinks);
+
+        $this->Set('BreadCrumbs', $this->GenerateBreadCrumbs($project, $projectClass, $foundMethod));
 
         // For the logged in create new see also link modal window
         if($this->IsLoggedIn()){
@@ -195,12 +227,111 @@ class ProjectsController extends Controller
         $seeAlsoLinks = $this->Models->SeeAlsoLink->Where(array('PropertyId' => $property->Id));
         $this->Set('SeeAlsoLinks', $seeAlsoLinks);
 
+        $this->Set('BreadCrumbs', $this->GenerateBreadCrumbs($project, $projectClass, null, $property));
+
         // For the logged in create new see also link modal window
         if($this->IsLoggedIn()){
             $this->Set('SeeAlsoLink', $this->Models->SeeAlsoLink->Create(array('PropertyId' => $projectClass->Id)));
         }
 
         return $this->View('ViewProperty');
+    }
+
+    private function GenerateBreadCrumbs($project = null, $class = null, $method = null, $property = null, $document = null)
+    {
+        $result = array();
+
+        if($project != null) {
+            $result[] = array(
+                'Link' => '/Projects/Details/' . $project->ProjectName,
+                'Text' => $project->ProjectName
+            );
+        }
+
+        if($class != null){
+            $result[] = array(
+                'Link' => '/Projects/Details/' . $project->ProjectName . '#Classes/',
+                'Text' => 'Classes'
+            );
+
+            $result[] = array(
+                'Link' => '/Projects/Details/' . $project->ProjectName . '/Classes/' . $class->ClassName,
+                'Text' => $class->ClassName
+            );
+        }
+
+        if($method != null){
+            $result[] = array(
+                'Link' => '/Projects/Details/' . $project->ProjectName. '/Classes/' . $class->ClassName . '#Methods/',
+                'Text' => 'Methods'
+            );
+
+            $result[] = array(
+                'Link' => '/Projects/Details/' . $project->ProjectName . '/Classes/' . $class->ClassName . '/Methods/' . $method->MethodName . $method->CreateLink(),
+                'Text' => $method->MethodName
+            );
+        }
+
+        if($property != null){
+            $result[] = array(
+                'Link' => '/Projects/Details/' . $project->ProjectName . '#Properties/',
+                'Text' => 'Properties'
+            );
+
+            $result[] = array(
+                'Link' => '/Projects/Details/' . $project->ProjectName . '/Classes/' . $class->ClassName . '/Properties/' . $property->PropertyName,
+                'Text' => $property->PropertyName
+            );
+        }
+
+        if($document != null)
+        {
+            if($class != null){
+                if($method != null){
+                    $result[] = array(
+                        'Link' => '/Projects/Details/' . $project->ProjectName . '/Classes/' . $class->ClassName . '/Methods/' . $method->MethodName . $method->CreateLink() .'#Documents/',
+                        'Text' => 'Documents'
+                    );
+
+                    $result[] = array(
+                        'Link' => '/Projects/Details/' . $project->ProjectName . '/Classes/' . $class->ClassName . '/Methods/' . $method->MethodName . $method->CreateLink() . '/Documents/'. $document->NavigationTitle,
+                        'Text' => $document->PageTitle
+                    );
+                }else if($property != null){
+                    $result[] = array(
+                        'Link' => '/Projects/Details/' . $project->ProjectName . '/Classes/' . $class->ClassName . '/Properties/' . $property->PropertyName .'#Documents/',
+                        'Text' => 'Documents'
+                    );
+
+                    $result[] = array(
+                        'Link' => '/Projects/Details/' . $project->ProjectName . '/Classes/' . $class->ClassName . '/Properties/' . $property->PropertyName . '/Documents/'. $document->NavigationTitle,
+                        'Text' => $document->PageTitle
+                    );
+                }else{
+                    $result[] = array(
+                        'Link' => '/Projects/Details/' . $project->ProjectName . '/Classes/' . $class->ClassName . '#Documents/',
+                        'Text' => 'Documents'
+                    );
+
+                    $result[] = array(
+                        'Link' => '/Projects/Details/' . $project->ProjectName . '/Classes/' . $class->ClassName . '/Documents/'. $document->NavigationTitle,
+                        'Text' => $document->PageTitle
+                    );
+                }
+            }else{
+                $result[] = array(
+                    'Link' => '/Projects/Details/' . $project->ProjectName . '#Documents/',
+                    'Text' => 'Documents'
+                );
+
+                $result[] = array(
+                    'Link' => '/Projects/Details/' . $project->ProjectName . '/Documents/'. $document->NavigationTitle,
+                    'Text' => $document->PageTitle
+                );
+            }
+        }
+
+        return $result;
     }
 
     private function StringEquals($a, $b)

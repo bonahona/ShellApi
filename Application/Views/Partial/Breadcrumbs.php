@@ -1,9 +1,17 @@
-<?php if(isset($BreadCrumbs)):?>
-    <ul class="breadcrumb">
-        <li><a href="#">BonaJson</a> <span class="divider"/></li>
-        <li><a href="#">Classes</a> <span class="divider"/></li>
-        <li><a href="#">JObject</a> <span class="divider"/></li>
-        <li><a href="#">Properties</a> <span class="divider"/></li>
-        <li class="active">Value</li>
-    </ul>
-<?php endif;?>
+<ul class="breadcrumb">
+    <?php
+    $lastIndex = count($BreadCrumbs);
+    $currentIndex = 1;
+    ?>
+    <?php foreach($BreadCrumbs as $breadCrumbs):?>
+        <?php if($currentIndex == $lastIndex):?>
+            <li class="active"><?php echo $breadCrumbs['Text'];?></li>
+        <?php else:?>
+            <li>
+                <?php echo $this->Html->Link($breadCrumbs['Link'], $breadCrumbs['Text']);?>
+                <span class="divider"></span>
+            </li>
+        <?php endif;?>
+        <?php $currentIndex ++;?>
+    <?php endforeach;?>
+</ul>

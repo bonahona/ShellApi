@@ -20,20 +20,10 @@
                     </thead>
                     <tbody>
                     <?php foreach($Methods as $method):?>
-
-                        <?php
-                        $parameterType = array();
-                        foreach($method->Parameters as $parameter){
-                            $parameterType[] = $parameter->Type->ClassName;
-                        }
-
-                        $parameters = rawurlencode ('(' . implode( $parameterType, ',') . ')');
-                        ?>
-
                         <tr>
                             <?php if($this->IsLoggedIn()):?>
                                 <td>
-                                    <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $method->ProjectClass->ClassName . '/Methods/' . $method->MethodName . $parameters;?>">
+                                    <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $method->ProjectClass->ClassName . '/Methods/' . $method->MethodName . $method->CreateLink();?>">
                                         <?php echo $method->MethodName;?>
                                     </a>
                                 </td>
@@ -56,7 +46,7 @@
                                 </td>
                             <?php else:?>
                                 <td>
-                                    <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $method->ProjectClass->ClassName . '/Methods/' . $method->MethodName . $parameters;?>">
+                                    <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $method->ProjectClass->ClassName . '/Methods/' . $method->MethodName . $method->CreateLink();?>">
                                         <?php echo $method->MethodName;?>
                                     </a>
                                 </td>

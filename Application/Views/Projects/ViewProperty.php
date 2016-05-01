@@ -32,7 +32,7 @@
     </div>
 <?php endif;?>
 
-<?php echo $this->PartialView('Documents', array('Documents' => $Documents, 'Project' => $Project));?>
+<?php echo $this->PartialView('Documents', array('Documents' => $Documents, 'Project' => $Project, 'ProjectClass' => $ProjectClass, 'Property' => $Property));?>
 <?php echo $this->PartialView('SeeAlsoLinks', array('SeeAlsoLinks' => $SeeAlsoLinks, 'Project', $Project));?>
 
 <?php if($this->IsLoggedIn()):?>

@@ -53,10 +53,14 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-            <?php echo $this->PartialView('Sidebar', array('Sidebar' => $Sidebar));?>
+            <?php if(isset($Siderbar)):?>
+                <?php echo $this->PartialView('Sidebar', array('Sidebar' => $Sidebar));?>
+            <?php endif;?>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <?php echo $this->PartialView('Breadcrumbs');?>
+            <?php if(isset($BreadCrumbs)):?>
+                <?php echo $this->PartialView('Breadcrumbs', array('BreadCrumbs' => $BreadCrumbs));?>
+            <?php endif;?>
             <?php echo $view;?>
         </div>
     </div>

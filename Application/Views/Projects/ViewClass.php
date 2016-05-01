@@ -5,7 +5,11 @@
             <?php if($ProjectClass->BaseClass != null):?>
                 <dt>Inherits:</dt>
                 <dd>
-                    <a href="#">Object</a>
+                    <?php if($ProjectClass->BaseClass->ExternalSource === ''):?>
+                        <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $ProjectClass->ClassName;?>"><?php echo $ProjectClass->BaseClass->ClassName;?></a>
+                    <?php else:?>
+                        <a href="<?php echo $ProjectClass->BaseClass->ExternalSource;?>"><?php echo $ProjectClass->BaseClass->ClassName;?></a>
+                    <?php endif;?>
                 </dd>
             <?php endif;?>
 
@@ -54,7 +58,9 @@
                                      <?php echo $inheritInterface->InheritInterface->ClassName;?>
                                  </a>,
                             <?php else:?>
-                                <a href="#"><?php echo $inheritInterface->InheritInterface->ClassName;?></a>,
+                                <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $inheritInterface->InheritInterface->ClassName;?>">
+                                    <?php echo $inheritInterface->InheritInterface->ClassName;?>
+                                </a>,
                             <?php endif;?>
                         <?php endforeach;?>
                     </dd>
@@ -108,7 +114,7 @@
     </div>
 <?php endif;?>
 
-<?php echo $this->PartialView('Documents', array('Documents' => $Documents, 'Project' => $Project));?>
+<?php echo $this->PartialView('Documents', array('Documents' => $Documents, 'Project' => $Project, 'ProjectClass' => $ProjectClass));?>
 <?php echo $this->PartialView('SeeAlsoLinks', array('SeeAlsoLinks' => $SeeAlsoLinks, 'Project', $Project));?>
 
 <?php if($this->IsLoggedIn()):?>
