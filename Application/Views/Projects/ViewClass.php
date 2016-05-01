@@ -1,6 +1,6 @@
 <h1 class="page-header"><?php echo $ProjectClass->ClassName;?></h1>
 <div class="row">
-    <div class="col-lg-6 col-md-12">
+    <div class="col-lg-12 col-md-12">
         <dl>
             <?php if($ProjectClass->BaseClass != null):?>
                 <dt>Inherits:</dt>
@@ -17,9 +17,9 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Class</th>
-                                <th>&nbsp;</th>
+                                <th class="col-lg-2">Id</th>
+                                <th class="col-lg-8">Class</th>
+                                <th class="col-lg-2">&nbsp;</th>
                             </tr>
                             </thead>
                             <tbody class="implements-inheritance-body">
@@ -28,7 +28,9 @@
                                     <td><?php echo $inheritInterface->Id;?></td>
                                     <td><?php echo $inheritInterface->InheritInterface->ClassName;?></td>
                                     <td>
-                                        <a href="#" class="btn btn-md btn-default"><span class="glyphicon glyphicon-trash"></span></a>
+                                        <button type="button" class="delete-inherit-interface btn btn-md btn-default" link-target="/InheritInterfaces/Delete/<?php echo $inheritInterface->Id;?>">
+                                            <span class="glyphicon glyphicon-trash"</span>
+                                        </button>
                                     </td>
                                 </tr>
                             <?php endforeach;?>

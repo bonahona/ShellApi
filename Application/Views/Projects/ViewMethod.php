@@ -5,18 +5,28 @@
             <dt>Type:</dt>
             <dd>
                 <?php if($Method->ReturnType->ExternalSource === ''):?>
-                    <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $Method->ReturnType->MethodName;?>">
-                        <?php echo $Method->ReturnType->MethodName;?>
+                    <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $Method->ReturnType->ClassName;?>">
+                        <?php echo $Method->ReturnType->ClassName;?>
                     </a>
                 <?php else:?>
                     <a target="_blank" href="<?php echo $Method->ReturnType->ExternalSource;?>">
-                        <?php echo $Method->ReturnType->MethodName;?>
+                        <?php echo $Method->ReturnType->ClassName;?>
                     </a>
                 <?php endif;?>
+            </dd>
+            <dt>Variants:</dt>
+            <dd>
+                <?php foreach($Methods as $method):?>
+                    <div>
+                        <?php echo $method->MethodName;?>
+                    </div>
+                <?php endforeach?>
             </dd>
         </dl>
     </div>
 </div>
+
+<?php echo $this->PartialView('ParameterList', array('Parameters' => $Method->Parameters));?>
 
 <div class="row">
     <div class="col-lg-8">
@@ -37,5 +47,6 @@
 
 <?php if($this->IsLoggedIn()):?>
     <?php echo $this->PartialView('SeeAlsoLinkDialog');?>
+    <?php echo $this->PartialView('CreateParameterDialog', array('Classes' => $Classes))?>
 <?php endif;?>
 
