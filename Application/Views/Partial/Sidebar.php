@@ -1,6 +1,8 @@
 <?php foreach($Sidebar as $sidebarPanel):?>
 <div class="panel panel-default">
-    <div class="panel-heading"><?php echo $sidebarPanel['Title'];?></div>
+    <?php if(isset($sidebarPanel['Title'])):?>
+        <div class="panel-heading"><?php echo $sidebarPanel['Title'];?></div>
+    <?php endif;?>
     <ul class="list-group">
         <?php foreach($sidebarPanel['Items'] as $sidebarItem):?>
             <li class="list-group-item">

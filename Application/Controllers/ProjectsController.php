@@ -7,6 +7,9 @@ class ProjectsController extends Controller
 
         $projectCategories = $this->Models->ProjectCategory->Where(array('IsActive' => 1));
         $this->Set('ProjectCategories', $projectCategories);
+
+        $this->Set('Sidebar', $this->GenerateSidebar());
+
         return $this->View();
     }
 
@@ -60,6 +63,7 @@ class ProjectsController extends Controller
         $publicClasses = $project->ProjectClasses->Where(array('ExternalSource' => ''));
         $this->Set('PublicClasses', $publicClasses);
 
+        $this->Set('Sidebar', $this->GenerateSidebar($project));
         $this->Set('BreadCrumbs', $this->GenerateBreadCrumbs($project));
 
         if($this->IsLoggedIn()){
@@ -235,6 +239,64 @@ class ProjectsController extends Controller
         }
 
         return $this->View('ViewProperty');
+    }
+
+    private function GenerateSidebar($project = null, $class = null, $method = null, $property = null, $document = null)
+    {
+        $result = array();
+
+        if($project != null) {
+            $projectEntry = array(
+                'Title' => $project->ProjectName,
+                'Items' => array()
+            );
+
+            foreach ($project->ProjectClasses as $projectClass) {
+                $projectEntry['Items'][] = array(
+                    'Link' => '/Projects/Details/' . $project->ProjectName . '/Classes/' . $projectClass->ClassName,
+                    'DisplayName' => $projectClass->ClassName
+                );
+            }
+
+            $result[] = $projectEntry;
+        }
+
+        $projectCategories = $this->Models->ProjectCategory->Where(array('IsActive' => 1));
+
+        foreach($projectCategories as $projectCategory){
+            if(count($projectCategory->Projects) > 0) {
+                $projectEntry = array(
+                    'Title' => $projectCategory->Name,
+                    'Items' => array()
+                );
+
+                foreach ($projectCategory->Projects->Where(array('IsActive' => 1)) as $project) {
+                    $projectEntry['Items'][] = array(
+                        'Link' => '/Projects/Details/' . $project->ProjectName,
+                        'DisplayName' => $project->ProjectName
+                    );
+                }
+
+                $result[] = $projectEntry;
+            }
+        }
+
+
+        // Generate the standard links that all pages shows
+        $result[] = array(
+            'Items' => array(
+                array(
+                    'Link' => 'http://fyrvall.com',
+                    'DisplayName' => 'Fyrvall.com'
+                ),
+                array(
+                    'Link' => '/',
+                    'DisplayName' => 'Documentation'
+                )
+            )
+        );
+
+        return $result;
     }
 
     private function GenerateBreadCrumbs($project = null, $class = null, $method = null, $property = null, $document = null)

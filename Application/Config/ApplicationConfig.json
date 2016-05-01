@@ -1,6 +1,6 @@
 {
   "Application": {
-    "DefaultController": "Home",
+    "DefaultController": "Projects",
     "DefaultAction": "Index",
     "DefaultLayout": "Default"
   },
