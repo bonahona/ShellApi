@@ -14,7 +14,7 @@
                         <th class="col-lg-2">&nbsp;</th>
                     </tr>
                     </thead>
-                    <tbody class="see-also-links-body">
+                    <tbody class="create-parameter-body">
                     <?php foreach($Parameters as $parameter):?>
                         <tr>
                             <td><?php echo $parameter->Id;?></td>
@@ -22,7 +22,7 @@
                             <td><?php echo $parameter->Type->ClassName;?></td>
                             <td><?php echo $parameter->DefaultValue;?></td>
                             <td>
-                                <button type="button" class="delete-see-also-link btn btn-md btn-default" link-target="/Parameters/Delete/<?php echo $parameter->Id;?>">
+                                <button type="button" class="delete-parameter btn btn-md btn-default" link-target="/Parameters/Delete/<?php echo $parameter->Id;?>">
                                     <span class="glyphicon glyphicon-trash"</span>
                                 </button>
                             </td>

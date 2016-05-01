@@ -7,9 +7,26 @@ class InheritInterfacesController extends BackendController
         if($this->IsPost()){
             $implementsInheritance = $this->Data->Parse('InheritInterface', $this->Models->InheritInterface);
             $implementsInheritance->Save();
-            return $this->Json($implementsInheritance->Object());
+
+            $result = $implementsInheritance->Object();
+            $result['Type'] = $implementsInheritance->InheritInterface->ClassName;
+            return $this->Json($result);
         }else{
             return $this->HttpNotFound();
         }
+    }
+
+    public function Delete($id)
+    {
+        if(empty($id)) {
+            return $this->HttpNotFound();
+        }
+
+        $implementsInheritance = $this->Models->InheritInterface->Find($id);
+        if($implementsInheritance == null){
+            return $this->HttpNotFound();
+        }
+
+        $implementsInheritance->Delete();
     }
 }

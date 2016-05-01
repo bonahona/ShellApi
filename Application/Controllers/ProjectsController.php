@@ -34,8 +34,7 @@ class ProjectsController extends Controller
             return $this->ViewProperty($project, $projectClass, $property);
         }else if($this->StringEquals($sectionType, 'Classes') && $sectionName != '' && $this->StringEquals('Methods', $subsectionType) && $subsectionName != '') {
             $projectClass = $this->Models->ProjectClass->Where(array('ProjectId' => $project->Id, 'ClassName' => $sectionName))->First();
-            $method = $this->Models->Method->Where(array('ProjectClassId' => $projectClass->Id, 'MethodName' => $subsectionName))->First();
-            return $this->ViewMethod($project, $projectClass, $method);
+            return $this->ViewMethod($project, $projectClass, $subsectionName);
         }else{
             return $this->HttpNotFound();
         }
@@ -117,11 +116,69 @@ class ProjectsController extends Controller
         return $this->View('ViewDocument');
     }
 
-    private function ViewMethod($project, $projectClass, $method)
+    private function ViewMethod($project, $projectClass, $methodName)
     {
+        // Dissect the parameter list
+        $methodName = urldecode($methodName);
+        $methodParse = explode('(', $methodName);
+
+        $methodName = $methodParse[0];
+        $methodParametersString = str_replace(')', '', $methodParse[1]);
+
+        if($methodParametersString === ''){
+            $methodParameters = array();
+        }else{
+            $methodParameters = explode(',', $methodParametersString);
+        }
+
+        // Find a list of all matching methods based on the name alone
+        $methods = $this->Models->Method->Where(array('ProjectClassId' => $projectClass->Id, 'MethodName' => $methodName));
+        $this->Set('Methods', $methods);
+
+        // Find the one that matches all the parameters in the list
+        $foundMethod = null;
+        foreach($methods as $method){
+            if(count($methodParameters) > 0){
+                $allMatches = true;
+                $i = 0;
+                foreach($method->Parameters as $parameter){
+                    $i ++;
+                    if(!$this->StringEquals($parameter->Type->ClassName,$methodParameters[0])){
+                        $allMatches = false;
+                    }
+                }
+                if($allMatches){
+                    $foundMethod = $method;
+                }
+            }else{
+                if(count($method->Parameters) == 0) {
+                    $foundMethod = $method;
+                }
+            }
+        }
+
+        // The parameter/method name combination gave no results
+        if($foundMethod == null){
+            return $this->HttpNotFound();
+        }
+
         $this->Set('Project', $project);
         $this->Set('ProjectClass', $projectClass);
-        $this->Set('Method', $method);
+        $this->Set('Method', $foundMethod);
+
+        $documents = $this->Models->Document->Where(array('MethodId' => $method->Id));
+        $this->Set('Documents', $documents);
+
+        $seeAlsoLinks = $this->Models->SeeAlsoLink->Where(array('MethodId' => $method->Id));
+        $this->Set('SeeAlsoLinks', $seeAlsoLinks);
+
+        // For the logged in create new see also link modal window
+        if($this->IsLoggedIn()){
+            $classes = $this->Models->ProjectClass->Where(array('ProjectId' => $project->Id));
+            $this->Set('Classes', $classes);
+            $this->Set('Parameter', $this->Models->Parameter->Create(array('MethodId' => $foundMethod->Id)));
+            $this->Set('SeeAlsoLink', $this->Models->SeeAlsoLink->Create(array('MethodId' => $method->Id)));
+        }
 
         return $this->View('ViewMethod');
     }

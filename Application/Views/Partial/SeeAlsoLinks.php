@@ -20,7 +20,6 @@
                             <td><?php echo $seeAlsoLink->DisplayName;?></td>
                             <td><?php echo $seeAlsoLink->Link;?></td>
                             <td>
-
                                 <button type="button" class="delete-see-also-link btn btn-md btn-default" link-target="/SeeAlsoLinks/Delete/<?php echo $seeAlsoLink->Id;?>">
                                     <span class="glyphicon glyphicon-trash"</span>
                                 </button>
