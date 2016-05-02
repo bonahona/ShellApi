@@ -113,6 +113,8 @@ class ProjectsBackendController extends BackendController
 
         if($project->ProjectLanguage->DisplayName == 'C#'){
             $generatedClasses = $this->GenerateCSharpClasses($project);
+        }else if($project->ProjectLanguage->DisplayName == 'Php'){
+             $generatedClasses = $this->GeneratePhpClasses($project);
         }
 
         var_dump(count($generatedClasses));
@@ -170,6 +172,48 @@ class ProjectsBackendController extends BackendController
         if(!$this->ClassExist('Object', $project)) {
             $objectClass = $this->GenerateClass('Object', 'https://msdn.microsoft.com/en-us/library/system.object(v=vs.90).aspx', $project);
             $result[] = $objectClass;
+        }
+
+        return $result;
+    }
+
+    private function GeneratePhpClasses($project)
+    {
+        $result = array();
+
+        if(!$this->ClassExist('boolean', $project)) {
+            $booleanClass = $this->GenerateClass('boolean', 'http://php.net/manual/en/language.types.boolean.php', $project);
+            $result[] = $booleanClass;
+        }
+
+        if(!$this->ClassExist('integers ', $project)) {
+            $intergerClass = $this->GenerateClass('integers ', 'http://php.net/manual/en/language.types.integer.php', $project);
+            $result[] = $intergerClass;
+        }
+
+        if(!$this->ClassExist('float ', $project)) {
+            $floatClass = $this->GenerateClass('float ', 'http://php.net/manual/en/language.types.float.php', $project);
+            $result[] = $floatClass;
+        }
+
+        if(!$this->ClassExist('string ', $project)) {
+            $stringClass = $this->GenerateClass('string ', 'http://php.net/manual/en/language.types.string.php', $project);
+            $result[] = $stringClass;
+        }
+
+        if(!$this->ClassExist('array ', $project)) {
+            $arrayClass = $this->GenerateClass('array ', 'http://php.net/manual/en/language.types.array.php', $project);
+            $result[] = $arrayClass;
+        }
+
+        if(!$this->ClassExist('object ', $project)) {
+            $objectClass = $this->GenerateClass('object ', 'http://php.net/manual/en/language.types.object.php', $project);
+            $result[] = $objectClass;
+        }
+
+        if(!$this->ClassExist('mixed ', $project)) {
+            $mixedClass = $this->GenerateClass('mixed ', 'http://php.net/manual/en/language.pseudo-types.php#language.types.mixed', $project);
+            $result[] = $mixedClass;
         }
 
         return $result;
