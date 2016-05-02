@@ -99,4 +99,97 @@ class ProjectsBackendController extends BackendController
     public function Delete($id)
     {
     }
+
+    public function GenerateDefaultPrimitives($id)
+    {
+        if(empty($id)){
+            return $this->HttpNotFound();
+        }
+
+        $project = $this->Models->Project->Find($id);
+        if($project == null){
+            return $this->HttpNotFound();
+        }
+
+        if($project->ProjectLanguage->DisplayName == 'C#'){
+            $generatedClasses = $this->GenerateCSharpClasses($project);
+        }
+
+        var_dump(count($generatedClasses));
+    }
+
+    private function GenerateCSharpClasses($project)
+    {
+        $result = array();
+
+        if(!$this->ClassExist('byte', $project)) {
+            $byteClass = $this->GenerateClass('byte', 'https://msdn.microsoft.com/en-us/library/system.byte%28v=vs.90%29.aspx', $project);
+            $result[] = $byteClass;
+        }
+
+        if(!$this->ClassExist('double', $project)) {
+            $doubleClass = $this->GenerateClass('double', 'https://msdn.microsoft.com/en-us/library/system.double%28v=vs.90%29.aspx', $project);
+            $result[] = $doubleClass;
+        }
+
+        if(!$this->ClassExist('char', $project)) {
+            $charClass = $this->GenerateClass('char', 'https://msdn.microsoft.com/en-us/library/system.char%28v=vs.90%29.aspx', $project);
+            $result[] = $charClass;
+        }
+
+        if(!$this->ClassExist('int', $project)) {
+            $intClass = $this->GenerateClass('int', 'https://msdn.microsoft.com/en-us/library/5kzh1b5w.aspx', $project);
+            $result[] = $intClass;
+        }
+
+        if(!$this->ClassExist('long', $project)) {
+            $longClass = $this->GenerateClass('long', 'https://msdn.microsoft.com/en-us/library/ctetwysk.aspx', $project);
+            $result[] = $longClass;
+        }
+
+        if(!$this->ClassExist('bool', $project)) {
+            $boolClass = $this->GenerateClass('bool', 'https://msdn.microsoft.com/en-us/library/c8f5xwh7.aspx', $project);
+            $result[] = $boolClass;
+        }
+
+        if(!$this->ClassExist('float', $project)) {
+            $floatClass = $this->GenerateClass('float', 'https://msdn.microsoft.com/en-us/library/b1e65aza.aspx', $project);
+            $result[] = $floatClass;
+        }
+
+        if(!$this->ClassExist('void', $project)) {
+            $voidClass = $this->GenerateClass('void', 'https://msdn.microsoft.com/en-us/library/yah0tteb.aspx', $project);
+            $result[] = $voidClass;
+        }
+
+        if(!$this->ClassExist('String', $project)) {
+            $stringClass = $this->GenerateClass('String', 'https://msdn.microsoft.com/en-us/library/system.string%28v=vs.90%29.aspx', $project);
+            $result[] = $stringClass;
+        }
+
+        if(!$this->ClassExist('Object', $project)) {
+            $objectClass = $this->GenerateClass('Object', 'https://msdn.microsoft.com/en-us/library/system.object(v=vs.90).aspx', $project);
+            $result[] = $objectClass;
+        }
+
+        return $result;
+    }
+
+    private function ClassExist($className, $project)
+    {
+        return $this->Models->ProjectClass->Any(array('ProjectId' => $project->Id, 'ClassName' => $className));
+    }
+
+    private function GenerateClass($className, $source, $project)
+    {
+        $result = $this->Models->ProjectClass->Create();
+        $result->ProjectId = $project->Id;
+        $result->ClassName = $className;
+        $result->IsPrimitive = 1;
+        $result->ExternalSource = $source;
+
+        $result->Save();
+        var_dump($result->Object());
+        return $result;
+    }
 }

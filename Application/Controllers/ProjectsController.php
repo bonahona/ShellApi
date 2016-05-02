@@ -251,7 +251,7 @@ class ProjectsController extends Controller
                 'Items' => array()
             );
 
-            foreach ($project->ProjectClasses as $projectClass) {
+            foreach ($project->ProjectClasses->Where(array('IsPrimitive' => 0)) as $projectClass) {
                 $projectEntry['Items'][] = array(
                     'Link' => '/Projects/Details/' . $project->ProjectName . '/Classes/' . $projectClass->ClassName,
                     'DisplayName' => $projectClass->ClassName

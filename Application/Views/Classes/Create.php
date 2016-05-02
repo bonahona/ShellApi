@@ -20,6 +20,14 @@
             <?php echo $this->Form->Input('ExternalSource', array('attributes' => array('class' => 'form-control')));?>
         </div>
         <div class="form-group">
+            <div class="checkbox">
+                <label>
+                    <?php echo $this->Form->Bool('IsPrimitive');?>
+                    Is Primitive
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
             <label>Base class</label>
             <?php echo $this->Form->Select('BaseClassId', $Classes, array('key' => 'Id', 'value' => 'ClassName', 'nullfield' => true, 'attributes' => array('class' => 'form-control')));?>
         </div>

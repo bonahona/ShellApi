@@ -80,8 +80,13 @@
 
 <?php if($this->IsLoggedIn()):?>
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-2">
             <a class="btn btn-md btn-default" href="<?php echo "/Classes/Create/$Project->Id";?>">Create class</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2">
+            <a class="btn btn-md btn-default" href="<?php echo "/ProjectsBackend/GenerateDefaultPrimitives/$Project->Id";?>">Generate primitives</a>
         </div>
     </div>
 <?php endif;?>
