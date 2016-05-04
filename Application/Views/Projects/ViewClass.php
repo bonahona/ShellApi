@@ -52,17 +52,17 @@
                 <?php if(count($InheritInterfaces) > 0):?>
                     <dt>Implements:</dt>
                     <dd>
-                        <?php foreach($InheritInterfaces as $inheritInterface):?>
-                            <?php if($inheritInterface->InheritInterface->ExternalSource != ''):?>
-                                 <a target="_blank" href="<?php echo $inheritInterface->InheritInterface->ExternalSource;?>">
-                                     <?php echo $inheritInterface->InheritInterface->ClassName;?>
-                                 </a>,
-                            <?php else:?>
-                                <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $inheritInterface->InheritInterface->ClassName;?>">
-                                    <?php echo $inheritInterface->InheritInterface->ClassName;?>
-                                </a>,
-                            <?php endif;?>
-                        <?php endforeach;?>
+                        <?php
+                        $links = array();
+                        foreach($InheritInterfaces as $inheritInterface) {
+                            if ($inheritInterface->InheritInterface->ExternalSource != '') {
+                                $links[] = $this->Html->Link($inheritInterface->InheritInterface->ExternalSource, $inheritInterface->InheritInterface->ClassName, array('attributes' => array('target' => '_blank')));
+                            } else {
+                                $links[] = $this->Html->Link('/Projects/Details/' . $Project->ProjectName . '/Classes/' . $inheritInterface->InheritInterface->ClassName, $inheritInterface->InheritInterface->ClassName);
+                            }
+                        }
+                        ?>
+                        <?php echo implode($links, ',');?>
                     </dd>
                 <?php endif;?>
             <?php endif;?>
