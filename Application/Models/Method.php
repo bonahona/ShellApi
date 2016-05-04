@@ -13,4 +13,15 @@ class Method extends Model
         $parameters = rawurlencode ('(' . implode( $parameterType, ',') . ')');
         return $parameters;
     }
+
+    public function CreateParameterText()
+    {
+        $parameterTypes = array();
+        foreach($this->Parameters as  $parameter){
+            $parameterTypes[] = $parameter->Type->ClassName;
+        }
+
+        $result = '(' . implode($parameterTypes, ',') . ')';
+        return  $result;
+    }
 }

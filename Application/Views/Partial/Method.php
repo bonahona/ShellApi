@@ -24,7 +24,7 @@
                             <?php if($this->IsLoggedIn()):?>
                                 <td>
                                     <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $method->ProjectClass->ClassName . '/Methods/' . $method->MethodName . $method->CreateLink();?>">
-                                        <?php echo $method->MethodName;?>
+                                        <?php echo $method->MethodName . $method->CreateParameterText();?>
                                     </a>
                                 </td>
                                 <td>
@@ -33,7 +33,7 @@
                                             <?php echo $method->ReturnType->ClassName;?>
                                         </a>
                                     <?php else:?>
-                                        <a target="_blank" href="<?php echo $method->Type->ExternalSource;?>">
+                                        <a target="_blank" href="<?php echo $method->ReturnType->ExternalSource;?>">
                                             <?php echo $method->ReturnType->ClassName;?>
                                         </a>
                                     <?php endif;?>
@@ -47,7 +47,7 @@
                             <?php else:?>
                                 <td>
                                     <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $method->ProjectClass->ClassName . '/Methods/' . $method->MethodName . $method->CreateLink();?>">
-                                        <?php echo $method->MethodName;?>
+                                        <?php echo $method->MethodName . $method->CreateParameterText();?>
                                     </a>
                                 </td>
                                 <td>
@@ -56,7 +56,7 @@
                                             <?php echo $method->ReturnType->ClassName;?>
                                         </a>
                                     <?php else:?>
-                                        <a target="_blank" href="<?php echo $method->Type->ExternalSource;?>">
+                                        <a target="_blank" href="<?php echo $method->ReturnType->ExternalSource;?>">
                                             <?php echo $method->ReturnType->ClassName;?>
                                         </a>
                                     <?php endif;?>
