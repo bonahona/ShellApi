@@ -54,6 +54,9 @@ class ProjectsController extends Controller
 
     private function ViewProject($project)
     {
+        $examples = $this->Models->Example->Where(array('ProjectId' => $project->Id));
+        $this->Set('Examples', $examples);
+
         $documents = $this->Models->Document->Where(array('ProjectId' => $project->Id));
         $this->Set('Documents', $documents);
 
@@ -82,6 +85,9 @@ class ProjectsController extends Controller
 
     private function ViewClass($project, $projectClass)
     {
+        $examples = $this->Models->Example->Where(array('ClassId' => $projectClass->Id));
+        $this->Set('Examples', $examples);
+
         $inheritInterfaces = $this->Models->InheritInterface->Where(array('ProjectClassId' => $projectClass->Id));
         $this->Set('InheritInterfaces', $inheritInterfaces);
 
@@ -200,6 +206,9 @@ class ProjectsController extends Controller
         $this->Set('ProjectClass', $projectClass);
         $this->Set('Method', $foundMethod);
 
+        $examples = $this->Models->Example->Where(array('MethodId' => $foundMethod->Id));
+        $this->Set('Examples', $examples);
+
         $documents = $this->Models->Document->Where(array('MethodId' => $foundMethod->Id));
         $this->Set('Documents', $documents);
 
@@ -221,6 +230,9 @@ class ProjectsController extends Controller
 
     private function ViewProperty($project, $projectClass, $property)
     {
+        $examples = $this->Models->Example->Where(array('PropertyId' => $property->Id));
+        $this->Set('Examples', $examples);
+
         $this->Set('Project', $project);
         $this->Set('ProjectClass', $projectClass);
         $this->Set('Property', $property);

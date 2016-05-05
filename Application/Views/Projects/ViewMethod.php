@@ -52,6 +52,8 @@ $header = $header . '(' . implode(',', $parameters) . ')';
     </div>
 <?php endif;?>
 
+<?php echo $this->PartialView('Examples', array('Examples' => $Examples, 'Method' => $Method));?>
+
 <?php echo $this->PartialView('Documents', array('Documents' => $Documents, 'Project' => $Project, 'ProjectClass' => $ProjectClass, 'Method' => $Method));?>
 <?php echo $this->PartialView('SeeAlsoLinks', array('SeeAlsoLinks' => $SeeAlsoLinks, 'Project' => $Project));?>
 

@@ -90,6 +90,7 @@
     </div>
 <?php endif;?>
 
+<?php echo $this->PartialView('Examples', array('Examples' => $Examples, 'ProjectClass' => $ProjectClass));?>
 
 <?php echo $this->PartialView('Method', array('Methods' => $PublicMethods, 'Header' => 'Public Methods', 'Project' => $Project));?>
 <?php echo $this->PartialView('Method', array('Methods' => $ProtectedMethods, 'Header' => 'Protected Methods', 'Project' => $Project));?>
