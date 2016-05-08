@@ -62,7 +62,10 @@ class ModelHelper
         $modelInstance = new $modelName(NULL);
         $tableName     = $modelInstance->TableName;
 
-        $db = Core::$Instance->GetDatabase();
+        $coreInstanceProperty = new ReflectionProperty(CORE_CLASS, 'Instance');
+        $coreInstance =  $coreInstanceProperty->getValue();
+
+        $db = $coreInstance->GetDatabase();
 
         $response = $db->DescribeTable($tableName);
         if ($response == NULL) {
@@ -102,7 +105,10 @@ class ModelHelper
         $modelName = str_replace(PHP_FILE_ENDING, '', $modelName);
         $buffer    = file_get_contents($filePath);
 
-        $modelCache             = &Core::$Instance->GetModelCache();
+        $coreInstanceProperty = new ReflectionProperty(CORE_CLASS, 'Instance');
+        $coreInstance =  $coreInstanceProperty->getValue();
+
+        $modelCache             = &$coreInstance->GetModelCache();
         $result                 = json_decode($buffer, true);
         $modelCache[$modelName] = $result;
 

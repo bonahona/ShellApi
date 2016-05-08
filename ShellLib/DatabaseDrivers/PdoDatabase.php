@@ -287,6 +287,29 @@ class PdoDatabase implements IDatabaseDriver
         return $row['RowExists'] != 0;
     }
 
+    public function Keys($modelCollection)
+    {
+        $result = array();
+
+        $primaryKey = $modelCollection->ModelCache['MetaData']['PrimaryKey'];
+        $tableName = $modelCollection->ModelCache['MetaData']['TableName'];
+
+        $sqlStatement = "SELECT $primaryKey FROM $tableName";
+
+        if(!$preparedStatement = $this->Database->prepare($sqlStatement)){
+            echo "Failed to prepare PDO statement";
+            var_dump($this->Database->errorInfo());
+        }
+
+        $preparedStatement->execute();
+
+        foreach($preparedStatement as $row){
+            $result[] = $row[$primaryKey];
+        }
+
+        return $result;
+    }
+
     public function All($modelCollection)
     {
         $result = new Collection();

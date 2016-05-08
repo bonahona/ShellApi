@@ -12,7 +12,7 @@ if(isset($argv[2])){
     $outputFile = date('Y-m-d_g-i-s') . '.json';
 }
 
-$outputPath = $outputDirectory . $outputFile;
+$outputPath = $outputDirectory . '/'. $outputFile;
 
 require_once('MigrateDatabaseCore.php');
 $migrateDatabaseObject = new MigrateDatabaseCore();

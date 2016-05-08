@@ -62,4 +62,9 @@ class Models
 
         return null;
     }
+
+    public function GetAll()
+    {
+        return $this->ModelCollections;
+    }
 }

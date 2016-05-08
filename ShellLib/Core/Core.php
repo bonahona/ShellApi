@@ -22,6 +22,8 @@ define('PHP_FILE_ENDING', '.php');
 define('CSS_FILE_ENDING', '.css');
 define('JS_FILE_ENDING', '.js');
 
+define('CORE_CLASS', 'Core');
+
 require_once('./ShellLib/Core/ConfigParser.php');
 require_once('./ShellLib/Core/Controller.php');
 require_once('./ShellLib/Core/ModelProxy.php');

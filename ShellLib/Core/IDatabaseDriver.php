@@ -13,6 +13,7 @@ interface IDatabaseDriver
     public function First($modelCollection);
     public function Any($modelCollection, $conditions);
     public function All($modelCollection);
+    public function Keys($modelCollection);
     public function Delete($modelCollection, $model);
     public function Insert($modelCollection, &$model);
     public function Update($modelCollection, $model);

@@ -12,7 +12,10 @@ class Model
 
     function __construct($modelCollection)
     {
-        $this->Models = Core::$Instance->GetModels();
+        $coreInstanceProperty = new ReflectionProperty(CORE_CLASS, 'Instance');
+        $coreInstance =  $coreInstanceProperty->getValue();
+
+        $this->Models = $coreInstance->GetModels();
 
         // When called the model data is being cached from db, no model collection will be sent in as it only needs the table name
         if($modelCollection == null){
