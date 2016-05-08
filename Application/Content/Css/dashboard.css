@@ -109,6 +109,26 @@ body {
     background-color: #404360;
 }
 
+.panel-heading
+{
+    font-weight: bold;
+}
+
+.indent-left-1
+{
+    margin-left: 1em;
+}
+
+.indent-left-2
+{
+    margin-left: 2em;
+}
+
+.indent-left-3
+{
+    margin-left: 3em;
+}
+
 .navbar-inverse .navbar-nav .light-grey,
 .navbar-inverse .light-grey
 {

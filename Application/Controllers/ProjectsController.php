@@ -115,6 +115,7 @@ class ProjectsController extends Controller
         $seeAlsoLinks = $this->Models->SeeAlsoLink->Where(array('ClassId' => $projectClass->Id));
         $this->Set('SeeAlsoLinks', $seeAlsoLinks);
 
+        $this->Set('Sidebar', $this->GenerateSidebar($project, $projectClass));
         $this->Set('BreadCrumbs', $this->GenerateBreadCrumbs($project, $projectClass));
 
         // For the logged in create new see also link modal window
@@ -141,6 +142,7 @@ class ProjectsController extends Controller
         $this->Set('Project', $project);
         $this->Set('Document', $document);
 
+        $this->Set('Sidebar', $this->GenerateSidebar($project, null, $document));
         $this->Set('BreadCrumbs', $this->GenerateBreadCrumbs($project, $class, $method, $property, $document));
 
         return $this->View('ViewDocument');
@@ -215,6 +217,7 @@ class ProjectsController extends Controller
         $seeAlsoLinks = $this->Models->SeeAlsoLink->Where(array('MethodId' => $foundMethod->Id));
         $this->Set('SeeAlsoLinks', $seeAlsoLinks);
 
+        $this->Set('Sidebar', $this->GenerateSidebar($project, $projectClass));
         $this->Set('BreadCrumbs', $this->GenerateBreadCrumbs($project, $projectClass, $foundMethod));
 
         // For the logged in create new see also link modal window
@@ -243,6 +246,7 @@ class ProjectsController extends Controller
         $seeAlsoLinks = $this->Models->SeeAlsoLink->Where(array('PropertyId' => $property->Id));
         $this->Set('SeeAlsoLinks', $seeAlsoLinks);
 
+        $this->Set('Sidebar', $this->GenerateSidebar($project, $projectClass));
         $this->Set('BreadCrumbs', $this->GenerateBreadCrumbs($project, $projectClass, null, $property));
 
         // For the logged in create new see also link modal window
@@ -253,7 +257,7 @@ class ProjectsController extends Controller
         return $this->View('ViewProperty');
     }
 
-    private function GenerateSidebar($project = null, $class = null, $method = null, $property = null, $document = null)
+    private function GenerateSidebar($project = null, $class = null, $document = null)
     {
         $result = array();
 
@@ -263,11 +267,51 @@ class ProjectsController extends Controller
                 'Items' => array()
             );
 
-            foreach ($project->ProjectClasses->Where(array('IsPrimitive' => 0)) as $projectClass) {
-                $projectEntry['Items'][] = array(
-                    'Link' => '/Projects/Details/' . $project->ProjectName . '/Classes/' . $projectClass->ClassName,
-                    'DisplayName' => $projectClass->ClassName
+            $namespacesExists = $this->NamespacesExists($project);
+            if($namespacesExists){
+                $namespaces = $this->FilterClassesByNamespace($project);
+
+                foreach($namespaces as $namespaceName => $namespace){
+                    $namespaceEntry = array(
+                        'SubsectionName' => 'Namespace ' . $namespaceName,
+                        'Items' => array()
+                    );
+
+                    foreach($namespace as $projectClass){
+                        $namespaceEntry['Items'][] = array(
+                            'Link' => '/Projects/Details/' . $project->ProjectName . '/Classes/' . $projectClass->ClassName,
+                            'DisplayName' => $projectClass->ClassName
+                        );
+                    }
+
+                    $projectEntry['Items'][] = $namespaceEntry;
+                }
+            }else{
+                $classes = $project->ProjectClasses->Where(array('IsPrimitive' => 0));
+                foreach($classes as $projectClass){
+                    $projectEntry['Items'][] = array(
+                        'Link' => '/Projects/Details/' . $project->ProjectName . '/Classes/' . $projectClass->ClassName,
+                        'DisplayName' => $projectClass->ClassName
+                    );
+                }
+            }
+
+            $documents = $this->Models->Document->Where(array('ProjectId' => $project->Id, 'ShowInMenu' => '1'));
+
+            if(count($documents) > 0) {
+                $documentSubSection = array(
+                    'SubsectionName' => 'Documents',
+                    'Items' => array()
                 );
+
+                foreach ($documents as $document) {
+                    $documentSubSection['Items'][] = array(
+                        'Link' => '/Projects/Details/' . $project->ProjectName . '/Documents/' . $document->NavigationTitle,
+                        'DisplayName' => 'PageTitle'
+                    );
+                }
+
+                $projectEntry['Items'][] = $documentSubSection;
             }
 
             $result[] = $projectEntry;
@@ -307,6 +351,36 @@ class ProjectsController extends Controller
                 )
             )
         );
+
+        return $result;
+    }
+
+    private function NamespacesExists($project)
+    {
+        foreach($project->ProjectClasses->Where(array('IsPrimitive' => '0')) as $projectClass){
+            if($projectClass !== ''){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function FilterClassesByNamespace($project)
+    {
+        $result = array();
+
+        foreach($project->ProjectClasses->Where(array('IsPrimitive' => '0')) as $projectClass){
+            $namespace = $projectClass->Namespace;
+            if($namespace !== ''){
+                if(!isset($result[$namespace])){
+                    $result[$namespace] = array();
+                }
+
+                $result[$namespace][] = $projectClass;
+
+            }
+        }
 
         return $result;
     }
