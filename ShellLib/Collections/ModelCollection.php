@@ -70,6 +70,11 @@ class ModelCollection implements ICollection
         return $this->GetInstance()->GetDatabase()->Delete($this, $model);
     }
 
+    public function Clear()
+    {
+        $this->GetInstance()->GetDatabase()->Clear($this);
+    }
+
     public function Save($model){
         if($model->IsSaved()){
             $this->Update($model);

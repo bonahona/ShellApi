@@ -365,6 +365,11 @@ class PdoDatabase implements IDatabaseDriver
         $preparedStatement->execute($params);
     }
 
+    public function Clear($modelCollection)
+    {
+        throw new Exception("Not implemented");
+    }
+
     public function Insert($modelCollection, &$model)
     {
         $tableName = $modelCollection->ModelCache['MetaData']['TableName'];

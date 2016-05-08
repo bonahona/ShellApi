@@ -15,6 +15,7 @@ interface IDatabaseDriver
     public function All($modelCollection);
     public function Keys($modelCollection);
     public function Delete($modelCollection, $model);
+    public function Clear($modelCollection);
     public function Insert($modelCollection, &$model);
     public function Update($modelCollection, $model);
 }
