@@ -13,6 +13,38 @@ class ProjectsController extends Controller
         return $this->View();
     }
 
+    public function Search()
+    {
+        $searchQuery = $this->Data['keywords'];
+        $this->Set('SearchQuery', $searchQuery);
+
+        $this->Title = "Search: " . $searchQuery;
+
+        $results = array();
+        if(!empty($searchQuery)){
+            $results = $this->FindDirectName($searchQuery);
+        }
+
+        $this->Set('Results', $results);
+        $this->Set('Sidebar', $this->GenerateSidebar());
+        return $this->View();
+    }
+
+    private function FindDirectName($searchQuery)
+    {
+        $result = array();
+
+        foreach($this->Models->Project->Where(array('ProjectName' => $searchQuery)) as $project) {
+            $result[] = array(
+                'Header' => 'Project - ' . $project->ProjectName,
+                'Link' => '/Projects/' . $project->ProjectName,
+                'Context' => $project->Description
+            );
+        }
+
+        return $result;
+    }
+
     public function Details($projectName = '', $sectionType = '', $sectionName = '', $subsectionType = '', $subsectionName = '', $lowestType = '', $lowestName = '')
     {
         $this->Title = $projectName;

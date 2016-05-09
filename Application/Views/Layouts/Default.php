@@ -30,8 +30,12 @@
                     <li><a class="light-grey" href="/User/Logout">Log out</a></li>
                 <?php endif;?>
             </ul>
-            <form class="navbar-form navbar-right">
-                <input type="text" class="form-control" placeholder="Search...">
+            <form method="get" action="/Projects/Search" class="navbar-form navbar-right">
+                <?php if(isset($SearchQuery)):?>
+                    <input type="text" name="keywords" class="form-control" placeholder="Search..."/ value="<?php echo $SearchQuery;?>">
+                <?php else:?>
+                    <input type="text" name="keywords" class="form-control" placeholder="Search..."/>
+                <?php endif;?>
             </form>
             <?php if($this->IsLoggedIn()):?>
                 <ul class="nav navbar-nav navbar-left">
