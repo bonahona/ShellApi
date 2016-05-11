@@ -16,6 +16,7 @@ class PdoDatabase implements IDatabaseDriver
         $port = 3306;
 
         $dataSource = "$provider:dbname=$database;host=$server;port=$port";
+
         $db = new PDO(
             $dataSource,
             $config['Database']['Username'],
@@ -367,7 +368,15 @@ class PdoDatabase implements IDatabaseDriver
 
     public function Clear($modelCollection)
     {
-        throw new Exception("Not implemented");
+        $tableName = $modelCollection->ModelCache['MetaData']['TableName'];
+
+        $sqlStatement = "delete from $tableName";
+        if(!$preparedStatement = $this->Database->prepare($sqlStatement)){
+            echo "Failed to prepare PDO statement";
+            var_dump($this->Database->erroInfo);
+        }
+
+        $preparedStatement->execute();
     }
 
     public function Insert($modelCollection, &$model)

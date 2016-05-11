@@ -25,8 +25,17 @@ class MigrateDatabaseCore extends ScriptCore
         file_put_contents($targetFile, $fileContent);
     }
 
-    public function ImportDatabase($targetFile = null)
+    public function ImportDatabase($sourceFile)
     {
+        // Make sure the source file exists
+        echo "Clearing current database:\n";
+        echo "========================================\n";
+        foreach($this->Models->GetAll() as $modelCollection){
+            echo "Clearing table " . $modelCollection->ModelCache['MetaData']['TableName'] . "\n";
+            $modelCollection->Clear();
+        }
 
+        echo "Importing source file:\n";
+        //echo
     }
 }
