@@ -59,6 +59,14 @@ class Collection implements IDataCollection
         $this->m_items[] = $item;
     }
 
+    public function AddRange($items)
+    {
+        foreach($items as $item)
+        {
+            $this->Add($item);
+        }
+    }
+
     public function OrderBy($field)
     {
         $tmpArray = $this->m_items;

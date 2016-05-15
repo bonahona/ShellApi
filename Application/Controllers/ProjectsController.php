@@ -22,8 +22,24 @@ class ProjectsController extends Controller
 
         $results = array();
         if(!empty($searchQuery)){
-            $results = $this->FindDirectName($searchQuery);
+            $directNames = $this->FindDirectName($searchQuery);
+            $documents = $this->FindDocuments($searchQuery);
+            $descriptions = $this->FindDescription($searchQuery);
+
+            foreach($directNames as $key => $values){
+                $results[$key] = $values;
+            }
+
+            foreach($documents as $key => $values){
+                $results[$key] = $values;
+            }
+
+            foreach($descriptions as $key => $values){
+                $results[$key] = $values;
+            }
         }
+
+
 
         $this->Set('Results', $results);
         $this->Set('Sidebar', $this->GenerateSidebar());
@@ -32,14 +48,117 @@ class ProjectsController extends Controller
 
     private function FindDirectName($searchQuery)
     {
+        // The names matches exact. These have the highest priority
+        $exactProjects = $this->Models->Project->Where(array('ProjectName' => $searchQuery));
+        $exactClasses = $this->Models->ProjectClass->Where(array('ClassName' => $searchQuery, 'IsPrimitive' => 0));
+        $exactMethods = $this->Models->Method->Where(array('MethodName' => $searchQuery));
+        $exactProperties = $this->Models->Property->Where(array('PropertyName' => $searchQuery));
+
+        // The name contains the search
+        $directProjects = $this->Models->Project->Where(LikeCondition('ProjectName',$searchQuery));
+        $directClasses = $this->Models->ProjectClass->Where(AndCondition(array(LikeCondition('ClassName',$searchQuery), 'IsPrimitive' => 0)));
+        $directMethods = $this->Models->Method->Where(LikeCondition('MethodName',$searchQuery));
+        $directProperties = $this->Models->Property->Where(LikeCondition('PropertyName',$searchQuery));
+
+        $itemsFound = new Collection();
+        $itemsFound->AddRange($exactProjects);
+        $itemsFound->AddRange($exactClasses);
+        $itemsFound->AddRange($exactMethods);
+        $itemsFound->AddRange($exactProperties);
+        $itemsFound->AddRange($directProjects);
+        $itemsFound->AddRange($directClasses);
+        $itemsFound->AddRange($directMethods);
+        $itemsFound->AddRange($directProperties);
+
         $result = array();
 
-        foreach($this->Models->Project->Where(OrCondition(array(LikeCondition('ProjectName',$searchQuery)))) as $project) {
-            $result[] = array(
-                'Header' => 'Project - ' . $project->ProjectName,
-                'Link' => '/Projects/' . $project->ProjectName,
-                'Context' => $project->Description
+        foreach($itemsFound as $item) {
+            if(is_a($item, 'Project')) {
+                $result[$item->GetLink()] = array(
+                    'Header' => 'Project - ' . $item->ProjectName,
+                    'Link' => $item->GetLink(),
+                    'Context' => $item->GetSearchResultContext(),
+                );
+            }else if(is_a($item, 'ProjectClass')){
+                $result[$item->GetLink()] = array(
+                    'Header' => 'Class - ' . $item->ClassName,
+                    'Link' => $item->GetLink(),
+                    'Context' => $item->GetSearchResultContext(),
+                );
+            } else if(is_a($item, 'Method')){
+                $result[$item->GetLink()] = array(
+                    'Header' => 'Method - ' . $item->MethodName,
+                    'Link' => $item->GetLink(),
+                    'Context' => $item->GetSearchResultContext()
+                );
+            } else if(is_a($item, 'Property')){
+                $result[$item->GetLink()] = array(
+                    'Header' => 'Property - ' . $item->PropertyName,
+                    'Link' => $item->GetLink(),
+                    'Context' => $item->GetSearchResultContext
+                );
+            }
+        }
+
+        return $result;
+    }
+
+    private function FindDocuments($searchQuery)
+    {
+        $documents = $this->Models->Document->Where(OrCondition(array(LikeCondition('PageTitle', $searchQuery), LikeCondition('Content', $searchQuery))));
+
+        $result = array();
+        foreach($documents as $document){
+            $result[$document->GetLink()] = array(
+                'Header' => 'Document - ' . $document->PageTitle,
+                'Link' => $document->GetLink(),
+                'Context' => $document->GetSearchResultContext(),
             );
+        }
+
+        return $result;
+    }
+
+    private function FindDescription($searchQuery)
+    {
+        $projects = $this->Models->Project->Where(LikeCondition('Description', $searchQuery));
+        $classes = $this->Models->ProjectClass->Where(LikeCondition('Description', $searchQuery));
+        $methods = $this->Models->Method->Where(LikeCondition('Description', $searchQuery));
+        $properties = $this->Models->Property->Where(LikeCondition('Description', $searchQuery));
+
+        $itemsFound = new Collection();
+        $itemsFound->AddRange($projects);
+        $itemsFound->AddRange($classes);
+        $itemsFound->AddRange($methods);
+        $itemsFound->AddRange($properties);
+
+        $result = array();
+        foreach($itemsFound as $item) {
+            if(is_a($item, 'Project')) {
+                $result[$item->GetLink()] = array(
+                    'Header' => 'Project - ' . $item->ProjectName,
+                    'Link' => $item->GetLink(),
+                    'Context' => $item->GetSearchResultContext(),
+                );
+            }else if(is_a($item, 'ProjectClass')){
+                $result[$item->GetLink()] = array(
+                    'Header' => 'Class - ' . $item->ClassName,
+                    'Link' => $item->GetLink(),
+                    'Context' => $item->GetSearchResultContext(),
+                );
+            } else if(is_a($item, 'Method')){
+                $result[$item->GetLink()] = array(
+                    'Header' => 'Method - ' . $item->MethodName,
+                    'Link' => $item->GetLink(),
+                    'Context' => $item->GetSearchResultContext()
+                );
+            } else if(is_a($item, 'Property')){
+                $result[$item->GetLink()] = array(
+                    'Header' => 'Property - ' . $item->PropertyName,
+                    'Link' => $item->GetLink(),
+                    'Context' => $item->GetSearchResultContext
+                );
+            }
         }
 
         return $result;
@@ -454,7 +573,7 @@ class ProjectsController extends Controller
 
         if($property != null){
             $result[] = array(
-                'Link' => '/Projects/Details/' . $project->ProjectName . '#Properties/',
+                'Link' => '/Projects/Details/' . $project->ProjectName. '/Classes/' . $class->ClassName . '#Properties/',
                 'Text' => 'Properties'
             );
 

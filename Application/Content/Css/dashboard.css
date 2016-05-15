@@ -145,6 +145,16 @@ body {
     margin-top: 1.0em;
 }
 
+.no-margin-bottom
+{
+    margin-bottom: 0;
+}
+
+.light-grey
+{
+    color:#999999;
+}
+
 ul
 {
     list-style-type: none;
