@@ -247,28 +247,14 @@ class PdoDatabase implements IDatabaseDriver
         $tableName = $modelCollection->ModelCache['MetaData']['TableName'];
         $primaryKey = $modelCollection->ModelCache['MetaData']['PrimaryKey'];
 
-        if(!is_array($conditions)){
-            return null;
-        }
-
-        $whereClause = "";
-        foreach($conditions as $key => $value){
-            $whereClause[] = "$key = ?";
-        }
-
-        $whereClause = implode($whereClause," AND ");
-        $sqlStatement = "SELECT count($primaryKey) as RowExists FROM $tableName WHERE $whereClause";
+        $sqlStatement = "SELECT count($primaryKey) as RowExists FROM $tableName WHERE $conditions";
 
         if(!$preparedStatement = $this->Database->prepare($sqlStatement)){
             echo "Failed to prepare PDO statement";
             var_dump($this->Database->errorInfo());
         }
 
-        foreach($conditions as $value){
-            $params[] = $value;
-        }
-
-        $preparedStatement->execute($params);
+        $preparedStatement->execute($parameters);
         $row = $preparedStatement->fetch();
 
         return $row['RowExists'] != 0;

@@ -44,8 +44,8 @@ class DatabaseWhereCondition
         }else if($this->Operator == 'LIKE') {
             $keys = array_keys($this->Operands);
             $field = $keys[0];
-            $conditionString = '(' . $field . ' LIKE \'%?%\')';
-            $parameters[] = $this->Operands[$field];
+            $conditionString = "( $field  LIKE ?)";
+            $parameters[] = '%' . $this->Operands[$field] . '%';
         }
 
         return array(
