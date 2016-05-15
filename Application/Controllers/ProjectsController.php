@@ -196,7 +196,7 @@ class ProjectsController extends Controller
         }else if($this->StringEquals($sectionType, 'Classes') && $sectionName != '' && $this->StringEquals('Properties', $subsectionType) && $subsectionName != '' && $this->StringEquals($lowestType, 'Documents') && $lowestName != '') {
             $projectClass = $this->Models->ProjectClass->Where(array('ProjectId' => $project->Id, 'ClassName' => $sectionName))->First();
             $property = $this->Models->Property->Where(array('ProjectClassId' => $projectClass->Id, 'PropertyName' => $subsectionName))->First();
-            $document = $this->Models->Document->Where(array('PropertyId' => $property->Id))->First();
+            $document = $this->Models->Document->Where(array('PropertyId' => $property->Id, 'NavigationTitle' => $lowestName))->First();
             return $this->ViewDocument($project, $projectClass, null, $property, $document);
         }else{
             return $this->HttpNotFound();
@@ -284,7 +284,7 @@ class ProjectsController extends Controller
 
     private function ViewDocument($project, $class, $method, $property, $document)
     {
-        if($document == null){
+            if($document == null){
             return $this->HttpNotFound();
         }
 
