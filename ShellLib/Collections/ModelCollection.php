@@ -41,7 +41,10 @@ class ModelCollection implements ICollection
 
     public function Where($conditions)
     {
-        $result = $this->GetInstance()->GetDatabase()->Where($this, $conditions);
+        $conditions = $this->ConvertConditions($conditions);
+        $whereConditions = $conditions->GetWhereClause();
+        $result = $this->GetInstance()->GetDatabase()->Where($this, $whereConditions['ConditionString'], $whereConditions['Parameters']);
+
         foreach($result as $entry){
             $entry->OnLoad();
         }
@@ -52,6 +55,18 @@ class ModelCollection implements ICollection
     public function Any($conditions)
     {
         return $this->GetInstance()->GetDatabase()->Any($this, $conditions);
+    }
+
+    // Helper to make sure all conditions are proper DatabaseWhereCondition objects
+    private function ConvertConditions($conditions)
+    {
+        if(is_array($conditions)){
+            return AndCondition($conditions);
+        }else if(is_a($conditions, 'DatabaseWhereCondition')){
+            return $conditions;
+        }else{
+            die('Invalid where conditions');
+        }
     }
 
     public function All()

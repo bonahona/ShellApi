@@ -180,35 +180,21 @@ class PdoDatabase implements IDatabaseDriver
         }
     }
 
-    public function Where($modelCollection, $conditions)
+    public function Where($modelCollection, $conditions, $parameters)
     {
         $result = new Collection();
 
         $tableName = $modelCollection->ModelCache['MetaData']['TableName'];
         $columns = array_keys($modelCollection->ModelCache['Columns']);
 
-        if(!is_array($conditions)){
-            return null;
-        }
-
-        $whereClause = "";
-        foreach($conditions as $key => $value){
-            $whereClause[] = "$key = ?";
-        }
-
-        $whereClause = implode($whereClause," AND ");
-        $sqlStatement = "SELECT * FROM $tableName WHERE $whereClause";
+        $sqlStatement = "SELECT * FROM $tableName WHERE $conditions";
 
         if(!$preparedStatement = $this->Database->prepare($sqlStatement)){
             echo "Failed to prepare PDO statement";
             var_dump($this->Database->errorInfo());
         }
 
-        foreach($conditions as $value){
-            $params[] = $value;
-        }
-
-        $preparedStatement->execute($params);
+        $preparedStatement->execute($parameters);
 
         $fields = array();
         foreach($columns as $column){
@@ -256,7 +242,7 @@ class PdoDatabase implements IDatabaseDriver
         return $result;
     }
 
-    public function Any($modelCollection, $conditions)
+    public function Any($modelCollection, $conditions, $parameters)
     {
         $tableName = $modelCollection->ModelCache['MetaData']['TableName'];
         $primaryKey = $modelCollection->ModelCache['MetaData']['PrimaryKey'];

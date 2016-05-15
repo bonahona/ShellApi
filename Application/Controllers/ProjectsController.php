@@ -34,7 +34,7 @@ class ProjectsController extends Controller
     {
         $result = array();
 
-        foreach($this->Models->Project->Where(array('ProjectName' => $searchQuery)) as $project) {
+        foreach($this->Models->Project->Where(OrCondition(array(LikeCondition('ProjectName',$searchQuery)))) as $project) {
             $result[] = array(
                 'Header' => 'Project - ' . $project->ProjectName,
                 'Link' => '/Projects/' . $project->ProjectName,

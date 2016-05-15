@@ -33,6 +33,7 @@ require_once('./ShellLib/Core/IDatabaseDriver.php');
 require_once('./ShellLib/Core/Models.php');
 require_once('./ShellLib/Core/Helpers.php');
 require_once('./ShellLib/Core/IHelper.php');
+require_once('./ShellLib/Core/DatabaseWhereCondition.php');
 require_once('./ShellLib/Files/File.php');
 require_once('./ShellLib/Logging/Logging.php');
 require_once('./ShellLib/Helpers/DirectoryHelper.php');

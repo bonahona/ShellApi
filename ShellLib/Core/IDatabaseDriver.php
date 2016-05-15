@@ -9,9 +9,9 @@ interface IDatabaseDriver
 
     public function Find($modelCollection, $id);
     public function Exists($modelCollection, $id);
-    public function Where($modelCollection, $conditions);
+    public function Where($modelCollection, $conditions, $parameters);
     public function First($modelCollection);
-    public function Any($modelCollection, $conditions);
+    public function Any($modelCollection, $conditions, $parameters);
     public function All($modelCollection);
     public function Keys($modelCollection);
     public function Delete($modelCollection, $model);
