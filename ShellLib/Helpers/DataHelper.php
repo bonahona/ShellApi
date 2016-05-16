@@ -102,6 +102,10 @@ class DataHelper implements Iterator, Countable, ArrayAccess
         if(isset($this->m_items[$element])){
             $result = array();
             foreach($this->m_items[$element] as $key => $value){
+				if($value == 'NULL'){
+					$value = null;
+				}
+					
                 $result[$key] = $value;
             }
 
