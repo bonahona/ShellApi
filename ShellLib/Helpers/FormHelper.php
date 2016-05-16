@@ -175,7 +175,7 @@ class FormHelper
             if(is_array($list)){
                 $result .= "<option value=\"-1\">-None-</option>\n";
             }else{
-                $result .= "<option value=\"0\" selected=\"\">-None-</option>\n";
+                $result .= "<option value=\"NULL\" selected=\"\">-None-</option>\n";
             }
         }
 
