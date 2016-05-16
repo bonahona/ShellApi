@@ -26,7 +26,7 @@ class DatabaseWhereCondition
                         $parameters[] = $parameter;
                     }
                 } else if ($value === null) {
-                    $operatorValueKeyPairs[] = "$key is null";
+                    $whereClauses[] = "$key is null";
                 } else {
                     $whereClauses[] = "$key = ?";
                     $parameters[] = $value;
