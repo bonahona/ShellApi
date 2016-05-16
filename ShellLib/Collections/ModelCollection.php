@@ -54,7 +54,9 @@ class ModelCollection implements ICollection
 
     public function Any($conditions)
     {
-        return $this->GetInstance()->GetDatabase()->Any($this, $conditions);
+        $conditions = $this->ConvertConditions($conditions);
+        $whereConditions = $conditions->GetWhereClause();
+        return $this->GetInstance()->GetDatabase()->Any($this, $whereConditions['ConditionString'], $whereConditions['Parameters']);
     }
 
     // Helper to make sure all conditions are proper DatabaseWhereCondition objects
