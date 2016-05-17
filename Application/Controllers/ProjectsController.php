@@ -214,7 +214,7 @@ class ProjectsController extends Controller
         $seeAlsoLinks = $this->Models->SeeAlsoLink->Where(array('ProjectId' => $project->Id));
         $this->Set('SeeAlsoLinks', $seeAlsoLinks);
 
-        $publicClasses = $project->ProjectClasses->Where(array('ExternalSource' => ''));
+        $publicClasses = $project->ProjectClasses->Where(array('ExternalSource' => ''))->OrderBy('ClassName');
         $this->Set('PublicClasses', $publicClasses);
 
         $this->Set('Sidebar', $this->GenerateSidebar($project));
