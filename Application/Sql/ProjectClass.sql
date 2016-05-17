@@ -6,7 +6,7 @@ create table ProjectClass(
     Description varchar(16384) default null,
     Namespace varchar(256) default null,
     ExternalSource varchar(512) default null,
-    IsPrimitive int(1) not null,
+    IsPrimitive int(1) not null default 0,
     BaseClassId int,
     ProjectId int not null,
     foreign key(BaseClassId) references ProjectClass(Id),

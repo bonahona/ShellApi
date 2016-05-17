@@ -242,22 +242,22 @@ class ProjectsController extends Controller
         $inheritInterfaces = $this->Models->InheritInterface->Where(array('ProjectClassId' => $projectClass->Id));
         $this->Set('InheritInterfaces', $inheritInterfaces);
 
-        $publicMethods = $this->Models->Method->Where(array('ProjectClassId' => $project->Id, 'AccessModifierId' => 3, 'IsStatic' => '0'));
+        $publicMethods = $this->Models->Method->Where(array('ProjectClassId' => $projectClass->Id, 'AccessModifierId' => 3, 'IsStatic' => '0'));
         $this->Set('PublicMethods', $publicMethods);
 
-        $protectedMethods = $this->Models->Method->Where(array('ProjectClassId' => $project->Id, 'AccessModifierId' => 2, 'IsStatic' => '0'));
+        $protectedMethods = $this->Models->Method->Where(array('ProjectClassId' => $projectClass->Id, 'AccessModifierId' => 2, 'IsStatic' => '0'));
         $this->Set('ProtectedMethods', $protectedMethods);
 
-        $staticMethods = $this->Models->Method->Where(array('ProjectClassId' => $project->Id, 'IsStatic' => '1'));
+        $staticMethods = $this->Models->Method->Where(array('ProjectClassId' => $projectClass->Id, 'IsStatic' => '1'));
         $this->Set('StaticMethods', $staticMethods);
 
-        $publicProperties =  $this->Models->Property->Where(array('ProjectClassId' => $project->Id, 'AccessModifierId' => 3, 'IsStatic' => '0'));
+        $publicProperties =  $this->Models->Property->Where(array('ProjectClassId' => $projectClass->Id, 'AccessModifierId' => 3, 'IsStatic' => '0'));
         $this->Set('PublicProperties', $publicProperties);
 
-        $protectedProperties =  $this->Models->Property->Where(array('ProjectClassId' => $project->Id, 'AccessModifierId' => 2, 'IsStatic' => '0'));
+        $protectedProperties =  $this->Models->Property->Where(array('ProjectClassId' => $projectClass->Id, 'AccessModifierId' => 2, 'IsStatic' => '0'));
         $this->Set('ProtectedProperties', $protectedProperties);
 
-        $staticProperties =  $this->Models->Property->Where(array('ProjectClassId' => $project->Id, 'AccessModifierId' => 3, 'IsStatic' => '1'));
+        $staticProperties =  $this->Models->Property->Where(array('ProjectClassId' => $projectClass->Id, 'AccessModifierId' => 3, 'IsStatic' => '1'));
         $this->Set('StaticProperties', $staticProperties);
 
         $documents = $this->Models->Document->Where(array('ClassId' => $projectClass->Id));
