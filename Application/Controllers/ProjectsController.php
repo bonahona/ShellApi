@@ -214,14 +214,14 @@ class ProjectsController extends Controller
         $seeAlsoLinks = $this->Models->SeeAlsoLink->Where(array('ProjectId' => $project->Id));
         $this->Set('SeeAlsoLinks', $seeAlsoLinks);
 
-        $publicClasses = $project->ProjectClasses->Where(array('ExternalSource' => ''))->OrderBy('ClassName');
+        $publicClasses = $project->ProjectClasses->Where(array('IsPrimitive' => '0'))->OrderBy('ClassName');
         $this->Set('PublicClasses', $publicClasses);
 
         $this->Set('Sidebar', $this->GenerateSidebar($project));
         $this->Set('BreadCrumbs', $this->GenerateBreadCrumbs($project));
 
         if($this->IsLoggedIn()){
-            $externalClasses = $project->ProjectClasses->WhereNot(array('ExternalSource' => ''));
+            $externalClasses = $project->ProjectClasses->WhereNot(array('IsPrimitive' => '1'));
             $this->Set('ExternalClasses', $externalClasses);
         }
 

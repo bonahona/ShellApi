@@ -39,8 +39,50 @@
             </div>
         </div>
     </div>
-
 <?php endforeach;?>
+
+<h3>Uncategorized projects</h3>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th class="col-lg-1">Id</th>
+                    <th class="col-lg-2">Name</th>
+                    <th class="col-lg-5">Description</th>
+                    <th class="col-lg-1">Language</th>
+                    <th class="col-lg-1">Active</th>
+                    <th class="col-lg-2">&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach($UncategorizedProjects as $project):?>
+                    <tr>
+                        <td><?php echo $project->Id;?></td>
+                        <td>
+                            <a href="<?php echo "/Projects/Details/$project->ProjectName";?>"><?php echo $project->ProjectName;?></a>
+                        </td>
+                        <td><?php echo $project->ShortDescription;?></td>
+                        <td>
+                            <?php if($project->ProjectLanguage != null):?>
+                                <?php echo $project->ProjectLanguage->DisplayName;?>
+                            <?php endif;?>
+                        </td>
+                        <td><?php echo $project->IsActive;?></td>
+                        <td>
+                            <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/ProjectsBackend/Description/$project->Id";?>"><span class="glyphicon glyphicon glyphicon-align-left"</span></a>
+                            <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/ProjectsBackend/Edit/$project->Id";?>"><span class="glyphicon glyphicon-pencil"</span></a>
+                            <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/ProjectsBackend/DeleteConfirm/$project->Id";?>"><span class="glyphicon glyphicon-trash"</span></a>
+                        </td>
+                    </tr>
+                <?php endforeach;?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-lg-8">

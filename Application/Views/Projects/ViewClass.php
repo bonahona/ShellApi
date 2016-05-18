@@ -53,16 +53,13 @@
                     <dt>Implements:</dt>
                     <dd>
                         <?php
-                        $links = array();
-                        foreach($InheritInterfaces as $inheritInterface) {
-                            if ($inheritInterface->InheritInterface->ExternalSource != '') {
-                                $links[] = $this->Html->Link($inheritInterface->InheritInterface->ExternalSource, $inheritInterface->InheritInterface->ClassName, array('attributes' => array('target' => '_blank')));
-                            } else {
-                                $links[] = $this->Html->Link('/Projects/Details/' . $Project->ProjectName . '/Classes/' . $inheritInterface->InheritInterface->ClassName, $inheritInterface->InheritInterface->ClassName);
+                            $links = array();
+                            foreach($InheritInterfaces as $inheritInterface) {
+                                $links[] = $InheritInterfaces->InheritInterface->GetLink();
                             }
-                        }
+
+                            echo implode($links, ',');
                         ?>
-                        <?php echo implode($links, ',');?>
                     </dd>
                 <?php endif;?>
             <?php endif;?>

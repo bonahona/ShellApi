@@ -4,13 +4,17 @@ $header = $Method->MethodName;
 $parameters = array();
 foreach($Method->Parameters as $parameter){
 
-    if($parameter->Type->ExternalSource === '') {
+    if($parameter->Type->IsPrimitive){
+        if ($parameter->Type->ExternalSource == null) {
+            $parameters[] = $parameter->Type->ClassName;
+        } else {
+            $url = $parameter->Type->ExternalSource;
+            $parameters[] = $this->Html->Link($url, $parameter->Type->ClassName);
+        }
+    }else{
         $url = '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $Method->ReturnType->ClassName;
-    } else{
-        $url = $parameter->Type->ExternalSource;
+        $parameters[] = $this->Html->Link($url, $parameter->Type->ClassName);
     }
-
-    $parameters[] = $this->Html->Link($url, $parameter->Type->ClassName);
 }
 
 $header = $header . '(' . implode(',', $parameters) . ')';
@@ -22,15 +26,7 @@ $header = $header . '(' . implode(',', $parameters) . ')';
         <dl>
             <dt>Return Type:</dt>
             <dd>
-                <?php if($Method->ReturnType->ExternalSource === ''):?>
-                    <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $Method->ReturnType->ClassName;?>">
-                        <?php echo $Method->ReturnType->ClassName;?>
-                    </a>
-                <?php else:?>
-                    <a target="_blank" href="<?php echo $Method->ReturnType->ExternalSource;?>">
-                        <?php echo $Method->ReturnType->ClassName;?>
-                    </a>
-                <?php endif;?>
+                <?php echo $Method->ReturnType->GetLink();?>
             </dd>
         </dl>
     </div>

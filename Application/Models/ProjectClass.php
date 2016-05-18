@@ -5,7 +5,15 @@ class ProjectClass extends Model
 
     public function GetLink()
     {
-        return '/Projects/Details/' . $this->Project->ProjectName . '/Classes/' . $this->ClassName;
+        if($this->IsPrimitive){
+            if($this->ExternalSource == ''){
+                return $this->ClassName;
+            }else{
+                return '<a target="_blank" href="' . $this->ExternalSource . '">';
+            }
+        }else{
+            return '/Projects/Details/' . $this->Project->ProjectName . '/Classes/' . $this->ClassName;
+        }
     }
 
     public function GetSearchResultContext($maxLength = 300)

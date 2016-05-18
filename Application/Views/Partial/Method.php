@@ -28,15 +28,7 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <?php if($method->ReturnType->ExternalSource === ''):?>
-                                        <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $method->ReturnType->ClassName;?>">
-                                            <?php echo $method->ReturnType->ClassName;?>
-                                        </a>
-                                    <?php else:?>
-                                        <a target="_blank" href="<?php echo $method->ReturnType->ExternalSource;?>">
-                                            <?php echo $method->ReturnType->ClassName;?>
-                                        </a>
-                                    <?php endif;?>
+                                    <?php echo $method->ReturnType->GetLink();?>
                                 </td>
                                 <td><?php echo $method->ShortDescription;?></td>
                                 <td>
@@ -51,15 +43,7 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <?php if($method->ReturnType->ExternalSource === ''):?>
-                                        <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $method->ReturnType->ClassName;?>">
-                                            <?php echo $method->ReturnType->ClassName;?>
-                                        </a>
-                                    <?php else:?>
-                                        <a target="_blank" href="<?php echo $method->ReturnType->ExternalSource;?>">
-                                            <?php echo $method->ReturnType->ClassName;?>
-                                        </a>
-                                    <?php endif;?>
+                                    <?php echo $method->ReturnType->GetLink();?>
                                 </td>
                                 <td><?php echo $method->ShortDescription;?></td>
                             <?php endif;?>
