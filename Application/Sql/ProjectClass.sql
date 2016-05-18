@@ -5,6 +5,7 @@ create table ProjectClass(
     ShortDescription varchar(1024) default null,
     Description varchar(16384) default null,
     Namespace varchar(256) default null,
+    CustomModifiersId int not null default 0,
     ExternalSource varchar(512) default null,
     IsPrimitive int(1) not null,
     BaseClassId int,

@@ -5,6 +5,7 @@ create table Property(
   Description varchar(16384) default null,
   IsStatic int(1) not null default 0,
   AccessModifierId int not null,
+  CustomModifiersId int not null default 0,
   ProjectClassId int not null,
   TypeId int not null,
   foreign key(ProjectClassId) references ProjectClass(Id),
