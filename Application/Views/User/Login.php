@@ -5,6 +5,7 @@
     <label for="Password" class="sr-only">Password</label>
     <?php echo $this->Form->Password('Password', array('attributes' => array('class' => 'form-control', 'placeholder' => 'Password', 'required' => 'true')));?>
     <?php echo $this->Form->Submit('Sign in', array('attributes' => array('class' => 'btn btn-lg btn-primary btn-block')));?>
+    <?php echo $this->Form->ValidationErrorFor('Password');?>
 
     <div class="row">
         <div class="col-lg-4">

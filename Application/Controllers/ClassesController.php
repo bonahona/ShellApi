@@ -13,7 +13,7 @@ class ClassesController extends BackendController
         if($this->IsPost() && !$this->Data->IsEmpty()){
             $class = $this->Data->Parse('ProjectClass', $this->Models->ProjectClass);
             $class->Save();
-
+		
             $project = $this->Models->Project->Find($projectId);
             return $this->Redirect('/Projects/Details/' . $project->ProjectName);
         }else{
