@@ -2,9 +2,14 @@
   "Application": {
     "DefaultController": "Projects",
     "DefaultAction": "Index",
-    "DefaultLayout": "Default"
+    "DefaultLayout": "Default",
+    "NotFoundController" : "Projects",
+    "NotFoundAction": "NotFound"
   },
-
+  "Debug":{
+    "DieOnRoutingError": false,
+    "DontCacheModels": false
+  },
   "Logging": {
     "FileDirectory": "/logs/",
     "Loggers": [

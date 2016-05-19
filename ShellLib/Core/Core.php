@@ -347,6 +347,21 @@ class Core
         return $dontCacheModels;
     }
 
+    protected function DebugDieOnRoutingError()
+    {
+        // Read debug data from the log
+        $dieOnRoutingError = false;
+        if($this->ApplicationConfig !== false) {
+            if (array_key_exists('Debug', $this->ApplicationConfig)) {
+                if (array_key_exists('DieOnRoutingError', $this->ApplicationConfig['Debug'])) {
+                    $dieOnRoutingError = $this->ApplicationConfig['Debug']['DieOnRoutingError'];
+                }
+            }
+        }
+
+        return $dieOnRoutingError;
+    }
+
     // Iterates over each model to make sure they are cached
     protected function CacheModels()
     {
@@ -425,27 +440,128 @@ class Core
         $actionName = $requestData['ActionName'];
         $variables = $requestData['Variables'];
 
+        $handler = $this->CreateHandler($controllerName, $actionName, $requestData);
+
+        // The controller or the action does not exists. If debuging is on, die and give an error, otherwise reroute to the notFound route
+        if($handler['error'] == 1){
+            $dieOnRoutingError = $this->DebugDieOnRoutingError();
+            if($dieOnRoutingError){
+                die($handler['message']);
+            }else{
+                $notFoundHandler = $this->CreateNotFoundHandler($requestData);
+
+                // If the not found handler, there is not much to do
+                if($notFoundHandler['error'] == 1){
+                    die('NotFoundHandler: ' . $notFoundHandler['message']);
+                }
+
+                $controller = $notFoundHandler['controller'];
+                $actionName = $notFoundHandler['actionName'];
+            }
+        }else{
+            $controller = $handler['controller'];
+        }
+
+        $this->ParseData($controller);
+
+        // Call the action
+        $controller->BeforeAction();
+        call_user_func_array(array($controller, $actionName), $variables);
+
+        // Set data based on the call
+        if(function_exists('http_response_code')) {
+            http_response_code($controller->ReturnCode);
+        }
+
+        // 404 errors use the notFound route specified in the application config
+        if($controller->ReturnCode === 404){
+            $notFoundHandler = $this->CreateNotFoundHandler($requestData);
+
+            if($notFoundHandler['error'] == 1) {
+                die('NotFoundHandler: ' . $notFoundHandler['message']);
+            }else{
+                $notFoundController = $notFoundHandler['controller'];
+                $notFoundAction = $notFoundHandler['actionName'];
+
+                $controller->BeforeAction();
+                call_user_func_array(array($notFoundController, $notFoundAction), array());
+            }
+        }
+
+        // Clean up
+        $this->Database->Close();
+    }
+
+    public function GetControllerPath($controllerName, $requestData)
+    {
+        $usedCore = $this;
+        $coreControllerPath = $this->CanHandleRoute($controllerName, $requestData);
+
+        if($coreControllerPath !== false){
+            return array(
+                'path' => $coreControllerPath,
+                'core' => $usedCore
+            );
+        }else{
+            foreach($this->Plugins as $plugin){
+                $usedCore = $plugin;
+                $pluginControllerPath = $plugin->CanHandleRoute($controllerName, $requestData);
+                if($pluginControllerPath !== false){
+                    return array(
+                        'path' => $pluginControllerPath,
+                        'core' => $usedCore
+                    );
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public function CanHandleRoute($controllerName, $requestData)
+    {
+        $controllerClassName = $controllerName . 'Controller';
+        $controllerPath = Directory($this->GetControllerFolder() . $controllerClassName . '.php');
+
+        // Make sure the required controllers source file exists
+        if(file_exists($controllerPath)){
+            return $controllerPath;
+        }else{
+            return false;
+        }
+    }
+
+    public function CreateHandler($controllerName, $actionName, $requestData)
+    {
         // Find the controller to use
         $controllerClassName = $controllerName . 'Controller';
-        $controllerPath = $this->GetControllerPath($requestData);
+        $controllerPath = $this->GetControllerPath($controllerName, $requestData);
 
         // Make sure the required controllers source file exists
         if ($controllerPath === false){
-            die('Controller path ' . $controllerClassName . ' not found');
-        }else{
-            require_once($controllerPath['path']);
+            return array(
+                'error' => 1,
+                'message' => 'Controller path ' . $controllerClassName . ' not found'
+            );
         }
 
+        require_once($controllerPath['path']);
 
         // Instanciate the controller
-        if(class_exists($controllerClassName)) {
-            $controller = new $controllerClassName;
-        }else{
-            die('Controller class ' . $controllerClassName . ' dont exists');
+        if(!class_exists($controllerClassName)) {
+            return array(
+                'error' => 1,
+                'message' => 'Controller class ' . $controllerClassName . ' dont exists'
+            );
         }
 
+        $controller = new $controllerClassName;
+
         if(!method_exists($controller, $actionName)){
-            die('Called action ' . $actionName . ' does not exists');
+            return array(
+                'error' => 1,
+                'message' => 'Called action ' . $actionName . ' does not exists'
+            );
         }
 
         $controller->Core           = $controllerPath['core'];
@@ -460,54 +576,32 @@ class Core
         $controller->Helpers        = $this->Helpers;
         $controller->Helpers->SetCurrentController($controller);
 
-        $this->ParseData($controller);
-
-        // Call the action
-        $controller->BeforeAction();
-        call_user_func_array(array($controller, $actionName), $variables);
-
-        // Clean up
-        $this->Database->Close();
+        return array(
+            'error' => 0,
+            'controller' => $controller,
+            'actionName' => $actionName
+        );
     }
 
-    public function GetControllerPath($requestData)
+    public function CreateNotFoundHandler($requestData)
     {
-        $usedCore = $this;
-        $coreControllerPath = $this->CanHandleRoute($requestData);
-
-        if($coreControllerPath !== false){
+        if(!isset($this->ApplicationConfig['Application']['NotFoundController'])){
             return array(
-                'path' => $coreControllerPath,
-                'core' => $usedCore
+                'error' => 1,
+                'Application config missing NotFoundController'
             );
-        }else{
-            foreach($this->Plugins as $plugin){
-                $usedCore = $plugin;
-                $pluginControllerPath = $plugin->CanHandleRoute($requestData);
-                if($pluginControllerPath !== false){
-                    return array(
-                        'path' => $pluginControllerPath,
-                        'core' => $usedCore
-                    );
-                }
-            }
         }
+        $notFoundControllerName = $this->ApplicationConfig['Application']['NotFoundController'];
 
-        return false;
-    }
-
-    public function CanHandleRoute($requestData)
-    {
-        $controllerName = $requestData['ControllerName'];
-        $controllerClassName = $controllerName . 'Controller';
-        $controllerPath = Directory($this->GetControllerFolder() . $controllerClassName . '.php');
-
-        // Make sure the required controllers source file exists
-        if(file_exists($controllerPath)){
-            return $controllerPath;
-        }else{
-            return false;
+        if(!isset($this->ApplicationConfig['Application']['NotFoundAction'])){
+            return array(
+                'error' => 1,
+                'Application config missing NotFoundAction'
+            );
         }
+        $notFoundAction = $this->ApplicationConfig['Application']['NotFoundAction'];
+
+        return $this->CreateHandler($notFoundControllerName, $notFoundAction, $requestData);
     }
 
     protected function ParseUrl($requestRoot, $requestUrl)

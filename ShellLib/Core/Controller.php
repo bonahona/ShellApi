@@ -188,11 +188,7 @@ class Controller
 
     protected function HttpStatus($statusCode)
     {
-        if(function_exists('http_response_code')) {
-            http_response_code("404");
-        }else{
-            echo "404";
-        }
+        $this->ReturnCode = $statusCode;
     }
 
     function HttpNotFound()

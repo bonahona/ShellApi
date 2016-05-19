@@ -529,7 +529,6 @@ class ProjectsController extends Controller
                 }
 
                 $result[$namespace][] = $projectClass;
-
             }
         }
 
@@ -638,4 +637,11 @@ class ProjectsController extends Controller
         return (strcasecmp($a, $b) == 0);
     }
 
+    public function NotFound()
+    {
+        $this->Title = 'Not found';
+
+        $this->Set('Sidebar', $this->GenerateSidebar());
+        return $this->View();
+    }
 }
