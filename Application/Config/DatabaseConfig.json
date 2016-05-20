@@ -3,9 +3,9 @@
     "UseDatabase": true,
     "DatabaseType" : "PDO",
     "Provider" : "mysql",
-    "Server" : "127.0.0.1",
+    "Server" : "10.13.37.203",
     "Database" : "documentation",
-    "Username" : "root",
-    "Password" : ""
+    "Username" : "documentation",
+    "Password" : "H3mligt"
   }
 }
