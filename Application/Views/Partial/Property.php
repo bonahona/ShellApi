@@ -23,9 +23,12 @@
                         <tr>
                             <?php if($this->IsLoggedIn()):?>
                                 <td>
+                                    <?php /*
                                     <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $property->ProjectClass->ClassName . '/Properties/' . $property->PropertyName;?>">
                                         <?php echo $property->PropertyName;?>
                                     </a>
+                                    */ ?>
+                                    <?php echo $property->PropertyName;?>
                                 </td>
                                 <td>
                                     <?php if($property->Type->ExternalSource === ''):?>

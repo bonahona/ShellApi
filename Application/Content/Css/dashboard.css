@@ -112,6 +112,7 @@ body {
 .panel-heading
 {
     font-weight: bold;
+    font-size: 1.1em;
 }
 
 .indent-left-1
@@ -160,4 +161,9 @@ ul
     list-style-type: none;
     list-style:none;
     padding-left:0;
+}
+
+.panel > .list-group .list-group-item .link-item
+{
+    padding: 5px 15px;
 }

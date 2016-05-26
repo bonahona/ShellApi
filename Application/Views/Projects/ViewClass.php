@@ -5,11 +5,7 @@
             <?php if($ProjectClass->BaseClass != null):?>
                 <dt>Inherits:</dt>
                 <dd>
-                    <?php if($ProjectClass->BaseClass->ExternalSource === ''):?>
-                        <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $ProjectClass->ClassName;?>"><?php echo $ProjectClass->BaseClass->ClassName;?></a>
-                    <?php else:?>
-                        <a href="<?php echo $ProjectClass->BaseClass->ExternalSource;?>"><?php echo $ProjectClass->BaseClass->ClassName;?></a>
-                    <?php endif;?>
+                    <?php echo $ProjectClass->BaseClass->GetLink();?>
                 </dd>
             <?php endif;?>
 
@@ -55,7 +51,7 @@
                         <?php
                             $links = array();
                             foreach($InheritInterfaces as $inheritInterface) {
-                                $links[] = $InheritInterfaces->InheritInterface->GetLink();
+                                $links[] = $inheritInterface->InheritInterface->GetLink();
                             }
 
                             echo implode($links, ',');
@@ -87,8 +83,6 @@
     </div>
 <?php endif;?>
 
-<?php echo $this->PartialView('Examples', array('Examples' => $Examples, 'ProjectClass' => $ProjectClass));?>
-
 <?php echo $this->PartialView('Method', array('Methods' => $PublicMethods, 'Header' => 'Public Methods', 'Project' => $Project));?>
 <?php echo $this->PartialView('Method', array('Methods' => $ProtectedMethods, 'Header' => 'Protected Methods', 'Project' => $Project));?>
 <?php echo $this->PartialView('Method', array('Methods' => $StaticMethods, 'Header' => 'Static Methods', 'Project' => $Project));?>
@@ -113,6 +107,7 @@
     </div>
 <?php endif;?>
 
+<?php echo $this->PartialView('Examples', array('Examples' => $Examples, 'ProjectClass' => $ProjectClass));?>
 <?php echo $this->PartialView('Documents', array('Documents' => $Documents, 'Project' => $Project, 'ProjectClass' => $ProjectClass));?>
 <?php echo $this->PartialView('SeeAlsoLinks', array('SeeAlsoLinks' => $SeeAlsoLinks, 'Project', $Project));?>
 

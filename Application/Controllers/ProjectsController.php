@@ -479,7 +479,7 @@ class ProjectsController extends Controller
                 foreach ($documents as $document) {
                     $documentSubSection['Items'][] = array(
                         'Link' => '/Projects/Details/' . $project->ProjectName . '/Documents/' . $document->NavigationTitle,
-                        'DisplayName' => 'PageTitle'
+                        'DisplayName' => $document->PageTitle
                     );
                 }
 

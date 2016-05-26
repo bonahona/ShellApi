@@ -1,10 +1,26 @@
 <h1 class="page-header"><?php echo $Project->ProjectName;?></h1>
 
+<?php if($this->IsLoggedIn()):?>
+    <div class="row">
+        <div class="col-lg-8">
+            <a class="btn btn-medium btn-default" href="<?php echo "/ProjectsBackend/Edit/$Project->Id";?>">Edit details</a>
+        </div>
+    </div>
+<?php endif;?>
+
 <div class="row">
     <div class="col-lg-8">
         <?php echo $Project->Description;?>
     </div>
 </div>
+
+<?php if($this->IsLoggedIn()):?>
+    <div class="row">
+        <div class="col-lg-8">
+            <a class="btn btn-medium btn-default" href="<?php echo "/ProjectsBackend/Description/$Project->Id";?>">Edit description</a>
+        </div>
+    </div>
+<?php endif;?>
 
 <h2>Classes</h2>
 

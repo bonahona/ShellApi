@@ -12,7 +12,10 @@ class ProjectClass extends Model
                 return '<a target="_blank" href="' . $this->ExternalSource . '">';
             }
         }else{
-            return '/Projects/Details/' . $this->Project->ProjectName . '/Classes/' . $this->ClassName;
+            $link = '/Projects/Details/' . $this->Project->ProjectName . '/Classes/' . $this->ClassName;
+            $display = $this->ClassName;
+
+            return '<a href="' . $link . '">' . $display . '</a>';
         }
     }
 

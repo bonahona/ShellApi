@@ -4,15 +4,7 @@
         <dl>
             <dt>Type:</dt>
             <dd>
-                <?php if($Property->Type->ExternalSource === ''):?>
-                    <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $Property->Type->ClassName;?>">
-                        <?php echo $Property->Type->ClassName;?>
-                    </a>
-                <?php else:?>
-                    <a target="_blank" href="<?php echo $Property->Type->ExternalSource;?>">
-                        <?php echo $Property->Type->ClassName;?>
-                    </a>
-                <?php endif;?>
+                <?php echo $Property->Type->GetLink();?>
             </dd>
         </dl>
     </div>
