@@ -7,7 +7,7 @@
     "NotFoundAction": "NotFound"
   },
   "Debug":{
-    "DieOnRoutingError": false,
+    "DieOnRoutingError": true,
     "DontCacheModels": false
   },
   "Logging": {

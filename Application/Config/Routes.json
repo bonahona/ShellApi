@@ -3,6 +3,10 @@
     "/Admin/":{
       "Controller": "User",
       "Action": "Login"
+    },
+    "/Contact/": {
+      "Controller": "Projects",
+      "Action": "Contact"
     }
   }
 }

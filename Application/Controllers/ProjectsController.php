@@ -518,6 +518,10 @@ class ProjectsController extends Controller
                     'DisplayName' => 'Fyrvall.com'
                 ),
                 array(
+                    'Link' => '/Contact',
+                    'DisplayName' => 'Contact'
+                ),
+                array(
                     'Link' => '/',
                     'DisplayName' => 'Documentation'
                 )
