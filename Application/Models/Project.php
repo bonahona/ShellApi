@@ -7,6 +7,11 @@ class Project extends Model
     {
         return '/Projects/Details/' . $this->ProjectName;
     }
+	
+	public function GetLinkText()
+	{
+		return '/Projects/Details/' . $this->ProjectName;
+	}
 
     public function GetSearchResultContext($maxLength = 300)
     {

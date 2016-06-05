@@ -18,6 +18,11 @@ class ProjectClass extends Model
             return '<a href="' . $link . '">' . $display . '</a>';
         }
     }
+	
+	public function GetLinkText()
+	{
+		return '/Projects/Details/' . $this->Project->ProjectName . '/Classes/' . $this->ClassName;
+	}
 
     public function GetSearchResultContext($maxLength = 300)
     {

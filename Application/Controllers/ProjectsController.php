@@ -74,27 +74,27 @@ class ProjectsController extends Controller
 
         foreach($itemsFound as $item) {
             if(is_a($item, 'Project')) {
-                $result[$item->GetLink()] = array(
+                $result[$item->GetLinkText()] = array(
                     'Header' => 'Project - ' . $item->ProjectName,
-                    'Link' => $item->GetLink(),
+                    'Link' => $item->GetLinkText(),
                     'Context' => $item->GetSearchResultContext(),
                 );
             }else if(is_a($item, 'ProjectClass')){
-                $result[$item->GetLink()] = array(
+                $result[$item->GetLinkText()] = array(
                     'Header' => 'Class - ' . $item->ClassName,
-                    'Link' => $item->GetLink(),
+                    'Link' => $item->GetLinkText(),
                     'Context' => $item->GetSearchResultContext(),
                 );
             } else if(is_a($item, 'Method')){
-                $result[$item->GetLink()] = array(
+                $result[$item->GetLinkText()] = array(
                     'Header' => 'Method - ' . $item->MethodName,
-                    'Link' => $item->GetLink(),
+                    'Link' => $item->GetLinkText(),
                     'Context' => $item->GetSearchResultContext()
                 );
             } else if(is_a($item, 'Property')){
-                $result[$item->GetLink()] = array(
+                $result[$item->GetLinkText()] = array(
                     'Header' => 'Property - ' . $item->PropertyName,
-                    'Link' => $item->GetLink(),
+                    'Link' => $item->GetLinkText(),
                     'Context' => $item->GetSearchResultContext
                 );
             }
