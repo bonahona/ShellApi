@@ -95,7 +95,7 @@ class ProjectsController extends Controller
                 $result[$item->GetLinkText()] = array(
                     'Header' => 'Property - ' . $item->PropertyName,
                     'Link' => $item->GetLinkText(),
-                    'Context' => $item->GetSearchResultContext
+                    'Context' => $item->GetSearchResultContext()
                 );
             }
         }
@@ -518,6 +518,10 @@ class ProjectsController extends Controller
                     'DisplayName' => 'Fyrvall.com'
                 ),
                 array(
+                    'Link' => '/Contact',
+                    'DisplayName' => 'Contact'
+                ),
+                array(
                     'Link' => '/',
                     'DisplayName' => 'Documentation'
                 )
@@ -651,6 +655,14 @@ class ProjectsController extends Controller
         }
 
         return $result;
+    }
+
+    public function Contact()
+    {
+        $this->Title = 'Contact';
+
+        $this->Set('Sidebar', $this->GenerateSidebar());
+        return $this->View();
     }
 
     private function StringEquals($a, $b)
