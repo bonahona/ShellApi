@@ -1,5 +1,7 @@
 <h1>Projects</h1>
 
+<?php echo $this->PartialView('StaticBlock', array('Identifier' => 'presentation'));?>
+
 <?php foreach($ProjectCategories as $projectCategory):?>
     <?php if(count($projectCategory->Projects) > 0):?>
         <h3><?php echo $projectCategory->Name;?></h3>

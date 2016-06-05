@@ -19,6 +19,11 @@ class ProjectClass extends Model
         }
     }
 
+    public function GetLinkText()
+    {
+        return '/Projects/Details/' . $this->Project->ProjectName . '/Classes/' . $this->ClassName;
+    }
+
     public function GetSearchResultContext($maxLength = 300)
     {
         $descriptionLength = strlen($this->Description);
