@@ -7,11 +7,6 @@ class Method extends Model
     {
         return '/Projects/Details/' . $this->ProjectClass->Project->ProjectName . '/Classes/' . $this->ProjectClass->ClassName . '/Methods/' . $this->MethodName . $this->CreateLink();
     }
-	
-	public function GetLinkText()
-	{
-		return '/Projects/Details/' . $this->ProjectClass->Project->ProjectName . '/Classes/' . $this->ProjectClass->ClassName . '/Methods/' . $this->MethodName . $this->CreateLink();
-	}
 
     public function GetLinkText()
     {

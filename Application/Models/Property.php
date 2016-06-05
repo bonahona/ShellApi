@@ -13,11 +13,6 @@ class Property extends Model
         return '/Projects/Details/' . $this->ProjectClass->Project->ProjectName . '/Classes/' . $this->ProjectClass->ClassName . '/Properties/' . $this->PropertyName;
     }
 
-    public function GetLinkText()
-    {
-        return '/Projects/Details/' . $this->ProjectClass->Project->ProjectName . '/Classes/' . $this->ProjectClass->ClassName . '/Properties/' . $this->PropertyName;
-    }
-
     public function GetSearchResultContext($maxLength = 300)
     {
         $descriptionLength = strlen($this->Description);
