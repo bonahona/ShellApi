@@ -24,7 +24,7 @@
             </span>
         </div>
         <div class="col-lg-6">
-            <?php echo $result['Context'];?>
+            <?php echo strip_tags($result['Context']);?>
         </div>
     </div>
 <?php endforeach;?>
