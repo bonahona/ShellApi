@@ -214,7 +214,7 @@ class Core
 
             $this->SetupFolders();
             if(!$this->ReadConfig()){
-                die("Failed to read ApplicationConfig");
+                trigger_error("Failed to read ApplicationConfig", E_USER_ERROR);trigger_error("Failed to read ApplicationConfig", E_USER_ERROR);
             }
 
             $this->Helpers = new Helpers();
@@ -307,7 +307,7 @@ class Core
     {
         $this->Logging = new Logging();
         if(!$this->Logging->SetupLoggers($this->ApplicationConfig)){
-            die('Failed to setup logging');
+            trigger_error("Failed to setup logging", E_USER_ERROR);
         }
     }
 
@@ -327,7 +327,7 @@ class Core
                 require_once($databaseProviderPath);
                 $this->Database = new PdoDatabase($this, $this->DatabaseConfig);
             }else{
-                die("Unknown database provider type: $databaseType");
+                trigger_error("Unknown database provider type: $databaseType", E_USER_ERROR);
             }
         }
     }
@@ -446,13 +446,13 @@ class Core
         if($handler['error'] == 1){
             $dieOnRoutingError = $this->DebugDieOnRoutingError();
             if($dieOnRoutingError){
-                die($handler['message']);
+                trigger_error($handler['message'], E_USER_ERROR);
             }else{
                 $notFoundHandler = $this->CreateNotFoundHandler($requestData);
 
                 // If the not found handler, there is not much to do
                 if($notFoundHandler['error'] == 1){
-                    die('NotFoundHandler: ' . $notFoundHandler['message']);
+                    trigger_error('NotFoundHandler: ' . $notFoundHandler['message'], E_USER_ERROR);
                 }
 
                 $controller = $notFoundHandler['controller'];
@@ -478,7 +478,7 @@ class Core
             $notFoundHandler = $this->CreateNotFoundHandler($requestData);
 
             if($notFoundHandler['error'] == 1) {
-                die('NotFoundHandler: ' . $notFoundHandler['message']);
+                trigger_error('NotFoundHandler: ' . $notFoundHandler['message'], E_USER_ERROR);
             }else{
                 $notFoundController = $notFoundHandler['controller'];
                 $notFoundAction = $notFoundHandler['actionName'];

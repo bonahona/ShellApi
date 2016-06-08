@@ -122,7 +122,7 @@ class Controller
         // Make sure the view exists
         $viewPath = ViewPath($this->Core, $this->Controller, $viewName);
         if(!file_exists($viewPath)) {
-            die('Could not find view ' . $viewPath);
+            trigger_error('Could not find view ' . $viewPath, E_USER_ERROR);
         }
 
         // Enable all the the view variables to be available in the view

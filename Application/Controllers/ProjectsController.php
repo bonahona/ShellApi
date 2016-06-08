@@ -211,6 +211,9 @@ class ProjectsController extends Controller
         $documents = $this->Models->Document->Where(array('ProjectId' => $project->Id));
         $this->Set('Documents', $documents);
 
+        $releaseNotes = $this->Models->ReleaseNotes->Where(array('ProjectId' => $project->Id));
+        $this->Set('ReleaseNotes', $releaseNotes);
+
         $seeAlsoLinks = $this->Models->SeeAlsoLink->Where(array('ProjectId' => $project->Id));
         $this->Set('SeeAlsoLinks', $seeAlsoLinks);
 
