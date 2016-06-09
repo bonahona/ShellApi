@@ -182,6 +182,9 @@ class ProjectsController extends Controller
         }else if($this->StringEquals($sectionType, 'Documents') && $sectionName != '') {
             $document = $this->Models->Document->Where(array('ProjectId' => $project->Id, 'NavigationTitle' => $sectionName))->First();
             return $this->ViewDocument($project, null, null, null, $document);
+        }else if($this->StringEquals($sectionType, 'ReleaseNotes') && $sectionName != '') {
+            $releaseNotes = $this->Models->ReleaseNotes->Where(array('ProjectId' => $project->Id, 'VersionNumber' => $sectionName))->First();
+            return $this->ViewReleaseNotes($project, $releaseNotes);
         }else if($this->StringEquals($sectionType, 'Classes') && $sectionName != '' && $this->StringEquals('Documents', $subsectionType) && $subsectionName != '') {
             $projectClass = $this->Models->ProjectClass->Where(array('ProjectId' => $project->Id, 'ClassName' => $sectionName))->First();
             $document = $this->Models->Document->Where(array('ClassId' => $projectClass->Id, 'NavigationTitle' => $subsectionName))->First();
@@ -211,7 +214,7 @@ class ProjectsController extends Controller
         $documents = $this->Models->Document->Where(array('ProjectId' => $project->Id));
         $this->Set('Documents', $documents);
 
-        $releaseNotes = $this->Models->ReleaseNotes->Where(array('ProjectId' => $project->Id));
+        $releaseNotes = $this->Models->ReleaseNotes->Where(array('ProjectId' => $project->Id))->OrderByDescending('VersionNumber')->Take(5);
         $this->Set('ReleaseNotes', $releaseNotes);
 
         $seeAlsoLinks = $this->Models->SeeAlsoLink->Where(array('ProjectId' => $project->Id));
@@ -256,6 +259,17 @@ class ProjectsController extends Controller
 
         $this->Set('Project', $project);
         return $this->View('ViewProject');
+    }
+
+    private function ViewReleaseNotes($project, $releaseNotes)
+    {
+        $this->Set('BreadCrumbs', $this->GenerateBreadCrumbs($project));
+        $this->Set('Sidebar', $this->GenerateSidebar($project));
+
+        $this->Set('Project', $project);
+        $this->Set('ReleaseNotes', $releaseNotes);
+
+        return $this->View('ViewReleaseNotes');
     }
 
     private function ViewClass($project, $projectClass)

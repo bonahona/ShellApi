@@ -80,6 +80,12 @@ class Collection implements IDataCollection
         return $customObjectSorter->SortCollection($this->m_items, $field);
     }
 
+    public function OrderByDescending($field)
+    {
+        $customObjectSorter = new CustomObjectSorter();
+        return $customObjectSorter->SortCollection($this->m_items, $field, Descending);
+    }
+
     public function Where($conditions)
     {
         $result = new Collection();

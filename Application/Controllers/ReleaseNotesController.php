@@ -15,7 +15,7 @@ class ReleaseNotesController extends BackendController
             $releaseNotes = $this->Data->Parse('ReleaseNotes', $this->Models->ReleaseNotes);
             $releaseNotes->Save();
 
-            return $this->Redirect('/');
+            return $this->Redirect('/Projects/Details/' . $project->ProjectName);
         }else{
             $releaseNotes = $this->Models->ReleaseNotes->Create(array('ProjectId' => $projectId));
             $this->Set('ReleaseNotes', $releaseNotes);
@@ -25,6 +25,22 @@ class ReleaseNotesController extends BackendController
 
     public function Edit($id)
     {
+        $this->Title = 'Edit release notes';
 
+        $releaseNotes = $this->Models->ReleaseNotes->Find($id);
+        if($releaseNotes == null){
+            return $this->HttpNotFound();
+        }
+
+        if($this->IsPost() && !$this->Data->IsEmpty()){
+            $releaseNotes = $this->Data->DbParse('ReleaseNotes', $this->Models->ReleaseNotes);
+            $releaseNotes->Save();
+
+            return $this->Redirect('/Projects/Details/' . $releaseNotes->Project->ProjectName);
+        }else{
+            $this->Set('ReleaseNotes', $releaseNotes);
+
+            return $this->View();
+        }
     }
 }

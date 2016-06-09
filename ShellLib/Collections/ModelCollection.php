@@ -19,6 +19,8 @@ class ModelCollection implements ICollection
             $result->$key = $value;
         }
 
+        $result->OnLoad();
+
         return $result;
     }
 
@@ -122,7 +124,12 @@ class ModelCollection implements ICollection
 
     public function OrderBy($field)
     {
+        trigger_error('ModelCollection does not support OrderBy. Use a selection first.', E_USER_ERROR);
+    }
 
+    public function OrderByDescending($field)
+    {
+        trigger_error('ModelCollection does not support OrderByDescending. Use a selection first.', E_USER_ERROR);
     }
 
     public function Take($count)

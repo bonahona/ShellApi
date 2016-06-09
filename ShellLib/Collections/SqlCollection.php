@@ -65,6 +65,11 @@ class SqlCollection implements IDataCollection
         return $result;
     }
 
+    public function OrderByDescending($field)
+    {
+
+    }
+
     public function Where($conditions)
     {
         $result = new Collection();

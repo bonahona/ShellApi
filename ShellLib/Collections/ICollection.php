@@ -6,6 +6,7 @@ interface ICollection
 
     public function Copy($items);
     public function OrderBy($field);
+    public function OrderByDescending($field);
     public function Where($conditions);
     public function Take($count);
     public function First();
