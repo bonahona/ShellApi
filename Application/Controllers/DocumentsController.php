@@ -112,4 +112,26 @@ class DocumentsController extends BackendController
             return $this->View();
         }
     }
+
+    public function DeleteConfirm($id)
+    {
+        $this->Title = 'Confirm delete document';
+
+        $document = $this->Models->Document->Find($id);
+        if($document == null){
+            return $this->HttpNotFound();
+        }
+
+        $project = $this->Models->Project->Find($document->ProjectId);
+
+        if($this->IsPost()){
+            $document->Delete();
+
+            return $this->Redirect('/Projects/Details/' . $project->ProjectName);
+        }else {
+            $this->Set('Project', $project);
+            $this->Set('Document', $document);
+            return $this->View();
+        }
+    }
 }
