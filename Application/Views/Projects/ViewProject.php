@@ -108,6 +108,14 @@
 <?php endif;?>
 
 <?php if($this->IsLoggedIn()):?>
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="/ProjectsBackend/MultiEditClasses/<?php echo $Project->Id;?>" class="btn btn-md btn-default">Multi Edit</a>
+        </div>
+    </div>
+<?php endif;?>
+
+<?php if($this->IsLoggedIn()):?>
     <h2>External Classes</h2>
     <div class="row">
         <div class="col-lg-12 col-md-12">

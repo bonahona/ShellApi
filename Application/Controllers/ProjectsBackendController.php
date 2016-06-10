@@ -67,6 +67,30 @@ class ProjectsBackendController extends BackendController
         }
     }
 
+    public function MultiEditClasses($id)
+    {
+        $this->Title = 'Multi Edit classes';
+
+        if($id == null || $id == ''){
+            return $this->HttpNotFound();
+        }
+
+        $project = $this->Models->Project->Find($id);
+        if($project == null){
+            return $this->HttpNotFound();
+        }
+
+        if($this->IsPost() && !$this->Data->IsEmpty()){
+
+        }else{
+            $classes = $this->Models->ProjectClass->Where(array('ProjectId' => $project->Id, 'IsPrimitive' => 2));
+            $this->Set('Classes', $classes);
+            $this->Set('Project', $project);
+
+            return $this->View();
+        }
+    }
+
     public function Description($id)
     {
         $this->Title = 'Edit Project Description';
