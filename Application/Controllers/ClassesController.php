@@ -63,6 +63,40 @@ class ClassesController extends BackendController
         }
     }
 
+    public function MultiEditMethods($id)
+    {
+        $this->Title = 'Multi edit methods';
+
+        if($id == null || $id == ''){
+            return $this->HttpNotFound();
+        }
+
+        $projectClass = $this->Models->ProjectClass->Find($id);
+        if($projectClass == null){
+            return $projectClass;
+        }
+
+        if($this->IsPost() && !$this->Data->IsEmpty()){
+            $methods = $this->Data->RawParse('Methods');
+
+            foreach($methods as $methodData){
+                $method = $this->Models->Method->Find($methodData['Id']);
+                if($method != null) {
+                    $method->ShortDescription = $methodData['Description'];
+                    $method->Save();
+                }
+            }
+
+            return $this->Redirect('/Projects/Details/' . $projectClass->Project->ProjectName . '/Classes/' . $projectClass->ClassName);
+        }else{
+            $methods = $this->Models->Method->Where(array('ProjectClassId' => $projectClass->Id))->OrderBy('MethodName');
+            $this->Set('Methods', $methods);
+            $this->Set('ProjectClass', $projectClass);
+
+            return $this->View();
+        }
+    }
+
     public function Description($id)
     {
         $this->Title = 'Edit Class Description';

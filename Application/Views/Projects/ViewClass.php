@@ -93,6 +93,11 @@
             <a class="btn btn-md btn-default" href="<?php echo "/Methods/Create/$ProjectClass->Id";?>">Create method</a>
         </div>
     </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <a class="btn btn-md btn-default" href="<?php echo "/Classes/MultiEditMethods/$ProjectClass->Id";?>">Multi edit</a>
+        </div>
+    </div>
 <?php endif;?>
 
 <?php echo $this->PartialView('Property', array('Properties' => $PublicProperties, 'Header' => 'Public Properties', 'Project' => $Project));?>

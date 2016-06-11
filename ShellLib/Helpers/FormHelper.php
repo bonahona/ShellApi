@@ -53,6 +53,12 @@ class FormHelper
             $value = $this->ParseValue($name);
         }
 
+        if(isset($options['index'])){
+            $index = $options['index'];
+        }else{
+            $index = null;
+        }
+
         // Passwords are not to be auto filled
         if($type == 'password'){
             $value = "";
@@ -70,7 +76,7 @@ class FormHelper
         }
 
         $id = $name;
-        $name = $this->ParseName($name);
+        $name = $this->ParseName($name, $index);
 
         if($type == 'select'){
             return $this->Select();
@@ -78,6 +84,17 @@ class FormHelper
             $result = "<input name=\"$name\" id=\"$id\" value=\"$value\" type=\"$type\" $attributes/>";
             return $result;
         }
+    }
+
+    public function IndexedInput($name, $index, $options = null)
+    {
+        if($options == null){
+            $options = array();
+        }
+
+        $options['index'] = $index;
+
+        return $this->Input($name, $options);
     }
 
     public function Password($name, $options = null)
@@ -276,9 +293,14 @@ class FormHelper
         }
     }
 
-    private function ParseName($name)
+    private function ParseName($name, $index = null)
     {
-        $result = "data[$this->m_currentForm][$name]";
+        if($index == null){
+            $result = "data[$this->m_currentForm][$name]";
+        }else{
+            $result = "data[$this->m_currentForm][$index][$name]";
+        }
+
         return $result;
     }
 

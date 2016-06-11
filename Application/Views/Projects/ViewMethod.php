@@ -1,5 +1,5 @@
 <?php
-$header = $Method->MethodName;
+$header = htmlspecialchars($Method->MethodName);
 
 $parameters = array();
 foreach($Method->Parameters as $parameter){

@@ -81,9 +81,19 @@ class ProjectsBackendController extends BackendController
         }
 
         if($this->IsPost() && !$this->Data->IsEmpty()){
+            $parsedClasses = $this->Data->RawParse('Classes');
 
+            foreach($parsedClasses as $classData){
+                $class = $this->Models->ProjectClass->Find($classData['Id']);
+                if($class != null){
+                    $class->ShortDescription = $classData['Description'];
+                    $class->Save();
+                }
+            }
+
+            return $this->Redirect('/Projects/Details/' . $project->ProjectName);
         }else{
-            $classes = $this->Models->ProjectClass->Where(array('ProjectId' => $project->Id, 'IsPrimitive' => 2));
+            $classes = $this->Models->ProjectClass->Where(array('ProjectId' => $project->Id, 'IsPrimitive' => 0))->OrderBy('ClassName');
             $this->Set('Classes', $classes);
             $this->Set('Project', $project);
 

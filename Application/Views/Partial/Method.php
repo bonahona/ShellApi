@@ -24,7 +24,7 @@
                             <?php if($this->IsLoggedIn()):?>
                                 <td>
                                     <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $method->ProjectClass->ClassName . '/Methods/' . $method->MethodName . $method->CreateLink();?>">
-                                        <?php echo $method->MethodName . $method->CreateParameterText();?>
+                                        <?php echo htmlspecialchars($method->MethodName) . $method->CreateParameterText();?>
                                     </a>
                                 </td>
                                 <td>

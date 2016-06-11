@@ -248,7 +248,7 @@ class ProjectsController extends Controller
         $this->Set('BreadCrumbs', $this->GenerateBreadCrumbs($project));
 
         if($this->IsLoggedIn()){
-            $externalClasses = $project->ProjectClasses->WhereNot(array('IsPrimitive' => '1'));
+            $externalClasses = $project->ProjectClasses->Where(array('IsPrimitive' => '1'));
             $this->Set('ExternalClasses', $externalClasses);
         }
 
