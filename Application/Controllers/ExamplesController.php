@@ -114,19 +114,7 @@ class ExamplesController extends BackendController
             $example = $this->Data->DbParse('Example', $this->Models->Example);
             $example->Save();
 
-            if($example->ProjectId !== ''){
-                $project = $this->Models->Project->Find($example->ProjectId);
-                return $this->Redirect('/Projects/Details/' . $project->ProjectName);
-            }else if($example->ClassId !== ''){
-                $projectClass = $this->Models->ProjectClass->Find($example->ClassId);
-                return $this->Redirect('/Projects/Details/' . $projectClass->Project->ProjectName . '/Classes/' . $projectClass->ClassName);
-            }else if($example->MethodId !== ''){
-                $method = $this->Models->Method->Find($example->MethodId);
-                return $this->Redirect('/Projects/Details/' . $method->ProjectClass->Project->ProjectName . '/Classes/' . $method->ProjectClass->ClassName . '/Methods/' . $method->MethodName);
-            }else if($example->PropertyId !== '') {
-                $property = $this->Models->Property->Find($example->MethodId);
-                return $this->Redirect('/Projects/Details/' . $property->ProjectClass->Project->ProjectName . '/Classes/' . $property->ProjectClass->ClassName . '/Properties/' . $property->PropertyName);
-            }
+            return $this->Redirect($this->GetReturnLink($example));
         }else{
             $this->Set('Example', $example);
             return $this->View();
@@ -144,7 +132,33 @@ class ExamplesController extends BackendController
             return $this->HttpNotFound();
         }
 
-        var_dump($example->Object());
+        if($this->IsPost() && !$this->Data->IsEmpty()){
+            $example->Delete();
+
+            return $this->Redirect($this->GetReturnLink($example));
+        }else{
+            $this->Set('ReturnLink', $this->GetReturnLink($example));
+            $this->Set('Example', $example);
+
+            return $this->View();
+        }
+    }
+
+    private function GetReturnLink($example)
+    {
+        if($example->ProjectId !== null){
+            $project = $this->Models->Project->Find($example->ProjectId);
+            return '/Projects/Details/' . $project->ProjectName;
+        }else if($example->ClassId !== null){
+            $projectClass = $this->Models->ProjectClass->Find($example->ClassId);
+            return '/Projects/Details/' . $projectClass->Project->ProjectName . '/Classes/' . $projectClass->ClassName;
+        }else if($example->MethodId !== null){
+            $method = $this->Models->Method->Find($example->MethodId);
+            return '/Projects/Details/' . $method->ProjectClass->Project->ProjectName . '/Classes/' . $method->ProjectClass->ClassName . '/Methods/' . $method->MethodName;
+        }else if($example->PropertyId !== null) {
+            $property = $this->Models->Property->Find($example->MethodId);
+            return '/Projects/Details/' . $property->ProjectClass->Project->ProjectName . '/Classes/' . $property->ProjectClass->ClassName . '/Properties/' . $property->PropertyName;
+        }
     }
 
     private function GenerateSortOrderList()

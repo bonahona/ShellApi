@@ -24,7 +24,7 @@
                             <td>
                                 <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Examples/Content/$example->Id";?>"><span class="glyphicon glyphicon-align-left"</a>
                                 <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Examples/Edit/$example->Id";?>"><span class="glyphicon glyphicon-pencil"</a>
-                                <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Examples/DeleteConfirm/$example->Id";?>"><span class="glyphicon glyphicon-trash"</a>
+                                <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Examples/Delete/$example->Id";?>"><span class="glyphicon glyphicon-trash"</a>
                             </td>
                         </tr>
                     <?php endforeach;?>

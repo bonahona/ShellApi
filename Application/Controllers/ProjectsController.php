@@ -348,7 +348,7 @@ class ProjectsController extends Controller
         }
 
         $methodName = $methodParse[0];
-        $methodParametersString = str_replace(')', '', $methodParse[1]);
+        $methodParametersString = str_replace(')', '', $methodParse[0]);
 
         if($methodParametersString === ''){
             $methodParameters = array();
