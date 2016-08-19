@@ -22,7 +22,20 @@
 <nav class="navbar navbar-inverse navbar-fixed-top dark-blue">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand light-grey" href="/">Documentation </a> <span class="navbar-brand">|</span> <a class="navbar-brand light-grey" href="http://fyrvall.com">Fyrvall.com</a>
+            <ul class="nav navbar-nav navbar-left">
+                <li class="dropdown">
+                    <a href="/" class="dropdown-toggle navbar-brand light-grey" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Documentation
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="navbar-brand"><a href="/">Documentation</a></li>
+                        <li class="navbar-brand"><a href="http://share.fyrvall.com">Share</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <span class="navbar-brand light-grey">|</span>
+            <a class="navbar-brand light-grey" href="http://fyrvall.com">Fyrvall.com</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
