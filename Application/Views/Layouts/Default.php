@@ -79,12 +79,16 @@
                 <?php echo $this->PartialView('Sidebar', array('Sidebar' => $Sidebar));?>
             <?php endif;?>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <?php if(isset($BreadCrumbs)):?>
-                <?php echo $this->PartialView('Breadcrumbs', array('BreadCrumbs' => $BreadCrumbs));?>
-            <?php endif;?>
-            <?php echo $view;?>
-        </div>
+        <main role="main">
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <?php if(isset($BreadCrumbs)):?>
+                    <?php echo $this->PartialView('Breadcrumbs', array('BreadCrumbs' => $BreadCrumbs));?>
+                <?php endif;?>
+                <article>
+                    <?php echo $view;?>
+                </article>
+            </div>
+        </main>
     </div>
 </div>
 
