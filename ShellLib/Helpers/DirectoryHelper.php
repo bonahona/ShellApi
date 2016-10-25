@@ -48,6 +48,15 @@ function Directory($localPath){
     return APPLICATION_ROOT . $localPath;
 }
 
+function GetDirectoryFromFilePath($filePath)
+{
+    $fileDirectories = explode('/', $filePath);
+    $fileDirectories = array_splice($fileDirectories, 0, count($fileDirectories) -1);
+
+    $result = implode('/', $fileDirectories);
+    return $result;
+}
+
 function ViewPath($core, $controller, $view){
     return APPLICATION_ROOT . $core->GetViewFolder() . '/' . $controller . '/' . $view . '.php';
 }

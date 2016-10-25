@@ -26,7 +26,7 @@ class ModelHelper
         if(array_key_exists($tableName, $this->TableNames)){
             return $this->TableNames[$tableName];
         }else{
-            die("Missing table is ModelHelper::GetModelName lookup");
+            trigger_error("Missing model entry for table $tableName", E_USER_WARNING);
         }
     }
 
@@ -38,7 +38,7 @@ class ModelHelper
             }
         }
 
-        die("Missing table is ModelHelper::GetTableName lookup");
+        trigger_error("Missing table entry for model $modelName", E_USER_WARNING);
     }
 
     public function GetModelFilePath($modelPath) {
@@ -69,7 +69,7 @@ class ModelHelper
 
         $response = $db->DescribeTable($tableName);
         if ($response == NULL) {
-            die("Missing table " . $tableName);
+            trigger_error("Missing table " . $tableName, E_USER_ERROR);
         }
 
         // Find references to other tables
@@ -84,10 +84,9 @@ class ModelHelper
             $saveResult = file_put_contents($filePath, json_encode($response));
 
             if ($saveResult == false) {
-                die("Failed to save model " . $modelName);
+                trigger_error("Failed to save model cache " . $modelName, E_USER_WARNING);
             }
         }
-
 
         $modelCache             = &Core::$Instance->GetModelCache();
         $modelCache[$modelName] = $response;
@@ -122,7 +121,7 @@ class ModelHelper
         $saveResult = file_put_contents($filePath, json_encode($modelData));
 
         if ($saveResult == false) {
-            die("Failed to save model " . $modelName);
+            trigger_error("Failed to save model " . $modelName, E_USER_WARNING);
         }
     }
 

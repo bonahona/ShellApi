@@ -34,6 +34,9 @@ require_once('/../../ShellLib/Utility/StringUtilities.php');
 */
 class ScriptCore
 {
+    // Overrides some config
+    protected  $IgnoreDatabase = false;
+
     public static $Instance;
 
     protected $DatabaseConfig;          // Server information and credentials to the database to use (if any).
@@ -111,7 +114,7 @@ class ScriptCore
 
             $this->SetupFolders();
             if(!$this->ReadConfig()){
-                die("Failed to read Database Config");
+                trigger_error('Failed to read Database config', E_USER_WARNING);
             }
 
             $this->SetupDatabase();
@@ -166,6 +169,11 @@ class ScriptCore
 
             $databaseType = $this->DatabaseConfig['Database']['DatabaseType'];
 
+            // Override the usedatabase config flag
+            if($this->IgnoreDatabase){
+                $this->DatabaseConfig['Database']['UseDatabase'] = false;
+            }
+
             // Handle the provider types given
             if($databaseType == 'MySqli'){
                 $databaseProviderPath = DATABASE_DRIVER_FOLDER . 'MySqliDatabase.php';
@@ -176,7 +184,7 @@ class ScriptCore
                 require_once($databaseProviderPath);
                 $this->Database = new PdoDatabase($this, $this->DatabaseConfig);
             }else{
-                die("Unknown database provider type: $databaseType");
+                trigger_error("Unknown or unsupportet database provider found in database config: $databaseType", E_USER_ERROR);
             }
         }
     }

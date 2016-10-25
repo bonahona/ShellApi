@@ -18,7 +18,7 @@ class MySqliDatabase implements IDatabaseDriver
         );
 
         if($db->connect_errno > 0){
-            die('Unable to connect to database, ' . $db->connect_error);
+            trigger_error('Unable to connect to database, ' . $db->connect_error, E_USER_WARNING);
         }
 
         $this->Database = $db;
@@ -103,7 +103,7 @@ class MySqliDatabase implements IDatabaseDriver
 
     public function DescribeRelation($class, $column)
     {
-        die("MySqli DescribeRelation not implemented");
+        trigger_error("MySqli DescribeRelation not implemented", E_USER_ERROR);
     }
 
     public function Close()

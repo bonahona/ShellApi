@@ -2,7 +2,10 @@
 
 class FormHelper
 {
+    /* @var Controller */
     private $m_controller;
+
+    /* @var string */
     private $m_currentForm = null;
 
     public function __construct($controller){
@@ -150,7 +153,7 @@ class FormHelper
     public function Select($name, $list, $options = null)
     {
         if(!is_array($list) && !$list instanceof Collection){
-            die('In Formhelper->Select. List is not an array nor Collection');
+            trigger_error("List $name is not an array nor Collection", E_USER_WARNING);
         }
 
         if($options == null){
@@ -252,6 +255,14 @@ class FormHelper
         }
     }
 
+    public function Nonce(){
+        $value = $this->m_controller->GenerateNonce($this->m_currentForm);
+        $name = $this->ParseNonceName();
+
+        $result = "<input type=\"hidden\" name=\"$name\" value=\"$value\"/>";
+        return $result;
+    }
+
     public function Submit($value, $options = null)
     {
         if(isset($options['attributes'])){
@@ -267,7 +278,7 @@ class FormHelper
     public function End()
     {
         if($this->m_currentForm == null){
-            die('No form is currently open');
+            trigger_error('No form is currently open', E_USER_WARNING);
         }else{
             $this->m_currentForm = null;
             return "</form>\n";
@@ -304,6 +315,12 @@ class FormHelper
         return $result;
     }
 
+    private function ParseNonceName()
+    {
+        $result = "nonce[$this->m_currentForm]";
+        return $result;
+    }
+
     private function ParseAttributes($attributes)
     {
         if($attributes == null){
@@ -311,7 +328,7 @@ class FormHelper
         };
 
         if(!is_array($attributes)){
-            die("Attributes is not an array");
+            trigger_error("Attributes is not an array", E_USER_WARNING);
         }
 
         $attributeArray = array();

@@ -6,29 +6,79 @@ define('DEFAULT_RETURN_CODE', '200');
 class Controller
 {
     // State data
+    /* @var string */
     public $Action;
+
+    /* @var string */
     public $Controller;
+
+    /* @var string */
     public $Verb;
+
+    /* @var string */
     public $RequestUri;
+
+    /* @var string */
     public $RequestString;
+
+    /* @var array */
     public $Parameters = array();        // Stores all parameters sent in in the uri that follow the Controller and Action
+
+    /* @var Models */
     public $Models;
+
+    /* @var FormHelper */
     public $Form;
+
+    /* @var HtmlHelper */
     public $Html;
+
+    /* @var ModelValidationHelper */
     public $ModelValidation;
+
+    /* @var Core */
     public $Core;                       // Main core for this controller
-    public $CurrentCore;                // Should usually be the same one as the Core, bit might, during rendering, be set to some other one for resource purposes
+
+    /* @var Core */
+    public $CurrentCore;                // Should usually be the same one as the Core, but might during rendering, be set to some other one for resource purposes
+
+    /* @var array */
     public $Config;
+
+    /* @var Helpers */
     public $Helpers;                    // Reference the main core's helpers list
 
+    /* @var Logging */
+    public $Logging;
+
+    /* @var Cache */
+    public $Cache;                      // Reference to the Core's cache object
+
     // Data sent
+
+    /* @var DataHelper */
     public $Post;                       // Stores all Post data variables sent in
+
+    /* @var DataHelper */
     public $Get;                        // Stores all get variables sent in
+
+    /* @var DataHelper */
     public $Data;                       // Stores both the Get and Post variables
+
+    /* @var DataHelper */
     public $Files;                      // Stores any files sent with the request
+
+    /* @var SessionHelper */
     public $Session = array();          // Stores all the session data
+
+    /* @var array */
     public $Cookies = array();          // Stores all cookies sent
+
+    /* @var string */
     public $Server = array();           // Stores all server variables
+
+    /* @var array */
+    public $Nonces = array();           // Nonce values fetched from the post data
 
     // Response data
     public $ReturnCode;
@@ -56,7 +106,7 @@ class Controller
         $this->Session = new SessionHelper();
     }
 
-    public function GetCore()
+    public  function GetCore()
     {
         return $this->Core;
     }
@@ -71,11 +121,11 @@ class Controller
         return $this->ViewData;
     }
 
-    public function IsPost(){
+    protected function IsPost(){
         return ($this->Verb == "POST");
     }
 
-    public function IsGet()
+    protected function IsGet()
     {
         return ($this->Verb == "GET");
     }
@@ -97,7 +147,7 @@ class Controller
         $partialViewName = PartialViewPath($this->Core, $viewName);
 
         if(!file_exists($partialViewName)){
-            die('Partial view missing ' . $partialViewName);
+            trigger_error('Partial view missing ' . $partialViewName, E_USER_ERROR);
         }
 
         if($partialViewVars != null){
@@ -106,7 +156,7 @@ class Controller
                     $$key = $var;
                 }
             }else{
-                die('$PartialViewVars is not an array');
+                trigger_error('$PartialViewVars is not an array', E_USER_ERROR);
             }
         }
         include($partialViewName);
@@ -260,7 +310,7 @@ class Controller
         }
     }
 
-    public function GetCurrentUser()
+    protected function GetCurrentUser()
     {
         if(isset($this->Session['CurrentUser'])){
             return $this->Session['CurrentUser'];
@@ -274,7 +324,66 @@ class Controller
     }
 
     // Function is called after the action but before the page is rendered
-    public function BeforeRender(){
+    protected function BeforeRender(){
         header('Content-Type: ' . $this->MimeType);
+    }
+
+    // CSRF protection using Nonces
+    public function GenerateNonce($formName, $ttl = 1){
+        $nonceValue = uniqid('', true);
+
+        if(!isset($_SESSION['Nonces'])){
+            $_SESSION['Engine']['Nonces'] = array();
+        }
+
+        $_SESSION['Nonces'][$formName] = array(
+            'Value' => $nonceValue,
+            'Ttl' => $ttl
+        );
+
+        return $nonceValue;
+    }
+
+    public function ValidateNonce($formName){
+        if(isset($_SESSION['Nonces']) && isset($_SESSION['Nonces'][$formName])){
+
+            $nonceEntry = $_SESSION['Nonces'][$formName];
+            $nonceValue = "";
+            if(isset($this->Nonces[$formName])){
+                $nonceValue = $this->Nonces[$formName];
+            }
+
+            if($nonceEntry['Value'] == $nonceValue){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    // Adds a request identifier to the list of cached output for automatic output cache handling
+    protected function EnableOutputCacheFor($requestData, $validity)
+    {
+
+    }
+
+    // Manual adding of an output cache entry or updates an existing one
+    protected function AddOutputCache($requestData, $output, $validity)
+    {
+
+    }
+
+    // Manual invalidation
+    protected function InvalidateOutputCache($requestData)
+    {
+
+    }
+
+    // Manual check for a cache entry
+    protected function IsOutputCached($requestData)
+    {
+
     }
 }

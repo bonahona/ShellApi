@@ -1,10 +1,10 @@
 {
   "Application": {
-    "DefaultController": "Projects",
-    "DefaultAction": "Index",
     "DefaultLayout": "Default",
     "NotFoundController" : "Projects",
-    "NotFoundAction": "NotFound"
+    "NotFoundAction": "NotFound",
+    "CapitalizeControllerName": true,
+    "CapitalizeActionName": true
   },
   "Debug":{
     "DieOnRoutingError": true,
@@ -14,14 +14,8 @@
     "FileDirectory": "/logs/",
     "Loggers": [
       {
-        "FileLog": {
-          "Name": "Default",
-          "File": "default.log"
-        }
-      },
-      {
-        "DatabaseLog":{
-          "Name": "DbLog"
+        "CacheLogger": {
+          "Name": "Cache"
         }
       }
     ]

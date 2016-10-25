@@ -69,7 +69,7 @@ class ModelCollection implements ICollection
         }else if(is_a($conditions, 'DatabaseWhereCondition')){
             return $conditions;
         }else{
-            die('Invalid where conditions');
+            trigger_error('Invalid WHERE condition for model query', E_USER_WARNING);
         }
     }
 

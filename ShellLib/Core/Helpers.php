@@ -40,6 +40,7 @@ class Helpers
         }
     }
 
+    /* @return IHelper */
     public function __get($helperName)
     {
         if(array_key_exists($helperName, $this->m_helpers)){
