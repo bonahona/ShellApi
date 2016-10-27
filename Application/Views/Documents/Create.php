@@ -16,6 +16,10 @@
             <?php echo $this->Form->Input('NavigationTitle', array('attributes' => array('class' => 'form-control', 'required' => 'true')));?>
         </div>
         <div class="form-group">
+            <label>Parent document</label>
+            <?php echo $this->Form->Select('ParentDocumentId', $AllDocuments, array('key' => 'Id', 'value' => 'PageTitle', 'nullfield' => true, 'attributes' => array('class' => 'form-control')));?>
+        </div>
+        <div class="form-group">
             <div class="checkbox">
                 <label>
                     <?php echo $this->Form->Bool('ShowInMenu');?>

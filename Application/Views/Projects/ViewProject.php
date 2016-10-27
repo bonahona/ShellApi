@@ -162,7 +162,7 @@
 
 <?php echo $this->PartialView('Examples', array('Examples' => $Examples, 'Project' => $Project));?>
 
-<?php echo $this->PartialView('Documents', array('Documents' => $Documents, 'Project' => $Project));?>
+<?php echo $this->PartialView('Documents', array('Documents' => $Documents, 'AllDocuments' => $AllDocuments, 'Project' => $Project));?>
 <?php echo $this->PartialView('ReleaseNotes', array('ReleaseNotes' => $ReleaseNotes, 'Project' => $Project));?>
 <?php echo $this->PartialView('SeeAlsoLinks', array('SeeAlsoLinks' => $SeeAlsoLinks), 'Project', $Project);?>
 

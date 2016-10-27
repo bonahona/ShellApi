@@ -167,3 +167,22 @@ ul
 {
     padding: 5px 15px;
 }
+
+.list-group {
+    margin-bottom: 5px;
+}
+
+.list-group-item {
+    padding: 5px 15px;
+}
+
+.list-group.inner li{
+    border:none;
+    margin-bottom: 5px;
+
+}
+
+.list-group li{
+    border:none;
+    margin-bottom: 5px;
+}

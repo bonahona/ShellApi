@@ -211,7 +211,10 @@ class ProjectsController extends Controller
         $examples = $this->Models->Example->Where(array('ProjectId' => $project->Id));
         $this->Set('Examples', $examples);
 
-        $documents = $this->Models->Document->Where(array('ProjectId' => $project->Id));
+        $allDocuments = $this->Models->Document->Where(array('ProjectId' => $project->Id));
+        $this->Set('AllDocuments', $allDocuments);
+
+        $documents = $this->Models->Document->Where(array('ProjectId' => $project->Id, 'ParentDocumentId' => null));
         $this->Set('Documents', $documents);
 
         $releaseNotes = $this->Models->ReleaseNotes->Where(array('ProjectId' => $project->Id))->OrderByDescending('VersionNumber')->Take(5);
