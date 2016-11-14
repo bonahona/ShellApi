@@ -227,6 +227,7 @@ class ProjectsController extends Controller
         $this->Set('NamespacesExists', $namespacesExists);
 
         $namespacedClasses = array();
+        $publicClasses = array();
 
         if($namespacesExists){
             $namespaces = $this->FilterClassesByNamespace($project);
@@ -240,20 +241,20 @@ class ProjectsController extends Controller
 
                 $namespacedClasses[$namespaceName] = $namespacedClasses[$namespaceName]->OrderBy('ClassName');
             }
-
-            $this->Set('NamespacedClasses', $namespacedClasses);
         }else{
             $publicClasses = $project->ProjectClasses->Where(array('IsPrimitive' => '0'))->OrderBy('ClassName');
-            $this->Set('PublicClasses', $publicClasses);
         }
 
+        $this->Set('NamespacedClasses', $namespacedClasses);
+        $this->Set('PublicClasses', $publicClasses);
         $this->Set('Sidebar', $this->GenerateSidebar($project));
         $this->Set('BreadCrumbs', $this->GenerateBreadCrumbs($project));
 
+        $externalClasses = array();
         if($this->IsLoggedIn()){
             $externalClasses = $project->ProjectClasses->Where(array('IsPrimitive' => '1'));
-            $this->Set('ExternalClasses', $externalClasses);
         }
+        $this->Set('ExternalClasses', $externalClasses);
 
         // For the logged in create new see also link modal window
         if($this->IsLoggedIn()){
