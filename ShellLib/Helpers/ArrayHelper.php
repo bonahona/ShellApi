@@ -9,3 +9,15 @@ function CreateArray($value, $count)
 
     return $result;
 }
+
+function RemoveEmpty($subject)
+{
+    $result = array();
+    foreach($subject as $entry){
+        if($entry != ''){
+            $result[] = $entry;
+        }
+    }
+
+    return $result;
+}

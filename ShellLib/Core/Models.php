@@ -10,12 +10,13 @@ class Models
         $this->ModelNameLookupTable = array();
     }
 
+    /* @return ModelCollection */
     public function __get($modelName)
     {
         if(array_key_exists($modelName, $this->ModelCollections)){
             return $this->ModelCollections[$modelName];
         }else{
-            die("Model $modelName does not exists");
+            trigger_error("Model $modelName does not exists", E_USER_ERROR);
         }
     }
 
@@ -45,6 +46,11 @@ class Models
 
     public function GetModelForName($modelName)
     {
+        if(!array_key_exists($modelName, $this->ModelCollections)){
+            trigger_error('Missing model for table name ' . $modelName, E_USER_WARNING);
+            return null;
+        }
+
         return $this->ModelCollections[$modelName];
     }
 

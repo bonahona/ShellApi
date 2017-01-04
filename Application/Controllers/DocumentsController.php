@@ -40,15 +40,20 @@ class DocumentsController extends BackendController
 
             if($this->StringEquals($type, 'Project')){
                 $document->ProjectId = $id;
+                $allDocuments = $this->Models->Document->Where(array('ProjectId' => $document->ProjectId));
             } else if($this->StringEquals($type, 'Class')){
                 $document->ClassId = $id;
+                $allDocuments = $this->Models->Document->Where(array('ClassId' => $document->ClassId));
             }else if($this->StringEquals($type, 'Method')){
                 $document->MethodId = $id;
+                $allDocuments = $this->Models->Document->Where(array('MethodId' => $document->MethodId));
             }else if($this->StringEquals('Property', 'Property')){
                 $document->PropertyId = $id;
+                $allDocuments = $this->Models->Document->Where(array('PropertyId' => $document->PropertyId));
             }
 
             $this->Set('Document', $document);
+            $this->Set('AllDocuments', $allDocuments);
 
             return $this->View();
         }

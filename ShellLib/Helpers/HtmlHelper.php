@@ -82,7 +82,7 @@ class HtmlHelper
         };
 
         if(!is_array($attributes)){
-            die("Attributes is not an array");
+            trigger_error("Attributes is not an array", E_USER_WARNING);
         }
 
         $attributeArray = array();

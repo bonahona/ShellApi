@@ -1,6 +1,6 @@
 <?php
 require_once('BackendController.php');
-class ProjectCategoriesController extends BackendController
+class ProjectcategoriesController extends BackendController
 {
     public function Index()
     {

@@ -1,6 +1,6 @@
 <?php
 require_once('BackendController.php');
-class ProjectLanguagesController extends BackendController
+class ProjectlanguagesController extends BackendController
 {
 
     public function Index()

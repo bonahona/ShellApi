@@ -1,12 +1,33 @@
 {
-  "Routes": {
-    "/Admin/":{
-      "Controller": "User",
-      "Action": "Login"
+  "Routes": [
+    {
+      "/Admin/{...}": {
+        "Controller": "User",
+        "Action": "Login",
+        "Variables": {
+        }
+      }
     },
-    "/Contact/": {
-      "Controller": "Projects",
-      "Action": "Contact"
+	{
+      "/Contact/{...}": {
+        "Controller": "Projects",
+        "Action": "Contact",
+        "Variables": {
+        }
+      }
+    },
+    {
+      "/{Controller}/{Action}/{...}": {
+        "Controller": "{Controller}",
+        "Action": "{Action}",
+        "Variables": "{...}"
+      }
+    }
+  ],
+  "Default": {
+    "Controller": "Projects",
+    "Action": "Index",
+    "Variables": {
     }
   }
 }
