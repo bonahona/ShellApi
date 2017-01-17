@@ -113,7 +113,7 @@
 <?php endif;?>
 
 <?php echo $this->PartialView('Examples', array('Examples' => $Examples, 'ProjectClass' => $ProjectClass));?>
-<?php echo $this->PartialView('Documents', array('Documents' => $Documents, 'Project' => $Project, 'ProjectClass' => $ProjectClass));?>
+<?php echo $this->PartialView('Documents', array('Documents' => $Documents, 'AllDocuments' => $AllDocuments, 'Project' => $Project, 'ProjectClass' => $ProjectClass));?>
 <?php echo $this->PartialView('SeeAlsoLinks', array('SeeAlsoLinks' => $SeeAlsoLinks, 'Project', $Project));?>
 
 <?php if($this->IsLoggedIn()):?>

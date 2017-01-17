@@ -15,6 +15,7 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <?php if(!isset($AllDocuments)){$AllDocuments = $Documents;}?>
                     <?php foreach($AllDocuments as $document):?>
                         <tr>
                             <td><?php echo $document->Id;?></td>
