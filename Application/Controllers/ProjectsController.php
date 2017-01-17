@@ -234,6 +234,7 @@ class ProjectsController extends Controller
 
             foreach($namespaces as $namespaceName => $namespace){
                 $namespacedClasses[$namespaceName] = new Collection();
+                $namespacedClasses[$namespaceName] = new Collection();
 
                 foreach($namespace as $projectClass){
                     $namespacedClasses[$namespaceName]->Add($projectClass);

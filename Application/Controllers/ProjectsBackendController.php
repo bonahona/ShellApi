@@ -151,7 +151,6 @@ class ProjectsbackendController extends BackendController
              $generatedClasses = $this->GeneratePhpClasses($project);
         }
 
-        var_dump(count($generatedClasses));
     }
 
     private function GenerateCSharpClasses($project)
@@ -267,7 +266,6 @@ class ProjectsbackendController extends BackendController
         $result->ExternalSource = $source;
 
         $result->Save();
-        var_dump($result->Object());
         return $result;
     }
 }

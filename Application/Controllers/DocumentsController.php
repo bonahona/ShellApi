@@ -113,6 +113,18 @@ class DocumentsController extends BackendController
                 return  $this->Redirect('/Documents/');
             }
         }else{
+            if($document->ProjectId != 0){
+                $allDocuments = $this->Models->Document->Where(array('ProjectId' => $document->ProjectId));
+            } else if($document->ClassId != 0){
+                $allDocuments = $this->Models->Document->Where(array('ClassId' => $document->ClassId));
+            }else if($document->MethodId != 0){
+                $allDocuments = $this->Models->Document->Where(array('MethodId' => $document->MethodId));
+            }else if($document->PropertyId != 0){
+                $allDocuments = $this->Models->Document->Where(array('PropertyId' => $document->PropertyId));
+            }
+
+            $this->Set('AllDocuments', $allDocuments);
+
             $this->Set('Document', $document);
             return $this->View();
         }
