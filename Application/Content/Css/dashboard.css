@@ -186,3 +186,9 @@ ul
     border:none;
     margin-bottom: 5px;
 }
+
+.code{
+    color: #000000;
+    font-weight: 400;
+    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+}
