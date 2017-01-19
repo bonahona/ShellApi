@@ -192,3 +192,7 @@ ul
     font-weight: 400;
     font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
 }
+
+hr {
+    border-top: 1px solid #ddd;
+}
