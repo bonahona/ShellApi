@@ -427,7 +427,6 @@ class PdoDatabase implements IDatabaseDriver
 
         $params = array();
         foreach($values as $key => $value){
-            echo "$key = $value";
             if($value == '0'){
                 $params[] = null;
             }else {
