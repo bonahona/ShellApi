@@ -44,7 +44,8 @@ function GetAllFiles($directory)
     return $result;
 }
 
-function Directory($localPath){
+function Directory($localPath)
+{
     return APPLICATION_ROOT . $localPath;
 }
 
@@ -57,7 +58,8 @@ function GetDirectoryFromFilePath($filePath)
     return $result;
 }
 
-function ViewPath($core, $controller, $view){
+function ViewPath($core, $controller, $view)
+{
     return APPLICATION_ROOT . $core->GetViewFolder() . '/' . $controller . '/' . $view . '.php';
 }
 
@@ -66,6 +68,64 @@ function PartialViewPath($core, $view)
     return APPLICATION_ROOT . $core->GetPartialFolder() . '/' . $view . '.php';
 }
 
-function LayoutPath($core, $layout){
+function LayoutPath($core, $layout)
+{
     return APPLICATION_ROOT . $core->GetLayoutFolder() . '/' .  $layout . '.php';
+}
+
+function CreateArray($value, $count)
+{
+    $result = array();
+
+    for($i = 0; $i < $count; $i++) {
+        $result[] = $value;
+    }
+
+    return $result;
+}
+
+function RemoveEmpty($subject)
+{
+    $result = array();
+    foreach($subject as $entry){
+        if($entry != ''){
+            $result[] = $entry;
+        }
+    }
+
+    return $result;
+}
+
+function startsWith($haystack, $needle)
+{
+    // search backwards starting from haystack length characters from the end
+    return $needle === "" || strrpos($haystack, $needle, -strlen($haystack)) !== FALSE;
+}
+
+function endsWith($haystack, $needle)
+{
+    // search forward starting from end minus needle length characters
+    return $needle === "" || (($temp = strlen($haystack) - strlen($needle)) >= 0 && strpos($haystack, $needle, $temp) !== FALSE);
+}
+
+function replaceLastOccurence($subject, $search, $replace)
+{
+    $pos = strrpos($subject, $search);
+
+    if($pos !== false) {
+        $subject = substr_replace($subject, $replace, $pos, strlen($search));
+    }
+
+    return $subject;
+}
+
+function ArrayKeyExistsCaseInsensitive($needle, $haystack)
+{
+    foreach(array_keys($haystack) as $key){
+        if(strtolower(($key) == strtolower($needle))){
+            return true;
+        }
+    }
+
+    return false;
 }

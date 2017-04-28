@@ -56,6 +56,12 @@ class Helpers
             }
             return $this->m_helpers[$helperName];
         }else{
+
+            if($helperName == ''){
+                $helperName = '[Empty]';
+            }
+
+            trigger_error('Helper ' . $helperName . ' does not exists', E_USER_ERROR);
             return null;
         }
     }

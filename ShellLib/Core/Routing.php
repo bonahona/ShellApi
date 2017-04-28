@@ -32,7 +32,6 @@ class Routing
         }
 
         $requestInfo = $this->GetRequestInfo($requestResource);
-
         if(isset($this->RoutingConfig['Routes'])){
             foreach($this->RoutingConfig['Routes'] as  $route){
                 if($this->CanHandleRequest($route, $requestInfo)){
@@ -127,8 +126,9 @@ class Routing
                 }
             }
         }
-        
+
         $result = array(
+            'MethodName' => $_SERVER['REQUEST_METHOD'],
             'ControllerName' => $controllerName,
             'ActionName' => $actionName,
             'Variables' => $variables
