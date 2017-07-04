@@ -22,9 +22,14 @@ class HtmlHelper
         return $result;
     }
 
-    public function Js($filename)
+    public function Js($filename, $isLocal = true)
     {
-        $filepath = $this->m_controller->GetCurrentCore()->GetJsFolder() . $filename;
+        if($isLocal) {
+            $filepath = $this->m_controller->GetCurrentCore()->GetJsFolder() . $filename;
+        }else{
+            $filepath = $filename;
+        }
+
         $result = "<script src=\"$filepath\"></script>";
 
         return $result;

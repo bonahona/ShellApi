@@ -1,5 +1,5 @@
 <?php /*@var $this Controller */?>
-<h1 class="page-header"><?php echo $Project->ProjectName;?></h1>
+<h1 class="page-header"><?php echo $Project->TitleName;?></h1>
 
 <?php if($this->IsLoggedIn()):?>
     <div class="row">

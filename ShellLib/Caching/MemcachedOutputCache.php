@@ -21,27 +21,13 @@ class MemcachedOutputCache implements IOutputCache
         }
     }
 
-    public function CacheOutput($request, $expires, $data)
+    public function CacheOutput($request, $httpResult)
     {
-
-    }
-
-    public function IsCached($request)
-    {
-        if($request['MethodName'] != 'GET'){
-            return false;
-        }
-
-        $keyName = $this->GetKeyName($request);
-        if($this->CacheServer->append($keyName, NULL)){
-            return true;
-        }
-
-        return false;
     }
 
     public function GetCache($request)
     {
+        return null;
     }
 
     public function Invalidate($request)

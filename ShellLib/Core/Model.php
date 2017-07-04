@@ -76,10 +76,6 @@ class Model
         }
     }
 
-    public function OnSave()
-    {
-    }
-
     public function Validate()
     {
         return array();
@@ -144,7 +140,6 @@ class Model
 
     public function Save()
     {
-        $this->OnSave();
         $this->ModelCollection->Save($this);
 
         // In case the Primary key has changed, the references key need an update
@@ -167,6 +162,14 @@ class Model
 
         foreach($this->Properties as $key => $value){
             $result[$key] = $value;
+        }
+
+        foreach($this->References as $key => $value){
+            $result[$key] = 'Proxy Object';
+        }
+
+        foreach($this->ReferenceCollections as $key => $value){
+            $result[$key] = 'Proxy Collection';
         }
 
         return $result;

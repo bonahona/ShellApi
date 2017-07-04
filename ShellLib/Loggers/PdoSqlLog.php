@@ -1,18 +1,11 @@
 <?php
 class PdoSqlLog implements ILog
 {
-    /* @var Logging */
-    protected $Logging;         // Reference back to the logging instance for shared functionality
-
-    /* @var PDO */
     protected $Database;
-
-    /* @var string */
     protected $TableName;
 
-    public function Setup($config, $logging)
+    public function Setup($config)
     {
-        $this->Logging = $logging;
         $this->Database = null;
 
         if(!isset($config['Name'])){
@@ -77,7 +70,7 @@ class PdoSqlLog implements ILog
         $this->TableName = $config['Table'];
     }
 
-    public function Log($message, $context = array(), $logLevel = LOGGING_NOTICE)
+    public function Write($data, $logLevel = LOGGING_NOTICE)
     {
         if($this->Database === null || $this->Database === false){
             return;
@@ -91,52 +84,11 @@ class PdoSqlLog implements ILog
             var_dump($this->Database->errorInfo());
         }
 
-        $message = $this->Logging->Interpolate($message, $context);
-        $values = array($message, $logLevel);
+        $values = array($data, $logLevel);
 
         if(!$preparedStatement->execute($values)){
             echo "Failed to execute PDO statement";
             var_dump($this->Database->errorInfo());
         }
-    }
-
-    public function Emergency($message, $context = array())
-    {
-        $this->Log($message, $context, LOGGING_EMERGENCY);
-    }
-
-    public function Alert($message, $context = array())
-    {
-        $this->Log($message, $context, LOGGING_ALERT);
-    }
-
-    public function Critical($message, $context = array())
-    {
-        $this->Log($message, $context, LOGGING_CRITICAL);
-    }
-
-    public function Error($message, $context = array())
-    {
-        $this->Log($message, $context, LOGGING_ERROR);
-    }
-
-    public function Warning($message, $context = array())
-    {
-        $this->Log($message, $context, LOGGING_WARNING);
-    }
-
-    public function Notice($message, $context = array())
-    {
-        $this->Log($message, $context, LOGGING_NOTICE);
-    }
-
-    public function Info($message, $context = array())
-    {
-        $this->Log($message, $context, LOGGING_INFO);
-    }
-
-    public function Debug($message, $context = array())
-    {
-        $this->Log($message, $context, LOGGING_DEBUG);
     }
 }

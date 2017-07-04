@@ -1,6 +1,6 @@
 <?php
-define('Ascending', 1);
-define('Descending', 2);
+const Ascending = 1;
+const Descending = 2;
 
 class CustomObjectSorter
 {

@@ -23,7 +23,7 @@ require_once('/../../ShellLib/Core/ModelProxyCollection.php');
 require_once('/../../ShellLib/Core/Model.php');
 require_once('/../../ShellLib/Core/Models.php');
 require_once('/../../ShellLib/Core/IDatabaseDriver.php');
-require_once('/../../ShellLib/Helpers/CoreHelper.php');
+require_once('/../../ShellLib/Helpers/DirectoryHelper.php');
 require_once('/../../ShellLib/Helpers/ModelHelper.php');
 require_once('/../../ShellLib/Collections/ICollection.php');
 require_once('/../../ShellLib/Collections/IDataCollection.php');

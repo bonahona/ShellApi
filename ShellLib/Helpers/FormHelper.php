@@ -2,10 +2,7 @@
 
 class FormHelper
 {
-    /* @var Controller */
     private $m_controller;
-
-    /* @var string */
     private $m_currentForm = null;
 
     public function __construct($controller){
@@ -255,14 +252,6 @@ class FormHelper
         }
     }
 
-    public function Nonce(){
-        $value = $this->m_controller->GenerateNonce($this->m_currentForm);
-        $name = $this->ParseNonceName();
-
-        $result = "<input type=\"hidden\" name=\"$name\" value=\"$value\"/>";
-        return $result;
-    }
-
     public function Submit($value, $options = null)
     {
         if(isset($options['attributes'])){
@@ -312,12 +301,6 @@ class FormHelper
             $result = "data[$this->m_currentForm][$index][$name]";
         }
 
-        return $result;
-    }
-
-    private function ParseNonceName()
-    {
-        $result = "nonce[$this->m_currentForm]";
         return $result;
     }
 

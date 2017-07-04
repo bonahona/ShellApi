@@ -1,7 +1,7 @@
 <?php
 
-define('DEFAULT_MIME_TYPE', 'text/html');
-define('DEFAULT_RETURN_CODE', '200');
+const DEFAULT_MIME_TYPE = 'text/html';
+const DEFAULT_RETURN_CODE = '200';
 
 class Controller
 {
@@ -55,7 +55,6 @@ class Controller
     public $Cache;                      // Reference to the Core's cache object
 
     // Data sent
-
     /* @var DataHelper */
     public $Post;                       // Stores all Post data variables sent in
 
@@ -77,17 +76,18 @@ class Controller
     /* @var string */
     public $Server = array();           // Stores all server variables
 
-    /* @var array */
-    public $Nonces = array();           // Nonce values fetched from the post data
-
     // Response data
     public $ReturnCode;
     public $MimeType;
     public $Title;
     public $Layout;
 
-    // Data that will be used in the view
+    // Data that will/can be used in the view
     public $ViewData = array();
+
+    // Can be used to queue scripts from controller fiels and then be read in the view and/or layout
+    public $JavascriptFiles = array();
+    public $CssFiles = array();
 
     function __construct(){
 
@@ -165,6 +165,10 @@ class Controller
     // Different ways to render something
     protected function View($viewName = null){
 
+        $httpResult = new HttpResult();
+        $httpResult->ReturnCode = $this->ReturnCode;
+        $httpResult->MimeType = $this->MimeType;
+
         if($viewName == null){
             $viewName = $this->Action;
         }
@@ -190,8 +194,8 @@ class Controller
         $layouts = $this->GetLayoutPaths();
 
         if(empty($layouts)){
-            echo $view;
-            return;
+            $httpResult->Content = $view;
+            return $httpResult;
         }
 
         // Go through the layout candidate files in order and make sure they exists. The first match will act as the layout for this view
@@ -205,40 +209,71 @@ class Controller
         }
 
         if($foundLayout == null){
-            echo $view;
+            $httpResult->Content = $view;
         }else{
             $this->CurrentCore = $foundLayout['core'];
+            ob_start();
             include($foundLayout['layout']);
+            $layoutView = ob_get_clean();
             $this->CurrentCore = $this->Core;
+
+            $httpResult->Content = $layoutView;
         }
+
+        return $httpResult;
     }
 
     protected function Json($data){
-        header('Content-Type: application/json');
-        echo json_encode($data);
+        $result = new HttpResult();
+        $result->MimeType = 'application/json';
+        $result->Content = json_encode($data);
+
+        return $result;
+    }
+
+    protected function Text($text)
+    {
+        $result = new HttpResult();
+        $result->MimeType = 'text/plain';
+        $result->Content = $text;
+        return $result;
+    }
+
+    protected function Http($text)
+    {
+        $result = new HttpResult();
+        $result->MimeType = 'text/html';
+        $result->Content = $text;
+        return $result;
     }
 
     protected function Redirect($url, $vars = null, $code = 301){
+
+        $locationString = '';
         if($vars != null){
             $queryParts = array();
             foreach($vars as $key => $value){
                 $queryParts[] = "$key=$value";
                 $queryString = implode(',', $queryParts);
-                header('Location:' . Url($url . '?' . $queryString), true, $code);
+                $locationString = Url($url . '?' . $queryString);
             }
         }else {
-            header('Location: ' . Url($url), true, $code);
+            $locationString =  Url($url);
         }
-        exit;
-    }
 
-    protected function SetType($type){
-        header('Content-Type: ' . $type);
+        $result = new HttpResult();
+        $result->Location = $locationString;
+        $result->ReturnCode = $code;
+
+        return $result;
     }
 
     protected function HttpStatus($statusCode)
     {
-        $this->ReturnCode = $statusCode;
+        $result = new HttpResult();
+        $result->ReturnCode = $statusCode;
+
+        return $result;
     }
 
     function HttpNotFound()
@@ -319,48 +354,32 @@ class Controller
         }
     }
 
+    protected function EnqueueJavascript($javascriptFile)
+    {
+        $this->JavascriptFiles[] = $javascriptFile . "\n";
+    }
+
+    protected function EnqueueCssFiles($cssFiles)
+    {
+        $this->CssFiles[] = $cssFiles;
+    }
+
+    protected function ClearJavascript()
+    {
+        $this->JavascriptFiles = array();
+    }
+
+    protected function ClearCss()
+    {
+        $this->CssFiles = array();
+    }
+
     // Function is called before the actions is
     public function BeforeAction(){
     }
 
     // Function is called after the action but before the page is rendered
     protected function BeforeRender(){
-        header('Content-Type: ' . $this->MimeType);
-    }
-
-    // CSRF protection using Nonces
-    public function GenerateNonce($formName, $ttl = 1){
-        $nonceValue = uniqid('', true);
-
-        if(!isset($_SESSION['Nonces'])){
-            $_SESSION['Engine']['Nonces'] = array();
-        }
-
-        $_SESSION['Nonces'][$formName] = array(
-            'Value' => $nonceValue,
-            'Ttl' => $ttl
-        );
-
-        return $nonceValue;
-    }
-
-    public function ValidateNonce($formName){
-        if(isset($_SESSION['Nonces']) && isset($_SESSION['Nonces'][$formName])){
-
-            $nonceEntry = $_SESSION['Nonces'][$formName];
-            $nonceValue = "";
-            if(isset($this->Nonces[$formName])){
-                $nonceValue = $this->Nonces[$formName];
-            }
-
-            if($nonceEntry['Value'] == $nonceValue){
-                return true;
-            }else{
-                return false;
-            }
-        }else{
-            return false;
-        }
     }
 
     // Adds a request identifier to the list of cached output for automatic output cache handling

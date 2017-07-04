@@ -3,8 +3,8 @@
  * Wrapper around a model to allow for model interaction such as load and save of data to the database
  */
 
-define('INT', "i");
-define('STRING', "s");
+const INT = 'i';
+const STRING = 's';
 
 class ModelCollection implements ICollection
 {

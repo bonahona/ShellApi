@@ -427,7 +427,7 @@ class PdoDatabase implements IDatabaseDriver
 
         $params = array();
         foreach($values as $key => $value){
-            if($value == '0'){
+            if($value === '0'){
                 $params[] = null;
             }else {
                 $params[] = $values[$key];
@@ -437,7 +437,7 @@ class PdoDatabase implements IDatabaseDriver
         $params[] = $id;
         if(!$preparedStatement->execute($params)){
             echo "Failed to execute PDO statement";
-            var_dump($this->Database->errorInfo());
+            var_dump(array('Sql' => $sqlStatement, 'Params' => $params, 'Error' => $this->Database->errorInfo()));
         }
     }
 }

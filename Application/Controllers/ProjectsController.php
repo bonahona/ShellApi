@@ -460,7 +460,7 @@ class ProjectsController extends Controller
 
         if($project != null) {
             $projectEntry = array(
-                'Title' => $project->ProjectName,
+                'Title' => $project->TitleName,
                 'Items' => array()
             );
 
@@ -526,7 +526,7 @@ class ProjectsController extends Controller
                 foreach ($projectCategory->Projects->Where(array('IsActive' => 1)) as $project) {
                     $projectEntry['Items'][] = array(
                         'Link' => '/Projects/Details/' . $project->ProjectName,
-                        'DisplayName' => $project->ProjectName
+                        'DisplayName' => $project->TitleName
                     );
                 }
 
@@ -592,7 +592,7 @@ class ProjectsController extends Controller
         if($project != null) {
             $result[] = array(
                 'Link' => '/Projects/Details/' . $project->ProjectName,
-                'Text' => $project->ProjectName
+                'Text' => $project->TitleName
             );
         }
 

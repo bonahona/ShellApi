@@ -47,6 +47,9 @@ class Models
     public function GetModelForName($modelName)
     {
         if(!array_key_exists($modelName, $this->ModelCollections)){
+            if($modelName == ''){
+                $modelName = '[Empty]';
+            }
             trigger_error('Missing model for table name ' . $modelName, E_USER_WARNING);
             return null;
         }
@@ -65,6 +68,14 @@ class Models
                 return $value;
             }
         }
+
+        if($tableName === null){
+            $tableName = '[null]';
+        }else if($tableName === ''){
+            $tableName = '[Empty]';
+        }
+
+        trigger_error('Missing model name for table name ' . $tableName, E_USER_WARNING);
 
         return null;
     }

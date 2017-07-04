@@ -1,38 +1,40 @@
 <?php
 define('SERVER_ROOT', str_ireplace('/Index.php', '', $_SERVER['PHP_SELF']));
 define('APPLICATION_ROOT',          $_SERVER['DOCUMENT_ROOT']);
-define('APPLICATION_FOLDER',        '/Application');
-define('CONFIG_FOLDER',             '/Config/');
-define('CONTROLLER_FOLDER',         '/Controllers/');
-define('MODELS_FOLDER',             '/Models/');
-define('PLUGINS_FOLDER',            '/Plugins/');
-define('HELPERS_FOLDER',            '/Helpers/');
-define('VIEWS_FOLDER',              '/Views/');
-define('PARTIAL_FOLDER',            '/Views/Partial/');
-define('LAYOUTS_FOLDER',            '/Views/Layouts');
-define('MODEL_CACHE_FOLDER',        '/Application/Temp/Cache/Models/');
-define('VIEW_CACHE_FOLDER',         '/Application/Temp/Cache/Views/');
-define('CSS_FOLDER',                '/Content/Css/');
-define('JS_FOLDER',                 '/Content/Js/');
-define('IMAGE_FOLDER',              '/Content/Images/');
-define('DATABASE_DRIVER_FOLDER',    './ShellLib/DatabaseDrivers/');
-define('LOGGER_FOLDER',             '/Loggers/');
-define('SHELL_LIB_LOGGERS_FOLDER',  '/ShellLib/Loggers/');
-define('SHELL_LIB_CACHE_FOLDER',    './ShellLib/Caching/');
-define('SHELL_LIB_OUTPUT_CACHE_FOLDER','/ShellLib/OutputCaches/');
 
-define('VIEW_FILE_ENDING', '.php');
-define('MODEL_CACHE_FILE_ENDING', '.model');
-define('OUTPUT_CACHE_FILE_ENDING', '.output');
-define('PHP_FILE_ENDING', '.php');
-define('CSS_FILE_ENDING', '.css');
-define('JS_FILE_ENDING', '.js');
+const APPLICATION_FOLDER =          '/Application';
+const CONFIG_FOLDER =               '/Config/';
+const CONTROLLER_FOLDER =           '/Controllers/';
+const MODELS_FOLDER =               '/Models/';
+const PLUGINS_FOLDER =              '/Plugins/';
+const HELPERS_FOLDER =              '/Helpers/';
+const VIEWS_FOLDER =                '/Views/';
+const PARTIAL_FOLDER =              '/Views/Partial/';
+const LAYOUTS_FOLDER =              '/Views/Layouts';
+const MODEL_CACHE_FOLDER =          '/Application/Temp/Cache/Models/';
+const VIEW_CACHE_FOLDER =           '/Application/Temp/Cache/Views/';
+const CSS_FOLDER =                  '/Content/Css/';
+const JS_FOLDER =                   '/Content/Js/';
+const IMAGE_FOLDER =                '/Content/Images/';
+const DATABASE_DRIVER_FOLDER =      './ShellLib/DatabaseDrivers/';
+const LOGGER_FOLDER =               '/Loggers/';
+const SHELL_LIB_LOGGERS_FOLDER =    '/ShellLib/Loggers/';
+const SHELL_LIB_CACHE_FOLDER =      './ShellLib/Caching/';
+const SHELL_LIB_OUTPUT_CACHE_FOLDER='/ShellLib/OutputCaches/';
 
-define('CORE_CLASS', 'Core');
+const VIEW_FILE_ENDING =            '.php';
+const MODEL_CACHE_FILE_ENDING =     '.model';
+const OUTPUT_CACHE_FILE_ENDING =    '.output';
+const PHP_FILE_ENDING =             '.php';
+const CSS_FILE_ENDING =             '.css';
+const JS_FILE_ENDING =              '.js';
+
+const CORE_CLASS =                  'Core';
 
 // The only classes always needed are these. The rest are loaded on demand
 require_once('./ShellLib/Core/ConfigParser.php');
 require_once('./ShellLib/Core/Routing.php');
+require_once('./ShellLib/Core/HttpResult.php');
 require_once('./ShellLib/Helpers/CoreHelper.php');
 require_once('./ShellLib/Caching/Caching.php');
 
@@ -76,6 +78,8 @@ class Core
     protected $CssFolder;
     protected $JsFolder;
     protected $ImageFolder;
+    protected $LoggerFolder;
+    protected $CacheFolder;
 
     public function GetIsPrimaryCore()
     {
@@ -98,10 +102,12 @@ class Core
         return $this->Caching;
     }
 
+    /* @return ModelHelper*/
     public function &GetModelHelper(){
         return $this->ModelHelper;
     }
 
+    /* @return int*/
     public function GetRequestUrl(){
         return $this->RequestUrl;
     }
@@ -188,23 +194,26 @@ class Core
 
     // Creates the core object that is used for the application and any plugins that are included
     // SubPath is used when a plugin is created where the path supplied points out the relative path to the plugin (For model and controller inclusions
+    // Creates the core object that is used for the application and any plugins that are included
+    // SubPath is used when a plugin is created where the path supplied points out the relative path to the plugin (For model and controller inclusions
     function __construct($subPath = null, $primaryCore = null)
     {
-        if($subPath == null){
+        if ($subPath == null) {
             $this->IsPrimaryCore = true;
             self::$Instance = $this;
             $this->PrimaryCore = $this;
 
             $this->SetupPreRequestFolder();
 
-            if(!$this->ReadConfig()){
-                trigger_error("Failed to read ApplicationConfig", E_USER_ERROR);trigger_error("Failed to read ApplicationConfig", E_USER_ERROR);
+            if (!$this->ReadConfig()) {
+                trigger_error("Failed to read ApplicationConfig", E_USER_ERROR);
+                trigger_error("Failed to read ApplicationConfig", E_USER_ERROR);
             }
 
             $this->PluginPath = '';
             $this->CreatePlugins();
             $this->SetupCaching();
-        }else{
+        } else {
             $this->IsPrimaryCore = false;
             $this->PluginPath = $subPath;
             $this->PrimaryCore = $primaryCore;
@@ -258,9 +267,6 @@ class Core
             $this->SetupLogs();
             $this->SetupDatabase();
             $this->CacheModels();
-
-            $this->PluginPath = '';
-            $this->SetupPlugins();
         }else{
             $this->IsPrimaryCore = false;
             $this->PluginPath = $subPath;
@@ -278,12 +284,6 @@ class Core
             $this->Database = $primaryCore->GetDatabase();
             $this->Helpers = $primaryCore->GetHelpers();
             $this->SetupHelpers();
-        }
-
-        // We are now sure all models have been loaded and all plugins initialized
-        if($subPath == null) {
-            $this->UpdateModelReferences();
-            $this->SetupModels();
         }
     }
 
@@ -407,32 +407,32 @@ class Core
         }
     }
 
-    protected  function ApplicationCapitalizeControllerName()
+    protected function CapitalizeActionName()
     {
-        $result = false;
-        if($this->ApplicationConfig !== false) {
-            if (array_key_exists('Application', $this->ApplicationConfig)) {
-                if (array_key_exists('CapitalizeControllerName', $this->ApplicationConfig['Application'])) {
-                    $result = $this->ApplicationConfig['Application']['CapitalizeControllerName'];
-                }
-            }
-        }
-
-        return $result;
-    }
-
-    protected  function ApplicationCapitalizeActionName()
-    {
-        $result = false;
+        // Read debug data from the log
+        $capitalizeActionName = false;
         if($this->ApplicationConfig !== false) {
             if (array_key_exists('Application', $this->ApplicationConfig)) {
                 if (array_key_exists('CapitalizeActionName', $this->ApplicationConfig['Application'])) {
-                    $result = $this->ApplicationConfig['Application']['CapitalizeActionName'];
+                    $capitalizeActionName = $this->ApplicationConfig['Application']['CapitalizeActionName'];
                 }
             }
         }
+        return $capitalizeActionName;
+    }
 
-        return $result;
+    protected function CapitalizeControllerName()
+    {
+        // Read debug data from the log
+        $capitalizeControllerName = false;
+        if($this->ApplicationConfig !== false) {
+            if (array_key_exists('Application', $this->ApplicationConfig)) {
+                if (array_key_exists('CapitalizeControllerName', $this->ApplicationConfig['Application'])) {
+                    $capitalizeControllerName = $this->ApplicationConfig['Application']['CapitalizeControllerName'];
+                }
+            }
+        }
+        return $capitalizeControllerName;
     }
 
     protected function DebugDontCacheModels()
@@ -511,6 +511,7 @@ class Core
         }
 
         $modelHelper = Core::$Instance->GetModelHelper();
+
         $modelFiles = GetAllFiles($modelCacheFolder);
         foreach($modelFiles as $modelFile){
             $cacheFile = $modelHelper->GetModelFilePath($modelFile);
@@ -524,6 +525,8 @@ class Core
 
     protected function SetupModels()
     {
+        $this->UpdateModelReferences();
+
         $this->Models = new Models();
         $this->Models->Setup($this->ModelCache);
     }
@@ -573,8 +576,9 @@ class Core
         if ($this->Caching->CacheExists()) {
             $caching = $this->Caching->GetFirstCache();
 
-            if ($caching->IsCached($requestData)) {
-                $this->ReturnCachedRequest($requestData);
+            $cacheResult = $caching->GetCache($requestData);
+            if($cacheResult != null) {
+                $this->DisplayResult($cacheResult);
                 return;
             }
         }
@@ -582,30 +586,19 @@ class Core
         $this->ReturnNonCachedRequest($requestData);
     }
 
-    public function ReturnCachedRequest($requestData)
-    {
-
-    }
-
     public function ReturnNonCachedRequest($requestData)
     {
         // Now we need to setup the rest of the application
         $this->LoadCodeBase();
         $this->SetupFolders();
-        $this->SetupCore();
+        $this->SetupCore('', $this);
+        $this->SetupPlugins();
+        $this->SetupModels();
 
         if($requestData != null) {
             $controllerName = $requestData['ControllerName'];
             $actionName     = $requestData['ActionName'];
             $variables      = $requestData['Variables'];
-
-            if($this->ApplicationCapitalizeControllerName()){
-                $controllerName = ucfirst($controllerName);
-            }
-
-            if($this->ApplicationCapitalizeActionName()){
-                $actionName = ucfirst($actionName);
-            }
 
             $handler = $this->CreateHandler($controllerName, $actionName, $requestData);
         }else{
@@ -635,20 +628,27 @@ class Core
             $controller = $handler['controller'];
         }
 
-        $this->UpdateNonces();
         $this->ParseData($controller);
 
-        // Call the action
-        $controller->BeforeAction();
-        call_user_func_array(array($controller, $actionName), $variables);
+        // Call the action and validate its result
+        $beforeActionHttpResult = $controller->BeforeAction();
+        if($beforeActionHttpResult != null){
+            if(is_a($beforeActionHttpResult, 'HttpResult')){
+                $this->DisplayResult($beforeActionHttpResult);
+                die();
+            }
+        }
 
-        // Set data based on the call
-        if(function_exists('http_response_code')) {
-            http_response_code($controller->ReturnCode);
+        $httpResult = call_user_func_array(array($controller, $actionName), $variables);
+
+        if($httpResult == null){
+            trigger_error('Called action ' . $controllerName . '->' . $actionName . ' does return null', E_USER_ERROR);
+        } else if(!is_a($httpResult, 'HttpResult')){
+            trigger_error('Called action ' . $controllerName . '->' . $actionName . ' does not resturn a HttpResult object', E_USER_ERROR);
         }
 
         // 404 errors use the notFound route specified in the application config
-        if($controller->ReturnCode === 404){
+        if($httpResult->ReturnCode === 404){
             $notFoundHandler = $this->CreateNotFoundHandler($requestData);
 
             if($notFoundHandler['error'] == 1) {
@@ -658,12 +658,43 @@ class Core
                 $notFoundAction = $notFoundHandler['actionName'];
 
                 $controller->BeforeAction();
-                call_user_func_array(array($notFoundController, $notFoundAction), array());
+                $httpResult = call_user_func_array(array($notFoundController, $notFoundAction), array());
             }
         }
 
+        $this->DisplayResult($httpResult);
+
+        $this->CacheResult($requestData, $httpResult);
+
         // Clean up
-        $this->Database->Close();
+        if($this->Database != null && $this->Database != false) {
+            $this->Database->Close();
+        }
+    }
+
+    public function CacheResult($request, $httpResult)
+    {
+        if($this->Caching->CacheExists($request)){
+            $this->Caching->GetFirstCache()->CacheOutput($request, $httpResult);
+        }
+    }
+
+    public  function DisplayResult($httpResult)
+    {
+        // Redirects needs to be handled first
+        if($httpResult->Location != null){
+            header('Location: ' . $httpResult->Location, true, $httpResult->ReturnCode);
+        }
+
+        // Set the HTTP return code (Default 200 = HTTP_OK)
+        if(function_exists('http_response_code')) {
+            http_response_code($httpResult->ReturnCode);
+        }
+
+        // Set the mime type of the request (Default is text/plain, standard for webpages are text/html and for json its application/json
+        header('Content-Type: ' . $httpResult->MimeType);
+
+        echo $httpResult->Content;
     }
 
     // Takes the raw request url and makes sure it follows the expected format
@@ -711,22 +742,31 @@ class Core
         $controllerClassName = $controllerName . 'Controller';
         $controllerPath = Directory($this->GetControllerFolder() . $controllerClassName . '.php');
 
-        // Make a non case-sensitive check
-        $directoryName = dirname($controllerPath);
-        $files = glob($directoryName . '/*', GLOB_NOSORT);
-        $controllerPathLowerCase = strtolower($controllerPath);
-        foreach($files as $file){
-            if(strtolower($file) == $controllerPathLowerCase){
-                return $this->GetControllerFolder() . basename($file);
+        // Make sure the required controllers source file exists
+        if(file_exists($controllerPath)){
+            return $controllerPath;
+        }else{
+            return false;
+        }
+    }
+
+    public function GetDeclaredMethods($className) {
+        $reflector = new ReflectionClass($className);
+        $methodNames = array();
+        foreach ($reflector->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
+            if ($method->class === $className) {
+                $methodNames[] = $method->name;
             }
         }
-
-        return false;
+        return $methodNames;
     }
 
     public function CreateHandler($controllerName, $actionName, $requestData)
     {
-        // Find the controller to use
+        if($this->CapitalizeControllerName()){
+            $controllerName = ucfirst($controllerName);
+        }
+
         $controllerClassName = $controllerName . 'Controller';
         $controllerPath = $this->GetControllerPath($controllerName, $requestData);
 
@@ -749,6 +789,10 @@ class Core
         }
 
         $controller = new $controllerClassName;
+
+        if($this->CapitalizeActionName()){
+            $actionName = ucfirst($actionName);
+        }
 
         if(!method_exists($controller, $actionName)){
             return array(
@@ -814,11 +858,7 @@ class Core
                         $controller->Post->Add($subKey, $subValue);
                         $controller->Data->Add($subKey, $subValue);
                     }
-                } else if($key == 'nonce') {
-                    foreach($_POST['nonce'] as $subKey => $subValue){
-                        $controller->Nonces[$subKey] = $subValue;
-                    }
-                } else {
+                }else {
                     $controller->Post->Add($key, $value);
                     $controller->Data->Add($key, $value);
                 }
@@ -873,20 +913,6 @@ class Core
         }
     }
 
-    public function UpdateNonces()
-    {
-        if(!isset($_SESSION['Nonces'])){
-            $_SESSION['Nonces'] = array();
-        }
-
-        foreach($_SESSION['Nonces'] as $key => $nonce){
-            $nonce['Ttl'] = $nonce['Ttl'] -1;
-            if($nonce['Ttl'] < 0){
-                unset($_SESSION['Nonces'][$key]);
-            }
-        }
-    }
-
     public function CreatePlugins()
     {
         $this->Plugins = array();
@@ -903,7 +929,7 @@ class Core
     public function SetupPlugins()
     {
         foreach($this->Plugins as $plugin){
-            $plugin->SetupCore($plugin->PluginPath, $plugin->PrimaryCore);
+            $plugin->SetupCore($plugin->PluginPath, $this);
         }
     }
 }
