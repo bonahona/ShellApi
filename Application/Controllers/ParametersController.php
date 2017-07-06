@@ -28,5 +28,7 @@ class ParametersController extends BackendController
         }
 
         $parameter->Delete();
+
+        return $this->Json(array('Status' => 'ok'));
     }
 }

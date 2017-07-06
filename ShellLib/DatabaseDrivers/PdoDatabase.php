@@ -4,6 +4,7 @@ class PdoDatabase implements IDatabaseDriver
     public $Database;
     public $Config;
 
+
     function __construct($core, $config)
     {
         if(!$config['Database']['UseDatabase']){
@@ -345,7 +346,7 @@ class PdoDatabase implements IDatabaseDriver
         $sqlStatement = "delete from $tableName";
         if(!$preparedStatement = $this->Database->prepare($sqlStatement)){
             echo "Failed to prepare PDO statement";
-            var_dump($this->Database->erroInfo);
+            var_dump($this->Database->erroInfo());
         }
 
         $preparedStatement->execute();
@@ -354,7 +355,7 @@ class PdoDatabase implements IDatabaseDriver
     public function Insert($modelCollection, &$model)
     {
         $tableName = $modelCollection->ModelCache['MetaData']['TableName'];
-        $columns = implode($modelCollection->ModelCache['MetaData']['ColumnNames'], ',');
+        $columns = implode($this->SafeColumnNames($modelCollection->ModelCache['MetaData']['ColumnNames']), ',');
         $valuePlaceHolders = implode(CreateArray('?', count($modelCollection->ModelCache['MetaData']['ColumnNames'])),',');
 
         // Create the required SQL
@@ -371,17 +372,6 @@ class PdoDatabase implements IDatabaseDriver
             $value = $model->$key;
             $values[] = $value;
         }
-
-        /*
-        $params = array();
-        foreach($values as $key => $value){
-            if($value == '0'){
-                $params[] = null;
-            }else {
-                $params[] = $values[$key];
-            }
-        }
-        */
 
         if(!$preparedStatement->execute($values)){
             echo "Failed to execute PDO statement";
@@ -439,5 +429,15 @@ class PdoDatabase implements IDatabaseDriver
             echo "Failed to execute PDO statement";
             var_dump(array('Sql' => $sqlStatement, 'Params' => $params, 'Error' => $this->Database->errorInfo()));
         }
+    }
+
+    private function SafeColumnNames($columns)
+    {
+        $result = array();
+        foreach($columns as $column){
+            $result[] = '`' . $column . '`';
+        }
+
+        return $result;
     }
 }

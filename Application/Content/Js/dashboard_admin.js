@@ -1,6 +1,7 @@
 $(document).ready(function() {
     CreateSeeAlsoLinks();
     CreateInheritInterface();
+    CreateGenericType();
     CreateParameter();
     DeleteSeeAlsoLinks();
     DeleteInheritInterface();
@@ -93,6 +94,56 @@ function CreateInheritInterface()
     });
 }
 
+
+function CreateGenericType()
+{
+    $('.generic-type-link').on('click', function(event){
+        event.preventDefault();
+
+        var form = $(this).closest('form.ajax-form');
+        var requestTarget = form.attr('link-target');
+
+        $.post(
+            requestTarget,
+            form.serialize(),
+            function(data){
+
+                alert(JSON.stringify(data));
+                $('#creategenerictypedialog').modal('toggle');
+                /*
+                 var tableRow = $('<tr></tr>');
+                 var tableColumns = Array();
+                 for(var i = 0; i < 5; i ++){
+                 tableColumns[i] = $('<td></td>');
+                 }
+
+                 tableColumns[0].html(data.Id);
+                 tableColumns[1].html(data.ParameterName);
+                 tableColumns[2].html(data.Type);
+                 tableColumns[3].html(data.Type);
+                 var buttonElement = $('<button type="button" class="delete-parameter btn btn-md btn-default" link-target="/Parameters/Delete/' + data.Id + '"> \
+                 <span class="glyphicon glyphicon-trash"</span> \
+                 </button> \
+                 ');
+                 DeleteParameters(buttonElement);
+
+                 tableColumns[4].append(buttonElement);
+
+
+                 for(i = 0; i < 5; i ++){
+                 tableRow.append(tableColumns[i]);
+                 }
+
+                 var tableBody = $('tbody.create-parameter-body');
+                 tableBody.append(tableRow);
+
+                 $('#createparameterdialog').modal('toggle');
+                 */
+            }
+        )
+    });
+}
+
 function CreateParameter()
 {
     $('.parameter-link').on('click', function(event){
@@ -106,31 +157,31 @@ function CreateParameter()
             form.serialize(),
             function(data){
 
-                 var tableRow = $('<tr></tr>');
-                 var tableColumns = Array();
-                 for(var i = 0; i < 5; i ++){
-                 tableColumns[i] = $('<td></td>');
-                 }
+                var tableRow = $('<tr></tr>');
+                var tableColumns = Array();
+                for(var i = 0; i < 5; i ++){
+                    tableColumns[i] = $('<td></td>');
+                }
 
-                 tableColumns[0].html(data.Id);
-                 tableColumns[1].html(data.ParameterName);
-                 tableColumns[2].html(data.Type);
-                 tableColumns[3].html(data.Type);
-                 var buttonElement = $('<button type="button" class="delete-parameter btn btn-md btn-default" link-target="/Parameters/Delete/' + data.Id + '"> \
+                tableColumns[0].html(data.Id);
+                tableColumns[1].html(data.ParameterName);
+                tableColumns[2].html(data.Type);
+                tableColumns[3].html(data.Type);
+                var buttonElement = $('<button type="button" class="delete-parameter btn btn-md btn-default" link-target="/Parameters/Delete/' + data.Id + '"> \
                      <span class="glyphicon glyphicon-trash"</span> \
                     </button> \
                  ');
-                 DeleteParameters(buttonElement);
+                DeleteParameters(buttonElement);
 
-                 tableColumns[4].append(buttonElement);
+                tableColumns[4].append(buttonElement);
 
 
-                 for(i = 0; i < 5; i ++){
-                 tableRow.append(tableColumns[i]);
-                 }
+                for(i = 0; i < 5; i ++){
+                    tableRow.append(tableColumns[i]);
+                }
 
-                 var tableBody = $('tbody.create-parameter-body');
-                 tableBody.append(tableRow);
+                var tableBody = $('tbody.create-parameter-body');
+                tableBody.append(tableRow);
 
                 $('#createparameterdialog').modal('toggle');
             }

@@ -1,27 +1,21 @@
-<?php
-$header = htmlspecialchars($Method->MethodName);
+<h1 class="page-header"><?php echo $Method->GetHeaderText($Project, $this->Html);?></h1>
 
-$parameters = array();
-foreach($Method->Parameters as $parameter){
+<?php $constraintLines = $Method->GetConstraints();?>
+<?php if(count($constraintLines) > 0):?>
+    <div class="row">
+        <div class="col-lg-6 col-md-12">
+            <?php foreach($constraintLines as $constraintLine):?>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <?php echo $constraintLine;?>
+                    </div>
+                </div>
+            <?php endforeach;?>
+        </div>
+    </div>
+<?php endif;?>
 
-    if($parameter->Type->IsPrimitive){
-        if ($parameter->Type->ExternalSource == null) {
-            $parameters[] = $parameter->Type->ClassName;
-        } else {
-            $url = $parameter->Type->ExternalSource;
-            $parameters[] = $this->Html->Link($url, $parameter->Type->ClassName);
-        }
-    }else{
-        $url = '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $Method->ReturnType->ClassName;
-        $parameters[] = $this->Html->Link($url, $parameter->Type->ClassName);
-    }
-}
-
-$header = $header . '(' . implode(',', $parameters) . ')';
-?>
-
-<h1 class="page-header"><?php echo $header;?></h1>
-<div class="row">
+<div class="row margin-top">
     <div class="col-lg-6 col-md-12">
         <dl>
             <dt>Return Type:</dt>
@@ -32,7 +26,12 @@ $header = $header . '(' . implode(',', $parameters) . ')';
     </div>
 </div>
 
+<?php echo $this->PartialView('GenericTypeList', array('GenericTypes' => $Method->GenericTypes));?>
 <?php echo $this->PartialView('ParameterList', array('Parameters' => $Method->Parameters));?>
+
+<?php if($this->IsLoggedIn()):?>
+    <h2>Description</h2>
+<?php endif;?>
 
 <div class="row">
     <div class="col-lg-8">
@@ -55,6 +54,7 @@ $header = $header . '(' . implode(',', $parameters) . ')';
 
 <?php if($this->IsLoggedIn()):?>
     <?php echo $this->PartialView('SeeAlsoLinkDialog');?>
-    <?php echo $this->PartialView('CreateParameterDialog', array('Classes' => $Classes))?>
+    <?php echo $this->PartialView('/Modals/ParameterDialog', array('Classes' => $Classes, 'Method' => $Method))?>
+    <?php echo $this->PartialView('/Modals/GenericTypeDialog', array('Classes' => $Classes, 'Method' => $Method))?>
 <?php endif;?>
 

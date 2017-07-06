@@ -10,7 +10,7 @@
                             <th class="col-lg-2">Name</th>
                             <th class="col-lg-2">Type</th>
                             <th class="col-lg-6">Description</th>
-                            <th class="col-lg-2">Description</th>
+                            <th class="col-lg-2">&nbsp;</th>
                         <?php else:?>
                             <th class="col-lg-2">Name</th>
                             <th class="col-lg-2">Type</th>
@@ -24,7 +24,7 @@
                             <?php if($this->IsLoggedIn()):?>
                                 <td>
                                     <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $method->ProjectClass->ClassName . '/Methods/' . $method->MethodName . $method->CreateLink();?>">
-                                        <?php echo htmlspecialchars($method->MethodName) . $method->CreateParameterText();?>
+                                        <?php echo $method->GetHeaderText($Project, $this->Html);?>
                                     </a>
                                 </td>
                                 <td>
@@ -39,7 +39,7 @@
                             <?php else:?>
                                 <td>
                                     <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $method->ProjectClass->ClassName . '/Methods/' . $method->MethodName . $method->CreateLink();?>">
-                                        <?php echo $method->MethodName . $method->CreateParameterText();?>
+                                        <?php echo $method->GetHeaderText($Project, $this->Html);?>
                                     </a>
                                 </td>
                                 <td>
