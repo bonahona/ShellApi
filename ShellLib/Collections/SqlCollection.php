@@ -54,6 +54,12 @@ class SqlCollection implements IDataCollection
         $this->m_items[] = $item;
     }
 
+    public function InsertAt($index, $item)
+    {
+        trigger_error('SqlCollection does not support InsertAt. Use a selection first.', E_USER_ERROR);
+
+    }
+
     public function OrderBy($field)
     {
         $tmpArray = $this->m_items;

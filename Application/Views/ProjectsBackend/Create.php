@@ -8,6 +8,10 @@
             <?php echo $this->Form->Input('ProjectName', array('attributes' => array('class' => 'form-control', 'required' => 'true')));?>
         </div>
         <div class="form-group">
+            <label>Project Title</label>
+            <?php echo $this->Form->Input('TitleName', array('attributes' => array('class' => 'form-control', 'required' => 'true')));?>
+        </div>
+        <div class="form-group">
             <label>Short description</label>
             <?php echo $this->Form->Input('ShortDescription', array('attributes' => array('class' => 'form-control', 'required' => 'true')));?>
         </div>

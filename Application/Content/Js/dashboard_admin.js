@@ -108,7 +108,6 @@ function CreateGenericType()
             form.serialize(),
             function(data){
 
-                alert(JSON.stringify(data));
                 $('#creategenerictypedialog').modal('toggle');
                 /*
                  var tableRow = $('<tr></tr>');

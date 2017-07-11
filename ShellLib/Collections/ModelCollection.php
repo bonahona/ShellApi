@@ -11,9 +11,14 @@ class ModelCollection implements ICollection
     public $ModelCache;
     public $ModelName;
 
+    /* @return Model */
     public function Create($defaultValues = array())
     {
         $result = new $this->ModelName($this);
+
+        if(!isset($defaultValues[$this->ModelCache['MetaData']['PrimaryKey']])){
+            $defaultValues[$this->ModelCache['MetaData']['PrimaryKey']] = 0;
+        }
 
         foreach($defaultValues as $key => $value){
             $result->$key = $value;
@@ -24,6 +29,7 @@ class ModelCollection implements ICollection
         return $result;
     }
 
+    /* @return Model */
     public function Find($id)
     {
         $result = $this->GetInstance()->GetDatabase()->Find($this, $id);
@@ -35,6 +41,7 @@ class ModelCollection implements ICollection
         return $result;
     }
 
+    /* @return bool */
     public function Exists($id)
     {
         $result = $this->GetInstance()->GetDatabase()->Exists($this, $id);
@@ -115,6 +122,11 @@ class ModelCollection implements ICollection
     public function Add($item)
     {
         $this->Save($item);
+    }
+
+    public function InsertAt($index, $item)
+    {
+        trigger_error('ModelCollection does not support Insert.', E_USER_ERROR);
     }
 
     public function Keys()

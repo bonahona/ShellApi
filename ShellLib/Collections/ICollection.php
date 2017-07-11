@@ -1,8 +1,14 @@
 <?php
 interface ICollection
 {
+    /* @return array*/
     public function Keys();
+
+    /* @return void */
     public function Add($item);
+
+    /* @return void */
+    public function InsertAt($index, $item);
 
     /* @return ICollection */
     public function Copy($items);

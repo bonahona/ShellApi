@@ -27,8 +27,10 @@ class Method extends Model
     public function CreateLink()
     {
         $parameterType = array();
-        foreach($this->Parameters as $parameter){
-            $parameterType[] = $parameter->Type->ClassName;
+        if($this->Parameters != null) {
+            foreach ($this->Parameters as $parameter) {
+                $parameterType[] = $parameter->Type->ClassName;
+            }
         }
 
         $parameters = rawurlencode ('(' . implode( $parameterType, ',') . ')');
@@ -64,7 +66,11 @@ class Method extends Model
 
             if($parameter->Type->IsPrimitive){
                 if ($parameter->Type->ExternalSource == null) {
-                    $parameters[] = $parameter->Type->ClassName;
+                    if($parameter->IsExtension){
+                        $parameters[] = 'this ' . $parameter->Type->ClassName . ' ' . $parameter->ParameterName;
+                    }else {
+                        $parameters[] = $parameter->Type->ClassName . ' ' . $parameter->ParameterName;
+                    }
                 } else {
                     $url = $parameter->Type->ExternalSource;
                     $parameters[] = $htmlHelper->Link($url, $parameter->Type->ClassName);

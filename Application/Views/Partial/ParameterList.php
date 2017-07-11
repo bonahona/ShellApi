@@ -8,9 +8,10 @@
                     <thead>
                     <tr>
                         <th class="col-lg-2">Id</th>
-                        <th class="col-lg-3">Name</th>
+                        <th class="col-lg-2">Name</th>
                         <th class="col-lg-2">Type</th>
                         <th class="col-lg-3">Default value</th>
+                        <th class="col-lg-1">Is Ext.</th>
                         <th class="col-lg-2">&nbsp;</th>
                     </tr>
                     </thead>
@@ -21,6 +22,7 @@
                             <td><?php echo $parameter->ParameterName;?></td>
                             <td><?php echo $parameter->Type->ClassName;?></td>
                             <td><?php echo $parameter->DefaultValue;?></td>
+                            <td><?php echo $parameter->IsExtension;?></td>
                             <td>
                                 <button type="button" class="delete-parameter btn btn-md btn-default" link-target="/Parameters/Delete/<?php echo $parameter->Id;?>">
                                     <span class="glyphicon glyphicon-trash"</span>

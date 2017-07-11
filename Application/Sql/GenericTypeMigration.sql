@@ -13,3 +13,6 @@ alter table parameter
 
 alter table parameter
 	add constraint ReturnGenericType foreign key(ReturnGenericTypeId) references GenericType(Id);
+
+alter table parameter
+  add column isExtension int(1) default 0;

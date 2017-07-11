@@ -20,6 +20,14 @@
                         <label>Type</label>
                         <?php echo $this->Form->Select('TypeId', $Classes, array('key' => 'Id', 'value' => 'ClassName', 'attributes' => array('class' => 'form-control')));?>
                     </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <?php echo $this->Form->Bool('IsExtension');?>
+                                Is Extension
+                            </label>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

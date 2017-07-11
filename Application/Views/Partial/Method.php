@@ -34,7 +34,7 @@
                                 <td>
                                     <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Methods/Description/$method->Id";?>"><span class="glyphicon glyphicon-align-left"</a>
                                     <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Methods/Edit/$method->Id";?>"><span class="glyphicon glyphicon-pencil"</a>
-                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Methods/DeleteConfirm/$method->Id";?>"><span class="glyphicon glyphicon-trash"</a>
+                                    <a class="btn btn-sm btn-default btn-margin-right" href="<?php echo "/Methods/Delete/$method->Id";?>"><span class="glyphicon glyphicon-trash"</a>
                                 </td>
                             <?php else:?>
                                 <td>

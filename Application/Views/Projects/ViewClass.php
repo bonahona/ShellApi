@@ -83,6 +83,13 @@
     </div>
 <?php endif;?>
 
+<?php if($this->IsLoggedIn()):?>
+    <div class="row margin-top">
+        <div class="col-lg-12">
+            <a class="btn btn-md btn-default" href="<?php echo "/Methods/Create/$ProjectClass->Id";?>">Create method</a>
+        </div>
+    </div>
+<?php endif;?>
 <?php echo $this->PartialView('Method', array('Methods' => $PublicMethods, 'Header' => 'Public Methods', 'Project' => $Project));?>
 <?php echo $this->PartialView('Method', array('Methods' => $ProtectedMethods, 'Header' => 'Protected Methods', 'Project' => $Project));?>
 <?php echo $this->PartialView('Method', array('Methods' => $StaticMethods, 'Header' => 'Static Methods', 'Project' => $Project));?>

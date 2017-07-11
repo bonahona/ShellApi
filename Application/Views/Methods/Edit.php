@@ -1,5 +1,4 @@
 <h1>Edit method</h1>
-
 <div class="row">
     <div class="col-lg-4">
         <?php echo $this->Form->Start('Method');?>
@@ -20,7 +19,9 @@
 
         <div class="form-group">
             <label>Return type</label>
-            <?php echo $this->Form->Select('ReturnTypeId', $ProjectClasses, array('key' => 'Id', 'value' => 'ClassName', 'attributes' => array('class' => 'form-control')));?>
+            <?php echo $this->Form->Select('ReturnTypeId', $ProjectClasses, array('key' => 'Id', 'value' => 'ClassName', 'nullfield' => true, 'attributes' => array('class' => 'form-control')));?>
+            <label>Generic type</label>
+            <?php echo $this->Form->Select('ReturnGenericTypeId', $GenericTypes, array('key' => 'Id', 'value' => 'TypeName', 'nullfield' => true, 'attributes' => array('class' => 'form-control')));?>
         </div>
         <div class="form-group">
             <div class="checkbox">
@@ -42,6 +43,6 @@
 
 <div class="row">
     <div class="col-lg-4">
-        <a href="#">Back</a>
+        <a href="<?php echo $Method->ProjectClass->GetLinkText();?>">Back</a>
     </div>
 </div>

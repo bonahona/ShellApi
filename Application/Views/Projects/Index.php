@@ -32,7 +32,7 @@
                                         </td>
                                     <?php else:?>
                                         <td class="col-lg-4">
-                                            <a href="<?php echo "/Projects/Details/$project->ProjectName";?>"><?php echo $project->TitleName;?></a>
+                                            <a href="<?php echo "/Projects/Details/$project->ProjectNae";?>"><?php echo $project->TitleName;?></a>
                                         </td>
                                         <td class="col-lg-8"><?php echo $project->ShortDescription;?></td>
                                     <?php endif;?>
@@ -45,3 +45,11 @@
         </div>
     <?php endif;?>
 <?php endforeach;?>
+
+<?php if($this->IsLoggedIn()):?>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <a href="/ProjectsBackend/Create/" class="btn btn-md btn-primary">Create new project</a>
+        </div>
+    </div>
+<?php endif;?>

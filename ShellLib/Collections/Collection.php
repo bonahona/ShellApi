@@ -74,6 +74,19 @@ class Collection implements IDataCollection
         }
     }
 
+    public function InsertAt($index, $item)
+    {
+        $size = count($this->m_items);
+        if($index >  $size){
+            $this->Add($item);
+            return;
+        }
+
+        $elementToMove = $size - $index;
+        $this->ShiftDown($index, $elementToMove);
+        $this->m_items[$index] = $item;
+    }
+
     public function OrderBy($field)
     {
         $customObjectSorter = new CustomObjectSorter();
@@ -190,6 +203,17 @@ class Collection implements IDataCollection
             return $this->m_items[$offset];
         }else{
             return null;
+        }
+    }
+
+    protected function ShiftDown($startIndex, $count)
+    {
+        if($count == 0){
+            return;
+        }
+
+        for($i = $startIndex + $count; $i > $startIndex; $i --){
+            $this->m_items[$i] = $this->m_items[$i -1];
         }
     }
 }

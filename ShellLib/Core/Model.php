@@ -42,6 +42,20 @@ class Model
         $this->IsDirty = false;
     }
 
+    public function ReloadReferences()
+    {
+        $this->SetupReferences();
+        $this->SetupReverseReferences();
+    }
+
+    // If the model entity has been created rather than loaded from DB, references and the likes needs to set manually.
+    // This functions performs all neccessary operations to make the model perform just like any other loaded model enity.
+    public function Load()
+    {
+        $this->ReloadReferences();
+        $this->OnLoad();
+    }
+
     protected function SetupReferences()
     {
         $this->References = array();
@@ -212,6 +226,15 @@ class Model
     {
         foreach($this->Properties as $key => $property){
             if($property === 0 || $property === '0'){
+                $this->$key = null;
+            }
+        }
+    }
+
+    public function ConvertNullToNull()
+    {
+        foreach($this->Properties as $key => $property){
+            if($property === 'NULL' || $property === 'null'){
                 $this->$key = null;
             }
         }

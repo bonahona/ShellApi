@@ -16,10 +16,12 @@
             <label>Access ModifierId</label>
             <?php echo $this->Form->Select('AccessModifierId', $AccessModifiers, array('attributes' => array('class' => 'form-control')));?>
         </div>
-
+        <label>Return type</label>
         <div class="form-group">
-            <label>Return type</label>
-            <?php echo $this->Form->Select('ReturnTypeId', $ProjectClasses, array('key' => 'Id', 'value' => 'ClassName', 'attributes' => array('class' => 'form-control')));?>
+            <label>Local type</label>
+            <?php echo $this->Form->Select('ReturnTypeId', $ProjectClasses, array('key' => 'Id', 'value' => 'ClassName', 'nullfield' => true, 'attributes' => array('class' => 'form-control')));?>
+            <label>Generic type</label>
+            <?php echo $this->Form->Select('ReturnGenericTypeId', new Collection(), array('key' => 'Id', 'value' => 'TypeName', 'nullfield' => true, 'attributes' => array('class' => 'form-control', 'disabled' => 'true')));?>
         </div>
         <div class="form-group">
             <div class="checkbox">
@@ -38,9 +40,8 @@
         <?php echo $this->Form->End();?>
     </div>
 </div>
-
 <div class="row">
     <div class="col-lg-4">
-        <a href="#">Back</a>
+        <a href="<?php echo $Method->ProjectClass->GetLinkText();?>">Back</a>
     </div>
 </div>
