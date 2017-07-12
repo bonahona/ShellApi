@@ -77,6 +77,7 @@ class MethodsController extends  BackendController
 
         if($this->IsPost() && !$this->Data->IsEmpty()){
             $method = $this->Data->DbParse('Method', $this->Models->Method);
+
             $method->ConvertNullToNull();
             $method->Save();
 

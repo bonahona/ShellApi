@@ -551,6 +551,7 @@ class Core
             require_once('./ShellLib/PhpDocWriter/PhpDocWriter.php');
             $phpDocWriter = new PhpDocWriter($this->ModelHelper);
             $phpDocWriter->WritePhpDocForModels($this->ModelCache);
+            $phpDocWriter->WritePhpDocForModelCollections($this->ModelCache);
 
         }
     }
