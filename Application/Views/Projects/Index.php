@@ -32,7 +32,7 @@
                                         </td>
                                     <?php else:?>
                                         <td class="col-lg-4">
-                                            <a href="<?php echo "/Projects/Details/$project->ProjectNae";?>"><?php echo $project->TitleName;?></a>
+                                            <a href="<?php echo "/Projects/Details/$project->ProjectName";?>"><?php echo $project->TitleName;?></a>
                                         </td>
                                         <td class="col-lg-8"><?php echo $project->ShortDescription;?></td>
                                     <?php endif;?>

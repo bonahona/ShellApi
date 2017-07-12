@@ -546,6 +546,12 @@ class Core
                     $this->ModelHelper->SaveModelCache($modelFileName, $modelName, $this->ModelCache[$modelName]);
                 }
             }
+
+            // Write a PhpDocFile
+            require_once('./ShellLib/PhpDocWriter/PhpDocWriter.php');
+            $phpDocWriter = new PhpDocWriter($this->ModelHelper);
+            $phpDocWriter->WritePhpDocForModels($this->ModelCache);
+
         }
     }
 

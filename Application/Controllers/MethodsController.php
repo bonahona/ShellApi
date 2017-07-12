@@ -79,7 +79,7 @@ class MethodsController extends  BackendController
             $method = $this->Data->DbParse('Method', $this->Models->Method);
             $method->ConvertNullToNull();
             $method->Save();
-            
+
             $redirectUrl = "/Projects/Details/" . $method->ProjectClass->Project->ProjectName . "/Classes/" . $method->ProjectClass->ClassName;
             return $this->Redirect($redirectUrl);
         }else{

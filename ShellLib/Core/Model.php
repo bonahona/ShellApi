@@ -211,6 +211,7 @@ class Model
         return $result;
     }
 
+    // TODO: This function should lie somewhere else. Duplicate in PhpDocWriter
     protected function CreateReferenceName($columnName)
     {
         if(endsWith($columnName, 'Id')){
