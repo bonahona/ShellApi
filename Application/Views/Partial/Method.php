@@ -43,7 +43,13 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <?php echo $method->ReturnType->GetLink();?>
+                                    <?php $returnType = $method->GetReturnType();?>
+
+                                    <?php if($returnType->HasLink()):?>
+                                        <?php echo $returnType->GetLink();?>
+                                    <?php else:?>
+                                        <?php echo $returnType->GetName();?>
+                                    <?php endif;?>
                                 </td>
                                 <td><?php echo $method->ShortDescription;?></td>
                             <?php endif;?>

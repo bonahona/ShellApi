@@ -3,6 +3,16 @@ class ProjectClass extends Model
 {
     public $TableName = 'projectclass';
 
+    public function HasLink()
+    {
+        return true;
+    }
+
+    public function GetName()
+    {
+        return $this->ClassName;
+    }
+
     public function GetLink()
     {
         if($this->IsPrimitive){

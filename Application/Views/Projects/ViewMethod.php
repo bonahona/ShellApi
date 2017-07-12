@@ -20,7 +20,13 @@
         <dl>
             <dt>Return Type:</dt>
             <dd>
-                <?php echo $Method->ReturnType->GetLink();?>
+                <?php $returnType = $Method->GetReturnType();?>
+
+                <?php if($returnType->HasLink()):?>
+                    <?php echo $returnType->GetLink();?>
+                <?php else:?>
+                    <?php echo $returnType->GetName();?>
+                <?php endif;?>
             </dd>
         </dl>
     </div>
@@ -35,7 +41,11 @@
 
 <div class="row">
     <div class="col-lg-8">
-        <?php echo $Method->Description;?>
+        <?php if($Method->Description != ""):?>
+            <?php echo $Method->Description;?>
+        <?php else:?>
+            <?php echo $Method->ShortDescription;?>
+        <?php endif;?>
     </div>
 </div>
 

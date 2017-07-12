@@ -8,7 +8,11 @@ class Model
     protected $References;              // Model proxy objects for references
     protected $ReferenceCollections;    // List of other objects referring to this one
     protected $CustomProperties;        // Custom properties added from without the db. Wont be saved back
+
+    /* @var Models */
     protected $Models;                  // Reference to the models object so other models can be searched for with references
+
+    /* @var Helpers */
     protected $Helpers;                 // Reference to the helpers list
 
     function __construct($modelCollection)

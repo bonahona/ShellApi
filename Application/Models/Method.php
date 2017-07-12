@@ -97,4 +97,19 @@ class Method extends Model
 
         return $result;
     }
+
+    public function GetReturnType()
+    {
+        $returnType = $this->Models->ProjectClass->Find($this->ReturnTypeId);
+        if($returnType != null){
+            return $returnType;
+        }
+
+        $genericReturnType = $this->Models->GenericType->Find($this->ReturnGenericTypeId);
+        if($genericReturnType != null){
+            return $genericReturnType;
+        }
+
+        return null;
+    }
 }
