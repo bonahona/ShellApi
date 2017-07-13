@@ -17,11 +17,18 @@
             <?php echo $this->Form->Select('AccessModifierId', $AccessModifiers, array('attributes' => array('class' => 'form-control')));?>
         </div>
 
-        <div class="form-group">
-            <label>Return type</label>
-            <?php echo $this->Form->Select('ReturnTypeId', $ProjectClasses, array('key' => 'Id', 'value' => 'ClassName', 'nullfield' => true, 'attributes' => array('class' => 'form-control')));?>
-            <label>Generic type</label>
-            <?php echo $this->Form->Select('ReturnGenericTypeId', $GenericTypes, array('key' => 'Id', 'value' => 'TypeName', 'nullfield' => true, 'attributes' => array('class' => 'form-control')));?>
+        <label>Return type</label>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group">
+                    <p>Return class</p>
+                    <?php echo $this->Form->Select('ReturnTypeId', $ProjectClasses, array('key' => 'Id', 'value' => 'ClassName', 'nullfield' => true, 'attributes' => array('class' => 'form-control')));?>
+                    <p>Generic type</p>
+                    <?php echo $this->Form->Select('ReturnGenericTypeId', $GenericTypes, array('key' => 'Id', 'value' => 'TypeName', 'nullfield' => true, 'attributes' => array('class' => 'form-control')));?>
+                    <p>Free Text return type</p>
+                    <?php echo $this->Form->Input('ReturnTypeFreeText',array('attributes' => array('class' => 'form-control')));?>
+                </div>
+            </div>
         </div>
         <div class="form-group">
             <div class="checkbox">

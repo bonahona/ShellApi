@@ -101,15 +101,21 @@ class Method extends Model
     public function GetReturnType()
     {
         $returnType = $this->Models->ProjectClass->Find($this->ReturnTypeId);
+
+        if($returnType == null) {
+            $returnType = $this->Models->GenericType->Find($this->ReturnGenericTypeId);
+        }
+
         if($returnType != null){
-            return $returnType;
+            if($returnType->HasLink()){
+                $result = $returnType->GetLink();
+            }else{
+                $result = $returnType->GetName();
+            }
+        }else{
+            $result = htmlspecialchars($this->ReturnTypeFreeText);
         }
 
-        $genericReturnType = $this->Models->GenericType->Find($this->ReturnGenericTypeId);
-        if($genericReturnType != null){
-            return $genericReturnType;
-        }
-
-        return null;
+        return $result;
     }
 }

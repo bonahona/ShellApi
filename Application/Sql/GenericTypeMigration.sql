@@ -16,3 +16,6 @@ alter table parameter
 
 alter table parameter
   add column isExtension int(1) default 0;
+
+alter table method
+  add column ReturnTypeFreeText varchar(512);

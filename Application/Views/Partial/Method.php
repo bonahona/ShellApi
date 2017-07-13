@@ -28,7 +28,7 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <?php echo $method->ReturnType->GetLink();?>
+                                    <?php echo $method->GetReturnType();?>
                                 </td>
                                 <td><?php echo $method->ShortDescription;?></td>
                                 <td>
@@ -43,13 +43,7 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <?php $returnType = $method->GetReturnType();?>
-
-                                    <?php if($returnType->HasLink()):?>
-                                        <?php echo $returnType->GetLink();?>
-                                    <?php else:?>
-                                        <?php echo $returnType->GetName();?>
-                                    <?php endif;?>
+                                    <?php echo $method->GetReturnType();?>
                                 </td>
                                 <td><?php echo $method->ShortDescription;?></td>
                             <?php endif;?>

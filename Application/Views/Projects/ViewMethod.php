@@ -20,13 +20,7 @@
         <dl>
             <dt>Return Type:</dt>
             <dd>
-                <?php $returnType = $Method->GetReturnType();?>
-
-                <?php if($returnType->HasLink()):?>
-                    <?php echo $returnType->GetLink();?>
-                <?php else:?>
-                    <?php echo $returnType->GetName();?>
-                <?php endif;?>
+                <?php echo $Method->GetReturnType();?>
             </dd>
         </dl>
     </div>
