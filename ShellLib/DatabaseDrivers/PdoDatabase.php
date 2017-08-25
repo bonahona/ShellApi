@@ -131,6 +131,100 @@ class PdoDatabase implements IDatabaseDriver
         // Not required for a PDO database object
     }
 
+    public function Execute($sqlCollection)
+    {
+        $result = new Collection();
+
+        $modelCollection = $sqlCollection->GetModelCollection();
+        $columns = array_keys($modelCollection->ModelCache['Columns']);
+
+        $sql = $this->GetSql($sqlCollection, 0);
+
+        if(!$preparedStatement = $this->Database->prepare($sql['SqlStatement'])){
+            echo "Failed to prepare PDO statement";
+            var_dump($this->Database->errorInfo());
+        }
+
+        $preparedStatement->execute($sql['Parameters']);
+
+        $fields = array();
+        foreach($columns as $column){
+            $name = $column;
+            $$name = null;
+            $fields[$name] = &$$name;
+        }
+
+        foreach($preparedStatement as $row){
+            $item = new $modelCollection->ModelName($modelCollection);
+            $item->FlagAsSaved();
+            foreach($fields as $key => $value){
+                $item->$key = $row[$key];
+            }
+
+            $result->Add($item);
+        }
+
+        return $result;
+    }
+
+    private function GetSql($sqlCollection, $depth)
+    {
+        $modelCollection = $sqlCollection->GetModelCollection();
+
+        $tableName = $modelCollection->ModelCache['MetaData']['TableName'];
+        $columns = array_keys($modelCollection->ModelCache['Columns']);
+        $columnString = implode(', ', $columns);
+
+        if($sqlCollection->SubQuery == null){
+            $fromStatement = $tableName;
+        }else{
+            $aliasName = 'tmp' . $tableName . $depth;
+            $fromStatement = '(' . $this->GetSql($sqlCollection->SubQuery, $depth +1)['SqlStatement'] . ') as ' . $aliasName;
+        }
+
+        $sqlStatement = "SELECT $columnString FROM $fromStatement";
+        $parameters = array();
+
+        if($sqlCollection->WhereCondition != null){
+            $conditions = $sqlCollection->WhereCondition->GetWhereClause();
+            $conditionString = $conditions['ConditionString'];
+            $sqlStatement .= " WHERE $conditionString";
+
+            foreach($conditions['Parameters'] as $parameter){
+                $parameters[] = $parameter;
+            }
+        }
+
+        if($sqlCollection->OrderByCondition != null){
+            $order = $sqlCollection->OrderByCondition['Order'];
+
+            $sqlStatement .= " ORDER BY ? $order";
+            $parameters[] = $sqlCollection->OrderByCondition['Field'];
+        }
+
+        $limit = array('use' => false,'skip' => 0, 'take' => 0);
+        if($sqlCollection->TakeCondition){
+            $limit['take'] =  $sqlCollection->TakeCondition;
+            $limit['user'] = true;
+        }
+
+        if($sqlCollection->SkipCondition){
+            $limit['skip'] =  $sqlCollection->SkipCondition;
+            $limit['user'] = true;
+        }
+
+        if($limit['use']){
+            $parameters[] = $limit['skip'];
+            $parameters[] = $limit['take'];
+            $sqlStatement .= " LIMIT ?, ?";
+        }
+
+        return array(
+            'SqlStatement' => $sqlStatement,
+            'Parameters' => $parameters
+        );
+    }
+
     public function Find($modelCollection, $id)
     {
         $tableName = $modelCollection->ModelCache['MetaData']['TableName'];

@@ -6,6 +6,7 @@ class ProjectsController extends Controller
         $this->Title = 'Projects';
 
         $projectCategories = $this->Models->ProjectCategory->Where(array('IsActive' => 1));
+
         $this->Set('ProjectCategories', $projectCategories);
 
         $this->Set('Sidebar', $this->GenerateSidebar());
@@ -514,7 +515,7 @@ class ProjectsController extends Controller
             $result[] = $projectEntry;
         }
 
-        $projectCategories = $this->Models->ProjectCategory->Where(array('IsActive' => 1));
+        $projectCategories = $this->Models->ProjectCategory->Where(array('IsActive' => 1))->OrderBy('Name');
 
         foreach($projectCategories as $projectCategory){
             if(count($projectCategory->Projects) > 0) {
@@ -523,7 +524,7 @@ class ProjectsController extends Controller
                     'Items' => array()
                 );
 
-                foreach ($projectCategory->Projects->Where(array('IsActive' => 1)) as $project) {
+                foreach ($projectCategory->Projects->Where(array('IsActive' => 1))->OrderBy('ProjectName') as $project) {
                     $projectEntry['Items'][] = array(
                         'Link' => '/Projects/Details/' . $project->ProjectName,
                         'DisplayName' => $project->TitleName

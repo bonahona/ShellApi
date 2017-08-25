@@ -50,6 +50,10 @@ class ModelCollection implements ICollection
 
     public function Where($conditions)
     {
+        $result = new SqlCollection($this, null);
+        return $result->Where($conditions);
+
+        /*
         $conditions = $this->ConvertConditions($conditions);
         $whereConditions = $conditions->GetWhereClause();
         $result = $this->GetInstance()->GetDatabase()->Where($this, $whereConditions['ConditionString'], $whereConditions['Parameters']);
@@ -59,25 +63,14 @@ class ModelCollection implements ICollection
         }
 
         return $result;
+        */
     }
 
     public function Any($conditions)
     {
-        $conditions = $this->ConvertConditions($conditions);
+        $conditions = ConvertConditions($conditions);
         $whereConditions = $conditions->GetWhereClause();
         return $this->GetInstance()->GetDatabase()->Any($this, $whereConditions['ConditionString'], $whereConditions['Parameters']);
-    }
-
-    // Helper to make sure all conditions are proper DatabaseWhereCondition objects
-    private function ConvertConditions($conditions)
-    {
-        if(is_array($conditions)){
-            return AndCondition($conditions);
-        }else if(is_a($conditions, 'DatabaseWhereCondition')){
-            return $conditions;
-        }else{
-            trigger_error('Invalid WHERE condition for model query', E_USER_WARNING);
-        }
     }
 
     public function All()
@@ -165,7 +158,7 @@ class ModelCollection implements ICollection
         throw new Exception("ModelCollection::Copy() not supported");
     }
 
-    protected function GetInstance()
+    public function GetInstance()
     {
         $coreInstanceProperty = new ReflectionProperty(CORE_CLASS, 'Instance');
         $coreInstance =  $coreInstanceProperty->getValue();

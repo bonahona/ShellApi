@@ -5,10 +5,10 @@ class DatabaseWhereCondition
     public $Operator;
     public $Operands;
 
-    public function __construct($operandArray, $operator = 'AND')
+    public function __construct($operands, $operator = 'AND')
     {
         $this->Operator = $operator;
-        $this->Operands = $operandArray;
+        $this->Operands = $operands;
     }
 
     public function GetWhereClause()
@@ -61,6 +61,12 @@ function AndCondition($operands)
     return new DatabaseWhereCondition($operands, 'AND');
 }
 
+function CombineAndConditions($first, $second)
+{
+    $operands = array_merge($first->Operands, $second->Operands);
+    return new DatabaseWhereCondition($operands, 'AND');
+}
+
 function OrCondition($operands)
 {
     return new DatabaseWhereCondition($operands, 'OR');
@@ -69,4 +75,16 @@ function OrCondition($operands)
 function LikeCondition($field, $value)
 {
     return new DatabaseWhereCondition(array($field => $value), 'LIKE');
+}
+
+// Helper to make sure all conditions are proper DatabaseWhereCondition objects
+function ConvertConditions($conditions)
+{
+    if(is_array($conditions)){
+        return AndCondition($conditions);
+    }else if(is_a($conditions, 'DatabaseWhereCondition')){
+        return $conditions;
+    }else{
+        trigger_error('Invalid WHERE condition for model query', E_USER_WARNING);
+    }
 }
