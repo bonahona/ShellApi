@@ -2,7 +2,6 @@
 	RewriteEngine on
 
 	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
 
 	RewriteRule ^([^?]*)$ /Index.php [NC,L,QSA]
  </IfModule>

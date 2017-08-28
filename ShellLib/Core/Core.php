@@ -37,6 +37,7 @@ require_once('./ShellLib/Core/Routing.php');
 require_once('./ShellLib/Core/HttpResult.php');
 require_once('./ShellLib/Helpers/CoreHelper.php');
 require_once('./ShellLib/Caching/Caching.php');
+require_once ('./ShellLib/Utility/MimeTypeHelper.php');
 
 // External reference to the core instance
 class Core
@@ -579,18 +580,45 @@ class Core
         $routingEngine = new Routing($this->RoutesConfig);
         $requestData = $routingEngine->ParseUrl($requestRoot, $this->RequestUrl);
 
-        // Check if a cache entry is present and if that is so, just return it and don't put up the rest of the application
-        if ($this->Caching->CacheExists()) {
-            $caching = $this->Caching->GetFirstCache();
+        if($requestData['Type'] == 'Content'){
+            return $this->ReturnContent($requestData['Path']);
+        }else {
+            // Check if a cache entry is present and if that is so, just return it and don't put up the rest of the application
+            if ($this->Caching->CacheExists()) {
+                $caching = $this->Caching->GetFirstCache();
 
-            $cacheResult = $caching->GetCache($requestData);
-            if($cacheResult != null) {
-                $this->DisplayResult($cacheResult);
-                return;
+                $cacheResult = $caching->GetCache($requestData);
+                if ($cacheResult != null) {
+                    $this->DisplayResult($cacheResult);
+                    return;
+                }
             }
+
+            $this->ReturnNonCachedRequest($requestData);
+        }
+    }
+
+    public function ReturnContent($content)
+    {
+        if(count($content) == 0){
+            // Nothing to fetch
+            die();
         }
 
-        $this->ReturnNonCachedRequest($requestData);
+        $path = 'Application/Content/' . implode('/', $content);
+
+        if(!file_exists($path)){
+            die('No such file');
+        }
+
+        $fileContent = file_get_contents($path);
+
+        $result = new HttpResult();
+        $result->Content = $fileContent;
+        $result->ReturnCode = 200;
+        $result->MimeType = GetMimeTypeFromFile($path);
+        $this->DisplayResult($result);
+        die();
     }
 
     public function ReturnNonCachedRequest($requestData)

@@ -1,6 +1,9 @@
 {
   "Routes": [
     {
+      "/Application/Content/{...}":{
+        "Content": "{...}"
+      },
       "/Admin/{...}": {
         "Controller": "User",
         "Action": "Login",
