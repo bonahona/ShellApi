@@ -195,13 +195,13 @@ class ScriptCore
         // Make sure the model folder exists
         $modelCacheFolder = Directory($this->ModelFolder);
         if(!is_dir($modelCacheFolder)){
-            mkdir($modelCacheFolder, 777, true);
+            mkdir($modelCacheFolder, 0777, true);
         }
 
         // Make sure the cache folder and cache folders exists
         $cacheFilePath = Directory(MODEL_CACHE_FOLDER);
         if(!is_dir($cacheFilePath)) {
-            mkdir($cacheFilePath, 777, true);
+            mkdir($cacheFilePath, 0777, true);
         }
 
         $modelHelper = ScriptCore::$Instance->GetModelHelper();
@@ -245,7 +245,7 @@ class ScriptCore
         $this->Plugins = array();
         $pluginFolder = Directory(PLUGINS_FOLDER);
         if(!is_dir($pluginFolder)){
-            mkdir($pluginFolder, 777, true);
+            mkdir($pluginFolder, 0777, true);
         }
         foreach(GetAllDirectories($pluginFolder) as $plugin){
             $pluginCore = new ScriptCore(PLUGINS_FOLDER . $plugin, $this);

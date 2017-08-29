@@ -24,7 +24,7 @@ class FileOutputCache implements IOutputCache
 
         $fileLocation = $this->GetFileLocation();
         if(!is_dir($fileLocation)) {
-            mkdir($fileLocation, 777, true);
+            mkdir($fileLocation, 0777, true);
         }
 
         $fileName = APPLICATION_ROOT . APPLICATION_FOLDER . $this->FolderName . $this->GetKeyName($request);

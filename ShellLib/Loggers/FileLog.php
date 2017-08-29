@@ -26,7 +26,7 @@ class FileLog implements ILog
         // Make sure the containing folder exists
         $fileDirectory = GetDirectoryFromFilePath($fileName);
         if(!is_dir($fileDirectory)){
-            mkdir($fileDirectory, 777, true);
+            mkdir($fileDirectory, 0777, true);
         }
 
         // Create the file for writing with append in mind. The pointer of the fle will be at the end of its current context

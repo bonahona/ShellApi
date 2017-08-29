@@ -21,7 +21,7 @@ class PhpDocWriter
         }
 
         if(!is_dir(PHP_DOC_FOLDER)) {
-            mkdir(PHP_DOC_FOLDER, 777, true);
+            mkdir(PHP_DOC_FOLDER, 0777, true);
         }
 
         $result = array();
@@ -90,7 +90,7 @@ class PhpDocWriter
         }
 
         if(!is_dir(PHP_DOC_FOLDER)) {
-            mkdir(PHP_DOC_FOLDER, 777, true);
+            mkdir(PHP_DOC_FOLDER, 0777, true);
         }
 
         $result = array();
