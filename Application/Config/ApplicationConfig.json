@@ -21,5 +21,9 @@
     ]
   },
   "Caching":{
+    "FileOutputCache":{
+      "StorageTimer": 3600,
+      "CacheFolder": "OutputCache"
+    }
   }
 }
