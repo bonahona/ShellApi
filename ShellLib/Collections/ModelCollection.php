@@ -129,12 +129,14 @@ class ModelCollection implements ICollection
 
     public function OrderBy($field)
     {
-        trigger_error('ModelCollection does not support OrderBy. Use a selection first.', E_USER_ERROR);
+        $result = new SqlCollection($this, null);
+        return $result->OrderBy($field);
     }
 
     public function OrderByDescending($field)
     {
-        trigger_error('ModelCollection does not support OrderByDescending. Use a selection first.', E_USER_ERROR);
+        $result = new SqlCollection($this, null);
+        return $result->OrderByDescending($field);
     }
 
     public function Take($count)

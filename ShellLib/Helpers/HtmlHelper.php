@@ -7,20 +7,9 @@ class HtmlHelper
         $this->m_controller = $controller;
     }
 
-    private function GetProtocol()
-    {
-        return $_SERVER['REQUEST_SCHEME'];
-    }
-
-    private function GetBaseHost()
-    {
-        return $_SERVER['SERVER_NAME'];
-    }
     public function Css($filename)
     {
-        $protocol = $this->GetProtocol();
-        $baseHost = $this->GetBaseHost();
-        $filepath = $protocol . '://' . $baseHost . $this->m_controller->GetCurrentCore()->GetCssFolder() . $filename;
+        $filepath = $this->m_controller->GetCurrentCore()->GetCssFolder() . $filename;
         $result = "<link rel=\"stylesheet\" type=\"text/css\" href=\"$filepath\"/>";
 
         return $result;
@@ -41,9 +30,6 @@ class HtmlHelper
             $filepath = $filename;
         }
 
-        $protocol = $this->GetProtocol();
-        $baseHost = $this->GetBaseHost();
-        $filepath = $protocol . '://' . $baseHost . $filepath;
         $result = "<script src=\"$filepath\"></script>";
 
         return $result;

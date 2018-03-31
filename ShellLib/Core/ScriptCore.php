@@ -245,7 +245,7 @@ class ScriptCore
         $this->Plugins = array();
         $pluginFolder = Directory(PLUGINS_FOLDER);
         if(!is_dir($pluginFolder)){
-            mkdir($pluginFolder, 0777, true);
+            mkdir($pluginFolder, 777, true);
         }
         foreach(GetAllDirectories($pluginFolder) as $plugin){
             $pluginCore = new ScriptCore(PLUGINS_FOLDER . $plugin, $this);

@@ -1,6 +1,6 @@
 alter table method modify ReturnTypeId int default null;
 
-alter table method
+alter table method(
 	add column ReturnGenericTypeId int default null;
 
 alter table method
@@ -19,3 +19,5 @@ alter table parameter
 
 alter table method
   add column ReturnTypeFreeText varchar(512);
+
+

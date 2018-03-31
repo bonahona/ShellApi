@@ -121,6 +121,11 @@ class Controller
         return $this->ViewData;
     }
 
+    public function GetBody()
+    {
+        return file_get_contents('php://input');
+    }
+
     protected function IsPost(){
         return ($this->Verb == "POST");
     }
@@ -268,10 +273,11 @@ class Controller
         return $result;
     }
 
-    protected function HttpStatus($statusCode)
+    protected function HttpStatus($statusCode, $text = "")
     {
         $result = new HttpResult();
         $result->ReturnCode = $statusCode;
+        $result->Content = $text;
 
         return $result;
     }
@@ -354,14 +360,26 @@ class Controller
         }
     }
 
-    protected function EnqueueJavascript($javascriptFile)
+    protected function EnqueueJavascript($javascriptFiles)
     {
-        $this->JavascriptFiles[] = $javascriptFile . "\n";
+        if(is_array($javascriptFiles)){
+            foreach($javascriptFiles as $javascriptFile){
+                $this->JavascriptFiles[] = $javascriptFile . "\n";
+            }
+        } else {
+            $this->JavascriptFiles[] = $javascriptFiles . "\n";
+        }
     }
 
     protected function EnqueueCssFiles($cssFiles)
     {
-        $this->CssFiles[] = $cssFiles;
+        if(is_array($cssFiles)){
+            foreach($cssFiles as $cssFile){
+                $this->CssFiles[] = $cssFile;
+            }
+        }else {
+            $this->CssFiles[] = $cssFiles;
+        }
     }
 
     protected function ClearJavascript()

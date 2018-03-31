@@ -26,6 +26,9 @@ class ModelHelper
         if(array_key_exists($tableName, $this->TableNames)){
             return $this->TableNames[$tableName];
         }else{
+            if($tableName == ''){
+                $tableName = '[Empty]';
+            }
             trigger_error("Missing model entry for table $tableName", E_USER_WARNING);
         }
     }

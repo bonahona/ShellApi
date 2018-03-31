@@ -178,6 +178,16 @@ class Collection implements IDataCollection
         }
     }
 
+    public function Last()
+    {
+        $tmpArray = array_reverse($this->m_items);
+        if(count($tmpArray) > 0){
+            return $tmpArray[0];
+        }else{
+            return null;
+        }
+    }
+
     public function offsetSet($offset, $value)
     {
         if(is_null($offset)){

@@ -8,4 +8,4 @@ if(isset($argv[1])){
 
 require_once('MigrateDatabaseCore.php');
 $migrateDatabaseObject = new MigrateDatabaseCore();
-$migrateDatabaseObject->ImportDatabase($sourceFile);
+$migrateDatabaseObject->RunImportDatabase($sourceFile);

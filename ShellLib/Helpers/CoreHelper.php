@@ -129,3 +129,14 @@ function ArrayKeyExistsCaseInsensitive($needle, $haystack)
 
     return false;
 }
+
+function CheckCapabilities($allowedCapabilities, $capabilities)
+{
+    foreach($allowedCapabilities as $allowedCapability){
+        if(in_array($allowedCapability, $capabilities)){
+            return true;
+        }
+    }
+
+    return false;
+}

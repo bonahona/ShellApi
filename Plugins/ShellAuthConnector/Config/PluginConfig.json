@@ -3,27 +3,13 @@
     {
     },
     "ShellApplication": {
-        "Name": "documentation",
+        "Name": "Documentation",
+        "LocalId": "3",
         "PublicKey": "-"
     },
     "ShellAuthServer": {
-        "Server": "auth.fyrvall.com",
+        "Server": "auth-site",
         "Port" : "80",
-        "MethodPaths": {
-            "CreateApplication": "/application/create",
-            "EditApplication": "/application/edit",
-            "DeleteApplication": "/application/delete",
-            "GetApplication": "/application/get",
-            "CreateUser": "/user/create",
-            "EditUser": "/user/edit",
-            "DeleteUser": "/user/delete",
-            "ResetPassword": "/user/resetpassword",
-            "Login": "/user/login",
-            "Logout": "/user/logout",
-            "GetUser": "/user/get",
-            "GetLocalUsers": "/user/getlocalusers",
-            "CheckAccessToken": "/user/checkaccesstoken",
-            "SetPrivilegeLevel": "/user/setprivilegelevel"
-        }
+        "MethodPath": "/api"
     }
 }

@@ -25,6 +25,7 @@ class PdoDatabase implements IDatabaseDriver
         );
 
         $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $this->Database = $db;
         $this->Config = $config;
@@ -131,6 +132,132 @@ class PdoDatabase implements IDatabaseDriver
         // Not required for a PDO database object
     }
 
+
+    /**
+     * @param DatabaseTableBuilder $databaseTableBuilder
+     * @param bool $verbose
+     * @return mixed
+     */
+    public function BuildTable($databaseTableBuilder, $verbose = false)
+    {
+        $sqlStatement = "create table if not exists " . strtolower($databaseTableBuilder->TableName) . "(\n";
+
+        $columnSql = array();
+        $referencesSql = array();
+        foreach($databaseTableBuilder->Columns as $column){
+            $columnSql[] = $column->Name . " " . $column->Type . " " . implode(" ", $column->Special);
+
+            if(count($column->References) > 0){
+                $referencesSql[] = "foreign key(" . $column->Name . ")  references " . strtolower($column->References['table']) . "(" . $column->References['column'] . ")";
+            }
+        }
+
+        $sqlStatement .= implode(",\n", array_merge($columnSql, $referencesSql));
+
+        $sqlStatement .= ")";
+
+        if($verbose === true){
+            echo $sqlStatement . "\n";
+        }
+
+        if($this->Database == null){
+            return "Database missing. Check DatabaseConfig.json";
+        }
+
+        $result = $this->Database->exec($sqlStatement);
+        if($result !== 0){
+            print_r($this>$this->Database->errorInfo());
+            return $this->Database->errorInfo()[2];
+        }
+
+        return true;
+    }
+    /**
+     * @param DatabaseTableAlter $databaseTableAlter
+     * @param bool $verbose
+     * @return mixed
+     */
+    public function AlterTable($databaseTableAlter, $verbose = false)
+    {
+        $sqlStatements = array();
+        foreach($databaseTableAlter->AddColumns as $column) {
+            $sqlStatements[] = "alter table " . strtolower($databaseTableAlter->TableName) . " add column " . $column->Name . " " . $column->Type . " " . implode(" ", $column->Special);
+
+            if(count($column->References) > 0){
+                $sqlStatements[] = "alter table " . strtolower($databaseTableAlter->TableName) . " add constraint " . uniqid() . " foreign key(" . $column->Name . ")  references " . strtolower($column->References['table']) . "(" . $column->References['column'] . ")";
+            }
+        }
+
+        if($this->Database == null){
+            return "Database missing. Check DatabaseConfig.json";
+        }
+
+        if($verbose === true){
+            foreach($sqlStatements as $sqlStatement) {
+                echo $sqlStatement . "\n";
+
+                $result = $this->Database->exec($sqlStatement);
+                if($result !== 0){
+                    print_r($this>$this->Database->errorInfo());
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /*
+     * @param String $migrationName
+     * @return bool
+     */
+    public function IsMigrationRun($migrationName, $type)
+    {
+        $sql = 'select count(*) as result from __migrationhistory where Name = \'' . $migrationName . '\' and Type = \'' . $type . '\'';
+
+        if(!$preparedStatement = $this->Database->prepare($sql)){
+            echo "Failed to prepare PDO statement";
+            var_dump($this->Database->errorInfo());
+        }
+
+        $preparedStatement->execute();
+        $row = $preparedStatement->fetch();
+        $isFound = $row['result'];
+
+        return $isFound == 1;
+    }
+
+    /*
+     * @param String $migrationName
+     */
+    public function NotifyMigrationRun($migrationName, $type)
+    {
+        $timeStamp = date('c');
+        $sql = 'insert into __migrationhistory(Name, TimeStamp, Type) values(\'' . $migrationName . '\', \'' . $timeStamp . '\', \'' . $type . '\')';
+
+        if(!$preparedStatement = $this->Database->prepare($sql)){
+            echo "Failed to prepare PDO statement";
+            var_dump($this->Database->errorInfo());
+        }
+
+        $preparedStatement->execute();
+
+        $isFound = &$result;
+        return $isFound == 0;
+    }
+
+    public function DropTable($databaseDropTable)
+    {
+        $sqlStatement = "drop table if exists " . strtolower($databaseDropTable->TableName);
+        if($this->Database == null){
+            return "Database missing. Check DatabaseConfig.json";
+        }
+        if(!$this->Database->exec($sqlStatement)){
+            return $this->Database->errorInfo()[2];
+        }
+
+        return true;
+    }
+
     public function Execute($sqlCollection)
     {
         $result = new Collection();
@@ -167,6 +294,14 @@ class PdoDatabase implements IDatabaseDriver
         return $result;
     }
 
+    public function RunSql($sql)
+    {
+        $result = $this->Database->exec($sql);
+        if($result === false){
+            print_r($this->Database->errorInfo());
+        }
+    }
+
     private function GetSql($sqlCollection, $depth)
     {
         $modelCollection = $sqlCollection->GetModelCollection();
@@ -198,8 +333,7 @@ class PdoDatabase implements IDatabaseDriver
         if($sqlCollection->OrderByCondition != null){
             $order = $sqlCollection->OrderByCondition['Order'];
 
-            $sqlStatement .= " ORDER BY ? $order";
-            $parameters[] = $sqlCollection->OrderByCondition['Field'];
+            $sqlStatement .= " ORDER BY " . $sqlCollection->OrderByCondition['Field']. " " . $order;
         }
 
         $limit = array('use' => false,'skip' => 0, 'take' => 0);
@@ -425,7 +559,7 @@ class PdoDatabase implements IDatabaseDriver
 
         $sqlStatement = "DELETE FROM $tableName WHERE $primaryKey = ?;";
         if(!$preparedStatement = $this->Database->prepare($sqlStatement)){
-            echo "Failed to prepare PDO statement";
+            echo "Failed to prepare PDO statement <br/>";
             var_dump($this->Database->errorInfo());
         }
 
@@ -439,8 +573,8 @@ class PdoDatabase implements IDatabaseDriver
 
         $sqlStatement = "delete from $tableName";
         if(!$preparedStatement = $this->Database->prepare($sqlStatement)){
-            echo "Failed to prepare PDO statement";
-            var_dump($this->Database->erroInfo());
+            echo "Failed to prepare PDO statement <br/>";
+            var_dump($this->Database->errorInfo());
         }
 
         $preparedStatement->execute();
@@ -456,7 +590,7 @@ class PdoDatabase implements IDatabaseDriver
         $sqlStatement = "INSERT INTO $tableName($columns) VALUES($valuePlaceHolders);";
 
         if(!$preparedStatement = $this->Database->prepare($sqlStatement)){
-            echo "Failed to prepare PDO statement";
+            echo "Failed to prepare PDO statement <br/>";
             var_dump($this->Database->errorInfo());
         }
 
@@ -468,7 +602,7 @@ class PdoDatabase implements IDatabaseDriver
         }
 
         if(!$preparedStatement->execute($values)){
-            echo "Failed to execute PDO statement";
+            echo "Failed to execute PDO statement " . $sqlStatement . "\nValues: " . implode(',', $values). " <br/>";
             var_dump($this->Database->errorInfo());
         }
 
@@ -511,7 +645,7 @@ class PdoDatabase implements IDatabaseDriver
 
         $params = array();
         foreach($values as $key => $value){
-            if($value === '0'){
+            if($value === 'NULL'){
                 $params[] = null;
             }else {
                 $params[] = $values[$key];
@@ -520,7 +654,7 @@ class PdoDatabase implements IDatabaseDriver
 
         $params[] = $id;
         if(!$preparedStatement->execute($params)){
-            echo "Failed to execute PDO statement";
+            echo "Failed to execute PDO statement " . $sqlStatement . "\nValues: " . implode(',', $values). " <br/>";
             var_dump(array('Sql' => $sqlStatement, 'Params' => $params, 'Error' => $this->Database->errorInfo()));
         }
     }

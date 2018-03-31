@@ -80,10 +80,15 @@ class FormHelper
 
         if($type == 'select'){
             return $this->Select();
-        }else{
-            $result = "<input name=\"$name\" id=\"$id\" value=\"$value\" type=\"$type\" $attributes/>";
-            return $result;
         }
+
+        $result = "";
+        if($type == 'checkbox'){
+            $result .= "<input name=\"$name\" value=\"0\" type=\"hidden\"/>";
+        }
+
+        $result .="<input name=\"$name\" id=\"$id\" value=\"$value\" type=\"$type\" $attributes/>";
+        return $result;
     }
 
     public function IndexedInput($name, $index, $options = null)
@@ -114,6 +119,7 @@ class FormHelper
         }
 
         $options['type'] = 'checkbox';
+
         return $this->Input($name, $options);
     }
 
@@ -149,7 +155,7 @@ class FormHelper
     }
     public function Select($name, $list, $options = null)
     {
-        if(!is_array($list) && !$list instanceof Collection){
+        if(!is_array($list) && !$list instanceof Collection && !$list instanceof SqlCollection){
             trigger_error("List $name is not an array nor Collection", E_USER_WARNING);
         }
 
@@ -205,6 +211,18 @@ class FormHelper
                 }
             }
         }else if($list instanceof Collection){
+            foreach($list as $item) {
+                $itemKey = $item->$keyIndex;
+                $itemValue = $item->$valueIndex;
+
+                if ($itemKey == $value) {
+                    $result .= "<option value=\"$itemKey\" selected=\"\">$itemValue</option>\n";
+                }else{
+                    $result .= "<option value=\"$itemKey\" >$itemValue</option>\n";
+                }
+            }
+        }else if($list instanceof SqlCollection){
+            $list->FetchData();
             foreach($list as $item) {
                 $itemKey = $item->$keyIndex;
                 $itemValue = $item->$valueIndex;

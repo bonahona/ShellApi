@@ -16,4 +16,4 @@ $outputPath = $outputDirectory . '/'. $outputFile;
 
 require_once('MigrateDatabaseCore.php');
 $migrateDatabaseObject = new MigrateDatabaseCore();
-$migrateDatabaseObject->ExportDatabase($outputPath);
+$migrateDatabaseObject->RunExportDatabase($outputPath);

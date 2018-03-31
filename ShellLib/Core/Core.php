@@ -1,35 +1,69 @@
 <?php
-define('SERVER_ROOT', str_ireplace('/Index.php', '', $_SERVER['PHP_SELF']));
-define('APPLICATION_ROOT',          $_SERVER['DOCUMENT_ROOT']);
 
-const APPLICATION_FOLDER =          '/Application';
-const CONFIG_FOLDER =               '/Config/';
-const CONTROLLER_FOLDER =           '/Controllers/';
-const MODELS_FOLDER =               '/Models/';
-const PLUGINS_FOLDER =              '/Plugins/';
-const HELPERS_FOLDER =              '/Helpers/';
-const VIEWS_FOLDER =                '/Views/';
-const PARTIAL_FOLDER =              '/Views/Partial/';
-const LAYOUTS_FOLDER =              '/Views/Layouts';
-const MODEL_CACHE_FOLDER =          '/Application/Temp/Cache/Models/';
-const VIEW_CACHE_FOLDER =           '/Application/Temp/Cache/Views/';
-const CSS_FOLDER =                  '/Content/Css/';
-const JS_FOLDER =                   '/Content/Js/';
-const IMAGE_FOLDER =                '/Content/Images/';
-const DATABASE_DRIVER_FOLDER =      './ShellLib/DatabaseDrivers/';
-const LOGGER_FOLDER =               '/Loggers/';
-const SHELL_LIB_LOGGERS_FOLDER =    '/ShellLib/Loggers/';
-const SHELL_LIB_CACHE_FOLDER =      './ShellLib/Caching/';
-const SHELL_LIB_OUTPUT_CACHE_FOLDER='/ShellLib/OutputCaches/';
+// Setup the ServerRoot and Application root differently if the Core is invoked from the command line or from a webserver
+if(php_sapi_name() === 'cli'){
+    // Get the root, that is the current directory but two folders up.
+    // Windows uses backslases ('\') while UNIX systems uses normals forward slashes ('/').
+    if (strpos(dirname(__FILE__), '\\') !== false) {
+        $baseDirectoryList = explode('\\', dirname(__FILE__));
+    }else{
+        $baseDirectoryList = explode('/', dirname(__FILE__));
+    }
 
-const VIEW_FILE_ENDING =            '.php';
-const MODEL_CACHE_FILE_ENDING =     '.model';
-const OUTPUT_CACHE_FILE_ENDING =    '.output';
-const PHP_FILE_ENDING =             '.php';
-const CSS_FILE_ENDING =             '.css';
-const JS_FILE_ENDING =              '.js';
+    $entryCount = count($baseDirectoryList);
+    $workingDirectory = implode(array_slice($baseDirectoryList, 0, $entryCount - 2), '/');
 
-const CORE_CLASS =                  'Core';
+    define('SERVER_ROOT', $workingDirectory);
+    define('APPLICATION_ROOT',      $workingDirectory . '/');
+    chdir(APPLICATION_ROOT);
+}else {
+    define('SERVER_ROOT', str_ireplace('/Index.php', '', $_SERVER['PHP_SELF']));
+    define('APPLICATION_ROOT', $_SERVER['DOCUMENT_ROOT']);
+}
+
+const APPLICATION_FOLDER =              '/Application';
+const CONFIG_FOLDER =                   '/Config/';
+const CONTROLLER_FOLDER =               '/Controllers/';
+const MODELS_FOLDER =                   '/Models/';
+const PLUGINS_FOLDER =                  '/Plugins/';
+const HELPERS_FOLDER =                  '/Helpers/';
+const VIEWS_FOLDER =                    '/Views/';
+const PARTIAL_FOLDER =                  '/Views/Partial/';
+const LAYOUTS_FOLDER =                  '/Views/Layouts';
+const MODEL_CACHE_FOLDER =              '/Application/Temp/Cache/Models/';
+const VIEW_CACHE_FOLDER =               '/Application/Temp/Cache/Views/';
+const CSS_FOLDER =                      '/Content/Css/';
+const JS_FOLDER =                       '/Content/Js/';
+const IMAGE_FOLDER =                    '/Content/Images/';
+const DATABASE_DRIVER_FOLDER =          './ShellLib/DatabaseDrivers/';
+const LOGGER_FOLDER =                   '/Loggers/';
+const SHELL_LIB_LOGGERS_FOLDER =        '/ShellLib/Loggers/';
+const SHELL_LIB_CACHE_FOLDER =          './ShellLib/Caching/';
+const SHELL_LIB_OUTPUT_CACHE_FOLDER =   '/ShellLib/OutputCaches/';
+const DATABASE_MIGRATIONS_FOLDER =      '/DatabaseMigrations/';
+
+const VIEW_FILE_ENDING =                '.php';
+const MODEL_CACHE_FILE_ENDING =         '.model';
+const OUTPUT_CACHE_FILE_ENDING =        '.output';
+const PHP_FILE_ENDING =                 '.php';
+const CSS_FILE_ENDING =                 '.css';
+const JS_FILE_ENDING =                  '.js';
+
+const CORE_CLASS =                      'Core';
+
+const CAPABILITIES_NONE =               0;
+const CAPABILITIES_CACHING =            1;
+const CAPABILITIES_MODELS =             2;
+const CAPABILITIES_MODEL_CACHING =      3;
+const CAPABILITIES_DATABASE =           4;
+const CAPABILITIES_ROUTING =            5;
+const CAPABILITIES_PLUGINS =            6;
+const CAPABILITIES_REQUEST =            500;        // The default capabilities needed for a web request to pass
+const CAPABILITIES_ALL =                1000;
+
+const MIGRATION_UP =                1;
+const MIGRATION_DOWN =              2;
+const MIGRATION_SEED =              3;
 
 // The only classes always needed are these. The rest are loaded on demand
 require_once('./ShellLib/Core/ConfigParser.php');
@@ -37,7 +71,6 @@ require_once('./ShellLib/Core/Routing.php');
 require_once('./ShellLib/Core/HttpResult.php');
 require_once('./ShellLib/Helpers/CoreHelper.php');
 require_once('./ShellLib/Caching/Caching.php');
-require_once ('./ShellLib/Utility/MimeTypeHelper.php');
 
 // External reference to the core instance
 class Core
@@ -81,6 +114,7 @@ class Core
     protected $ImageFolder;
     protected $LoggerFolder;
     protected $CacheFolder;
+    protected $DatabaseMigrationFolder;
 
     public function GetIsPrimaryCore()
     {
@@ -168,6 +202,11 @@ class Core
         return  $this->ImageFolder;
     }
 
+    public function GetDatabaseMigrationFolder()
+    {
+        return $this->DatabaseMigrationFolder;
+    }
+
     public function GetApplicationConfig()
     {
         return $this->ApplicationConfig;
@@ -208,7 +247,6 @@ class Core
 
             if (!$this->ReadConfig()) {
                 trigger_error("Failed to read ApplicationConfig", E_USER_ERROR);
-                trigger_error("Failed to read ApplicationConfig", E_USER_ERROR);
             }
 
             $this->PluginPath = '';
@@ -223,7 +261,7 @@ class Core
         }
     }
 
-    public function LoadCodeBase()
+    public function LoadCodeBase($capabilities)
     {
         require_once('./ShellLib/Core/Controller.php');
         require_once('./ShellLib/Core/ModelProxy.php');
@@ -252,7 +290,7 @@ class Core
         require_once('./ShellLib/Collections/SqlCollection.php');
     }
 
-    function SetupCore($subPath = null, $primaryCore = null)
+    function SetupCore($subPath = null, $primaryCore = null, $capabilities = array())
     {
         if($subPath == null){
             $this->ModelCache = array();
@@ -267,7 +305,9 @@ class Core
             $this->SetupHelpers();
             $this->SetupLogs();
             $this->SetupDatabase();
-            $this->CacheModels();
+            if(CheckCapabilities(array(CAPABILITIES_MODEL_CACHING, CAPABILITIES_REQUEST, CAPABILITIES_ALL), $capabilities)) {
+                $this->CacheModels();
+            }
         }else{
             $this->IsPrimaryCore = false;
             $this->PluginPath = $subPath;
@@ -281,10 +321,28 @@ class Core
 
             $this->FindLoggers($this->LoggerFolder);
 
-            $this->CacheModels();
+            if(CheckCapabilities(array(CAPABILITIES_MODEL_CACHING, CAPABILITIES_REQUEST, CAPABILITIES_ALL), $capabilities)) {
+                $this->CacheModels();
+            }
+
             $this->Database = $primaryCore->GetDatabase();
             $this->Helpers = $primaryCore->GetHelpers();
             $this->SetupHelpers();
+        }
+    }
+
+    protected function SetupCapabilities($capabilities = array(CAPABILITIES_ALL))
+    {
+        $this->LoadCodeBase($capabilities);
+        $this->SetupFolders();
+        $this->SetupCore('', $this, $capabilities);
+
+        if(CheckCapabilities(array(CAPABILITIES_PLUGINS, CAPABILITIES_REQUEST, CAPABILITIES_ALL), $capabilities)){
+            $this->SetupPlugins($capabilities);
+        }
+
+        if(CheckCapabilities(array(CAPABILITIES_MODELS, CAPABILITIES_REQUEST, CAPABILITIES_ALL), $capabilities)) {
+            $this->SetupModels();
         }
     }
 
@@ -311,6 +369,7 @@ class Core
         $this->JsFolder = SERVER_ROOT . APPLICATION_FOLDER . JS_FOLDER;
         $this->ImageFolder = SERVER_ROOT . APPLICATION_FOLDER . IMAGE_FOLDER;
         $this->LoggerFolder = APPLICATION_FOLDER . LOGGER_FOLDER;
+        $this->DatabaseMigrationFolder = APPLICATION_FOLDER . DATABASE_MIGRATIONS_FOLDER;
     }
 
     protected function SetupPluginFolders()
@@ -326,6 +385,7 @@ class Core
         $this->JsFolder =  $this->PluginPath . JS_FOLDER;
         $this->ImageFolder =  $this->PluginPath . IMAGE_FOLDER;
         $this->LoggerFolder = $this->PluginPath . LOGGER_FOLDER;
+        $this->DatabaseMigrationFolder = $this->PluginPath . DATABASE_MIGRATIONS_FOLDER;
     }
 
     protected function ReadConfig()
@@ -366,6 +426,10 @@ class Core
     protected function SetupCaching()
     {
         $this->Caching = new Caching();
+
+        if(!isset($this->ApplicationConfig['Caching'])){
+            return;
+        }
 
         foreach($this->ApplicationConfig['Caching'] as $type => $caching){
 
@@ -580,55 +644,26 @@ class Core
         $routingEngine = new Routing($this->RoutesConfig);
         $requestData = $routingEngine->ParseUrl($requestRoot, $this->RequestUrl);
 
-        if($requestData['Type'] == 'Content'){
-            return $this->ReturnContent($requestData['Path']);
-        }else {
-            // Check if a cache entry is present and if that is so, just return it and don't put up the rest of the application
-            if ($this->Caching->CacheExists()) {
-                $caching = $this->Caching->GetFirstCache();
+        // Check if a cache entry is present and if that is so, just return it and don't put up the rest of the application
+        if ($this->Caching->CacheExists()) {
+            $caching = $this->Caching->GetFirstCache();
 
-                $cacheResult = $caching->GetCache($requestData);
-                if ($cacheResult != null) {
-                    $this->DisplayResult($cacheResult);
-                    return;
-                }
+            $cacheResult = $caching->GetCache($requestData);
+            if($cacheResult != null) {
+                $this->DisplayResult($cacheResult);
+                return;
             }
-
-            $this->ReturnNonCachedRequest($requestData);
-        }
-    }
-
-    public function ReturnContent($content)
-    {
-        if(count($content) == 0){
-            // Nothing to fetch
-            die();
         }
 
-        $path = 'Application/Content/' . implode('/', $content);
-
-        if(!file_exists($path)){
-            die('No such file');
-        }
-
-        $fileContent = file_get_contents($path);
-
-        $result = new HttpResult();
-        $result->Content = $fileContent;
-        $result->ReturnCode = 200;
-        $result->MimeType = GetMimeTypeFromFile($path);
-        $this->DisplayResult($result);
-        die();
+        $this->ReturnNonCachedRequest($requestData);
     }
 
     public function ReturnNonCachedRequest($requestData)
     {
         // Now we need to setup the rest of the application
-        $this->LoadCodeBase();
-        $this->SetupFolders();
-        $this->SetupCore('', $this);
-        $this->SetupPlugins();
-        $this->SetupModels();
+        $this->SetupCapabilities(array(CAPABILITIES_REQUEST));
+
+        $variables = array();
 
         if($requestData != null) {
             $controllerName = $requestData['ControllerName'];
@@ -863,7 +898,7 @@ class Core
         if(!isset($this->ApplicationConfig['Application']['NotFoundController'])){
             return array(
                 'error' => 1,
-                'Application config missing NotFoundController'
+                'message' => 'Application config missing NotFoundController'
             );
         }
         $notFoundControllerName = $this->ApplicationConfig['Application']['NotFoundController'];
@@ -871,7 +906,7 @@ class Core
         if(!isset($this->ApplicationConfig['Application']['NotFoundAction'])){
             return array(
                 'error' => 1,
-                'Application config missing NotFoundAction'
+                'message' => 'Application config missing NotFoundAction'
             );
         }
         $notFoundAction = $this->ApplicationConfig['Application']['NotFoundAction'];
@@ -961,10 +996,34 @@ class Core
         }
     }
 
-    public function SetupPlugins()
+    public function SetupPlugins($capabilities)
     {
         foreach($this->Plugins as $plugin){
-            $plugin->SetupCore($plugin->PluginPath, $this);
+            $plugin->SetupCore($plugin->PluginPath, $this, $capabilities);
+        }
+    }
+
+
+    public function MigrateDatabase($action)
+    {
+        require_once ('./ShellLib/DatabaseMigration/IDatabaseMigratorTask.php');
+        require_once ('./ShellLib/DatabaseMigration/DatabaseColumn.php');
+        require_once ('./ShellLib/DatabaseMigration/DatabaseTableBuilder.php');
+        require_once ('./ShellLib/DatabaseMigration/DatabaseTableAlter.php');
+        require_once ('./ShellLib/DatabaseMigration/DatabaseDropTable.php');
+        require_once ('./ShellLib/DatabaseMigration/DatabaseRunSql.php');
+        require_once ('./ShellLib/DatabaseMigration/IDatabaseMigration.php');
+        require_once ('./ShellLib/DatabaseMigration/DatabaseMigrator.php');
+
+        $migration =  new DatabaseMigrator($this->Models, $this->Database, $this);
+        $migration->MigrationSetup();
+
+        if($action == MIGRATION_UP){
+            $migration->Up();
+        }else if($action == MIGRATION_DOWN){
+            $migration->Down();
+        }else if($action == MIGRATION_SEED){
+            $migration->Seed();
         }
     }
 }

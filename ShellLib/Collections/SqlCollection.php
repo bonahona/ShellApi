@@ -89,6 +89,10 @@ class SqlCollection implements IDataCollection
 
     public function Add($item)
     {
+        foreach(debug_backtrace() as $stackframe){
+            echo "File: " . $stackframe['file'] . " Line: " . $stackframe['line'] . "<br/>";
+        }
+
         trigger_error('SqlCollection does not support Add. Use a selection first.', E_USER_ERROR);
     }
 
@@ -105,6 +109,19 @@ class SqlCollection implements IDataCollection
 
         if(count($this->m_items) > 0){
             return $this->m_items[0];
+        }else{
+            return null;
+        }
+    }
+
+    public function Last()
+    {
+        $this->TakeCondition = 1;
+        $this->FetchData();
+
+        $tmpArray = array_reverse($this->m_items);
+        if(count($tmpArray) > 0){
+            return $tmpArray[0];
         }else{
             return null;
         }
@@ -191,7 +208,7 @@ class SqlCollection implements IDataCollection
     public function FetchData()
     {
         if($this->IsExecuted){
-            return;
+            return null;
         }
 
         if($this->ParentQuery != null){
@@ -200,9 +217,13 @@ class SqlCollection implements IDataCollection
 
         $this->IsExecuted = true;
         $database = $this->ModelCollection->GetInstance()->GetDatabase();
-        foreach($database->Execute($this) as $item){
+
+        $result = $database->Execute($this);
+        foreach($result as $item){
             $item->OnLoad();
             $this->m_items[] = $item;
         }
+
+        return $result;
     }
 }
