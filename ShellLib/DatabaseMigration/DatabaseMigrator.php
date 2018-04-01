@@ -109,9 +109,16 @@ class DatabaseMigrator
                     'fileName'
                 );
             }
+
+            usort($result, array('DatabaseMigrator', 'SortMigrations'));
         }
 
         return $result;
+    }
+
+    private static function SortMigrations($a, $b)
+    {
+        return $a['migration']->GetSortOrder() - $b['migration']->GetSortOrder();
     }
 
     public function RunMigrationUp($migration, $fileName)
