@@ -1,8 +1,11 @@
 <?php
-abstract class BackendController extends Controller
+require_once('BaseController.php');
+abstract class BackendController extends BaseController
 {
     public function BeforeAction()
     {
+        parent::BeforeRender();
+
         if(!$this->IsLoggedIn()){
             $this->Redirect('/Admin/', array('ref' => $this->RequestUri));
         }

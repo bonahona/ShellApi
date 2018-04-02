@@ -128,7 +128,7 @@ class Routing
                 }
             }
         }
-        
+
         $result = array(
             'MethodName' => $_SERVER['REQUEST_METHOD'],
             'ControllerName' => $controllerName,

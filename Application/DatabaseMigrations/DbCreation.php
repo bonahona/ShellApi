@@ -20,7 +20,7 @@ class DbCreation implements IDatabaseMigration
         $migrator->CreateTable('staticblock')
             ->AddPrimaryKey('Id', 'int')
             ->AddColumn('Identifier', 'varchar(128)', array('not null', 'default ""'))
-            ->AddColumn('Content', 'varchar(32768)');
+            ->AddColumn('Content', 'text');
 
         $migrator->CreateTable('projectcategory')
             ->AddPrimaryKey('Id', 'int')
@@ -47,7 +47,7 @@ class DbCreation implements IDatabaseMigration
             ->AddPrimaryKey('Id', 'int')
             ->AddColumn('PageTitle', 'varchar(256)')
             ->AddColumn('NavigationTitle', 'varchar(256)')
-            ->AddColumn('Content', 'varchar(16834)')
+            ->AddColumn('Content', 'text')
             ->AddColumn('ShowInMenu', 'int(1)', array('not null', 'default 0'))
             ->AddColumn('ProjectId', 'int')
             ->AddColumn('ClassId', 'int')
@@ -71,7 +71,7 @@ class DbCreation implements IDatabaseMigration
             ->AddPrimaryKey('Id', 'int')
             ->AddColumn('VersionNumber', 'varchar(128)')
             ->AddColumn('ReelaseDate', 'varchar(128)')
-            ->AddColumn('Content', 'varchar(32768)')
+            ->AddColumn('Content', 'text')
             ->AddReference('project', 'Id', array('not null', 'default 0'), 'ProjectId');
 
         $migrator->CreateTable('seealsolink')

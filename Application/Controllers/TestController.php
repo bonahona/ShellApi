@@ -6,18 +6,20 @@ class TestController extends Controller
         $result = $this->Models->Method->Where(
             array('ProjectClassId' => $projectClassId, 'ReturnTypeId' => $returnType, 'IsStatic' => $isStatic)
         )->OrderBy('MethodName')->Take(5);
-        var_dump($result);
+
         return;
         return $this->Json(['test'=> 'this is the body']);
     }
 
     public function Test($lol)
     {
+        /*
         $testCollection = $this->Models->GenericType->Where(array('Test' => $lol))->OrderBy(GenericType.TypeName);
 
 
         $i = $this->Models->Example->First();
 
         $i->ProjectId
+        */
     }
 }

@@ -1,10 +1,7 @@
 {
   "Routes": [
     {
-      "/Application/Content/{...}":{
-        "Content": "{...}"
-      },
-      "/Admin/{...}": {
+      "/admin/{...}": {
         "Controller": "User",
         "Action": "Login",
         "Variables": {
@@ -12,7 +9,7 @@
       }
     },
 	{
-      "/Contact/{...}": {
+      "/contact/{...}": {
         "Controller": "Projects",
         "Action": "Contact",
         "Variables": {

@@ -1,5 +1,6 @@
 <?php
-class ProjectsController extends Controller
+require_once('BaseController.php');
+class ProjectsController extends BaseController
 {
     public function Index()
     {

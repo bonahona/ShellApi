@@ -2,27 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a1c9fbac-ad80-4e8b-bfd7-079c45f8e4ea" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/Application/DatabaseMigrations/DbSeed.php" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" afterPath="" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Application/Controllers/BaseController.php" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/Application/Sql/AlterDocument01.sql" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Application/Sql/AlterProject01.sql" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Application/Sql/Document.sql" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Application/Sql/Example.sql" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Application/Sql/GenericType.sql" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Application/Sql/GenericTypeMigration.sql" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Application/Sql/InheritInterface.sql" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Application/Sql/Method.sql" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Application/Sql/Parameter.sql" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Application/Sql/Project.sql" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Application/Sql/ProjectCategory.sql" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Application/Sql/ProjectClass.sql" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Application/Sql/ProjectLanguage.sql" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Application/Sql/Property.sql" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Application/Sql/ReleaseNotes.sql" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Application/Sql/SeeAlsoLink.sql" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Application/Sql/StaticBlock.sql" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/ShellLib/DatabaseMigration/DatabaseMigrator.php" afterPath="$PROJECT_DIR$/ShellLib/DatabaseMigration/DatabaseMigrator.php" />
+      <change beforePath="$PROJECT_DIR$/Application/Config/ApplicationConfig.json" afterPath="$PROJECT_DIR$/Application/Config/ApplicationConfig.json" />
+      <change beforePath="$PROJECT_DIR$/Application/Config/Routes.json" afterPath="$PROJECT_DIR$/Application/Config/Routes.json" />
+      <change beforePath="$PROJECT_DIR$/Application/Controllers/BackendController.php" afterPath="$PROJECT_DIR$/Application/Controllers/BackendController.php" />
+      <change beforePath="$PROJECT_DIR$/Application/Controllers/ProjectsController.php" afterPath="$PROJECT_DIR$/Application/Controllers/ProjectsController.php" />
+      <change beforePath="$PROJECT_DIR$/Application/Controllers/TestController.php" afterPath="$PROJECT_DIR$/Application/Controllers/TestController.php" />
+      <change beforePath="$PROJECT_DIR$/Application/Controllers/UserController.php" afterPath="$PROJECT_DIR$/Application/Controllers/UserController.php" />
+      <change beforePath="$PROJECT_DIR$/Application/DatabaseMigrations/DbCreation.php" afterPath="$PROJECT_DIR$/Application/DatabaseMigrations/DbCreation.php" />
+      <change beforePath="$PROJECT_DIR$/Application/Views/Layouts/Default.php" afterPath="$PROJECT_DIR$/Application/Views/Layouts/Default.php" />
+      <change beforePath="$PROJECT_DIR$/Plugins/ShellAuthConnector/Config/PluginConfig.json" afterPath="$PROJECT_DIR$/Plugins/ShellAuthConnector/Config/PluginConfig.json" />
+      <change beforePath="$PROJECT_DIR$/ShellLib/Core/Core.php" afterPath="$PROJECT_DIR$/ShellLib/Core/Core.php" />
+      <change beforePath="$PROJECT_DIR$/ShellLib/Core/Routing.php" afterPath="$PROJECT_DIR$/ShellLib/Core/Routing.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -38,107 +30,72 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="DbCreation.php" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Application/DatabaseMigrations/DbCreation.php">
+          <file leaf-file-name="PluginConfig.json" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Plugins/ShellAuthConnector/Config/PluginConfig.json">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="323">
-                  <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+                <state relative-caret-position="238">
+                  <caret line="14" column="1" lean-forward="true" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="DbSeed.php" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Application/DatabaseMigrations/DbSeed.php">
+          <file leaf-file-name="Dockerfile" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Dockerfile">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="374">
-                  <caret line="22" column="5" lean-forward="true" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
+                <state relative-caret-position="340">
+                  <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="ProjectLanguage.php" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Application/Models/ProjectLanguage.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="IDatabaseMigration.php" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ShellLib/DatabaseMigration/IDatabaseMigration.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="119">
-                  <caret line="7" column="25" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="25" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="DatabaseMigrator.php" pinned="false" current-in-tab="true">
+          <file leaf-file-name="DatabaseMigrator.php" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/ShellLib/DatabaseMigration/DatabaseMigrator.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="409">
-                  <caret line="117" column="0" lean-forward="true" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
+                <state relative-caret-position="714">
+                  <caret line="42" column="40" lean-forward="false" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="40" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="ModelHelper.php" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ShellLib/Helpers/ModelHelper.php">
+          <file leaf-file-name="DatabaseConfig.json" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Application/Config/DatabaseConfig.json">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="753">
-                  <caret line="137" column="8" lean-forward="false" selection-start-line="137" selection-start-column="8" selection-end-line="137" selection-end-column="8" />
+                <state relative-caret-position="170">
+                  <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Core.php" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ShellLib/Core/Core.php">
+          <file leaf-file-name="BackendController.php" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Application/Controllers/BackendController.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="141">
-                  <caret line="968" column="0" lean-forward="true" selection-start-line="968" selection-start-column="0" selection-end-line="968" selection-end-column="0" />
+                <state relative-caret-position="204">
+                  <caret line="12" column="60" lean-forward="true" selection-start-line="12" selection-start-column="60" selection-end-line="12" selection-end-column="60" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="PdoDatabase.php" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ShellLib/DatabaseDrivers/PdoDatabase.php">
+          <file leaf-file-name="DatabaseTableAlter.php" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/ShellLib/DatabaseMigration/DatabaseTableAlter.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="334">
-                  <caret line="171" column="0" lean-forward="true" selection-start-line="171" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
-                  <folding>
-                    <marker date="1522457638176" expanded="true" signature="2998:3182" ph="select TABLE... KEY_COLUMN_USAGE" />
-                    <marker date="1522457638176" expanded="true" signature="4066:4146" ph="create table... if" />
-                    <marker date="1522457638176" expanded="true" signature="5487:5499" ph="alter table ${strtolower($databaseTableBuilder-&gt;TableName)}... " />
-                    <marker date="1522457638176" expanded="true" signature="5487:5546" ph="alter table ${strtolower($databaseTableBuilder-&gt;TableName)}... " />
-                    <marker date="1522457638176" expanded="true" signature="5487:5560" ph="alter table ${strtolower($databaseTableAlter-&gt;TableName)}add... " />
-                    <marker date="1522457638176" expanded="true" signature="5487:5605" ph="alter table ${strtolower($databaseTableAlter-&gt;TableName)}... " />
-                    <marker date="1522457638176" expanded="true" signature="5726:5804" ph="alter table ${strtolower($databaseTableAlter-&gt;TableName)}add... " />
-                    <marker date="1522457638176" expanded="true" signature="5726:5819" ph="alter table ${strtolower($databaseTableAlter-&gt;TableName)}add... " />
-                    <marker date="1522457638176" expanded="true" signature="5726:5955" ph="alter table ${strtolower($databaseTableAlter-&gt;TableName)}add... " />
-                    <marker date="1522457638176" expanded="true" signature="6613:6731" ph="select count... " />
-                    <marker date="1522457638176" expanded="true" signature="7239:7370" ph="insert into " />
-                    <marker date="1522457638176" expanded="true" signature="7742:7763" ph="drop table i... " />
-                    <marker date="1522457638176" expanded="true" signature="9920:9946" ph="SELECT ${$co... ${$fromStatement}" />
-                    <marker date="1522457638176" expanded="true" signature="11571:11615" ph="SELECT * FRO... ${$tableName}" />
-                    <marker date="1522457638176" expanded="true" signature="12468:12522" ph="SELECT ${$pr... ${$tableName}" />
-                    <marker date="1522457638176" expanded="true" signature="13216:13247" ph="SELECT * FRO... ${$tableName}" />
-                    <marker date="1522457638176" expanded="true" signature="14304:14336" ph="SELECT * FRO... ${$tableName}" />
-                    <marker date="1522457638176" expanded="true" signature="15169:15230" ph="SELECT count... ${$tableName}" />
-                    <marker date="1522457638176" expanded="true" signature="15833:15857" ph="SELECT ${$pr... ${$tableName}" />
-                    <marker date="1522457638176" expanded="true" signature="16490:16504" ph="SELECT * FRO... ${$tableName}" />
-                    <marker date="1522457638176" expanded="true" signature="17584:17628" ph="DELETE FROM ${$tableName}... " />
-                    <marker date="1522457638176" expanded="true" signature="18063:18075" ph="delete from ${$tableName}... " />
-                    <marker date="1522457638176" expanded="true" signature="18765:18824" ph="INSERT INTO ${$tableName}... " />
-                    <marker date="1522457638176" expanded="true" signature="20196:20245" ph="UPDATE ${$tableName}... " />
-                  </folding>
+                <state relative-caret-position="17">
+                  <caret line="1" column="24" lean-forward="false" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="24" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ProjectsController.php" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Application/Controllers/ProjectsController.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="255">
+                  <caret line="15" column="5" lean-forward="true" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -146,8 +103,28 @@
           <file leaf-file-name="Routes.json" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Application/Config/Routes.json">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="425">
-                  <caret line="25" column="28" lean-forward="true" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
+                <state relative-caret-position="34">
+                  <caret line="2" column="5" lean-forward="true" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Routing.php" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/ShellLib/Core/Routing.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="560">
+                  <caret line="245" column="24" lean-forward="true" selection-start-line="245" selection-start-column="24" selection-end-line="245" selection-end-column="24" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Core.php" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/ShellLib/Core/Core.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="887">
+                  <caret line="1011" column="70" lean-forward="false" selection-start-line="1011" selection-start-column="70" selection-end-line="1011" selection-end-column="70" />
                   <folding />
                 </state>
               </provider>
@@ -160,8 +137,8 @@
           <file leaf-file-name="DbCreation.php" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Application/DatabaseMigrations/DbCreation.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="455">
-                  <caret line="113" column="0" lean-forward="false" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
+                <state relative-caret-position="371">
+                  <caret line="71" column="56" lean-forward="true" selection-start-line="71" selection-start-column="56" selection-end-line="71" selection-end-column="56" />
                   <folding />
                 </state>
               </provider>
@@ -179,10 +156,15 @@
       <find>DatabaseTableBuilder</find>
       <find>BuildTable</find>
       <find>Execute</find>
-      <find>var_dump</find>
       <find>Alter</find>
       <find>GetSortOrder</find>
       <find>fileName</find>
+      <find>tolower</find>
+      <find>ValueExists</find>
+      <find>var_dump</find>
+      <find>DatabaseTableAlter</find>
+      <find>Can</find>
+      <find>Content</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -191,20 +173,28 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Plugins/ShellAuthConnector/Config/PluginConfig.json" />
         <option value="$PROJECT_DIR$/Application/Config/DatabaseConfig.json" />
         <option value="$PROJECT_DIR$/ShellLib/Core/IDatabaseDriver.php" />
         <option value="$PROJECT_DIR$/ShellLib/DatabaseMigration/DatabaseTableBuilder.php" />
         <option value="$PROJECT_DIR$/ShellLib/DatabaseMigration/DatabaseTableAlter.php" />
         <option value="$PROJECT_DIR$/Dockerfile" />
         <option value="$PROJECT_DIR$/run.sh" />
-        <option value="$PROJECT_DIR$/ShellLib/Core/Core.php" />
         <option value="$PROJECT_DIR$/Application/Sql/GenericTypeMigration.sql" />
-        <option value="$PROJECT_DIR$/Application/DatabaseMigrations/DbCreation.php" />
         <option value="$PROJECT_DIR$/ShellLib/DatabaseDrivers/PdoDatabase.php" />
-        <option value="$PROJECT_DIR$/Application/Config/Routes.json" />
         <option value="$PROJECT_DIR$/Application/DatabaseMigrations/DbSeed.php" />
         <option value="$PROJECT_DIR$/ShellLib/DatabaseMigration/DatabaseMigrator.php" />
+        <option value="$PROJECT_DIR$/Application/Controllers/TestController.php" />
+        <option value="$PROJECT_DIR$/Application/Config/Routes.json" />
+        <option value="$PROJECT_DIR$/Application/Config/ApplicationConfig.json" />
+        <option value="$PROJECT_DIR$/Application/Views/Layouts/Default.php" />
+        <option value="$PROJECT_DIR$/Application/Controllers/BaseController.php" />
+        <option value="$PROJECT_DIR$/Application/Controllers/UserController.php" />
+        <option value="$PROJECT_DIR$/Application/Controllers/BackendController.php" />
+        <option value="$PROJECT_DIR$/Application/Controllers/ProjectsController.php" />
+        <option value="$PROJECT_DIR$/ShellLib/Core/Routing.php" />
+        <option value="$PROJECT_DIR$/Plugins/ShellAuthConnector/Config/PluginConfig.json" />
+        <option value="$PROJECT_DIR$/ShellLib/Core/Core.php" />
+        <option value="$PROJECT_DIR$/Application/DatabaseMigrations/DbCreation.php" />
       </list>
     </option>
   </component>
@@ -216,8 +206,7 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="-7" />
     <option name="width" value="1294" />
     <option name="height" value="1407" />
   </component>
@@ -252,7 +241,32 @@
               <item name="Documentation" type="b2602c69:ProjectViewProjectNode" />
               <item name="Documentation" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="Application" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Config" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="Documentation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Documentation" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Application" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Controllers" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="Documentation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Documentation" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Application" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="DatabaseMigrations" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="Documentation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Documentation" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Application" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Views" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="Documentation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Documentation" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Application" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Views" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Home" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="Documentation" type="b2602c69:ProjectViewProjectNode" />
@@ -310,12 +324,12 @@
       <option name="presentableId" value="Default" />
       <updated>1522436992429</updated>
       <workItem from="1522436993637" duration="8691000" />
-      <workItem from="1522452163898" duration="9010000" />
+      <workItem from="1522452163898" duration="14336000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17701000" />
+    <option name="totallyTimeSpent" value="23027000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
@@ -372,205 +386,10 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Plugins/ShellAuthConnector/Config/PluginConfig.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="6" lean-forward="false" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ShellLib/DatabaseMigration/DatabaseMigrator.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="35" column="32" lean-forward="true" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/DatabaseMigrations/DbCreation.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1734">
-          <caret line="102" column="30" lean-forward="false" selection-start-line="102" selection-start-column="19" selection-end-line="102" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ShellLib/DatabaseMigration/DatabaseColumn.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ShellLib/DatabaseMigration/DatabaseDropTable.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ShellLib/DatabaseMigration/DatabaseTableBuilder.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="79" lean-forward="true" selection-start-line="18" selection-start-column="79" selection-end-line="18" selection-end-column="79" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ShellLib/DatabaseMigration/DatabaseTableAlter.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="36" lean-forward="true" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ShellLib/Core/IDatabaseDriver.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="27" column="1" lean-forward="true" selection-start-line="27" selection-start-column="1" selection-end-line="27" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ShellLib/DatabaseDrivers/PdoDatabase.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2652">
-          <caret line="156" column="29" lean-forward="true" selection-start-line="156" selection-start-column="29" selection-end-line="156" selection-end-column="29" />
-          <folding>
-            <marker date="1522457638176" expanded="true" signature="2998:3182" ph="select TABLE... KEY_COLUMN_USAGE" />
-            <marker date="1522457638176" expanded="true" signature="4066:4146" ph="create table... if" />
-            <marker date="1522457638176" expanded="true" signature="5487:5499" ph="alter table ${strtolower($databaseTableBuilder-&gt;TableName)}... " />
-            <marker date="1522457638176" expanded="true" signature="5487:5546" ph="alter table ${strtolower($databaseTableBuilder-&gt;TableName)}... " />
-            <marker date="1522457638176" expanded="true" signature="5487:5560" ph="alter table ${strtolower($databaseTableAlter-&gt;TableName)}add... " />
-            <marker date="1522457638176" expanded="true" signature="5487:5605" ph="alter table ${strtolower($databaseTableAlter-&gt;TableName)}... " />
-            <marker date="1522457638176" expanded="true" signature="5726:5804" ph="alter table ${strtolower($databaseTableAlter-&gt;TableName)}add... " />
-            <marker date="1522457638176" expanded="true" signature="5726:5819" ph="alter table ${strtolower($databaseTableAlter-&gt;TableName)}add... " />
-            <marker date="1522457638176" expanded="true" signature="5726:5955" ph="alter table ${strtolower($databaseTableAlter-&gt;TableName)}add... " />
-            <marker date="1522457638176" expanded="true" signature="6613:6731" ph="select count... " />
-            <marker date="1522457638176" expanded="true" signature="7239:7370" ph="insert into " />
-            <marker date="1522457638176" expanded="true" signature="7742:7763" ph="drop table i... " />
-            <marker date="1522457638176" expanded="true" signature="9920:9946" ph="SELECT ${$co... ${$fromStatement}" />
-            <marker date="1522457638176" expanded="true" signature="11571:11615" ph="SELECT * FRO... ${$tableName}" />
-            <marker date="1522457638176" expanded="true" signature="12468:12522" ph="SELECT ${$pr... ${$tableName}" />
-            <marker date="1522457638176" expanded="true" signature="13216:13247" ph="SELECT * FRO... ${$tableName}" />
-            <marker date="1522457638176" expanded="true" signature="14304:14336" ph="SELECT * FRO... ${$tableName}" />
-            <marker date="1522457638176" expanded="true" signature="15169:15230" ph="SELECT count... ${$tableName}" />
-            <marker date="1522457638176" expanded="true" signature="15833:15857" ph="SELECT ${$pr... ${$tableName}" />
-            <marker date="1522457638176" expanded="true" signature="16490:16504" ph="SELECT * FRO... ${$tableName}" />
-            <marker date="1522457638176" expanded="true" signature="17584:17628" ph="DELETE FROM ${$tableName}... " />
-            <marker date="1522457638176" expanded="true" signature="18063:18075" ph="delete from ${$tableName}... " />
-            <marker date="1522457638176" expanded="true" signature="18765:18824" ph="INSERT INTO ${$tableName}... " />
-            <marker date="1522457638176" expanded="true" signature="20196:20245" ph="UPDATE ${$tableName}... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Sql/ProjectClass.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="14" column="2" lean-forward="false" selection-start-line="14" selection-start-column="2" selection-end-line="14" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Sql/GenericTypeMigration.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="45" lean-forward="true" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Config/ApplicationConfig.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Sql/StaticBlock.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="1" lean-forward="false" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Config/DatabaseConfig.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="1" lean-forward="false" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Sql/ProjectCategory.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Sql/Document.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Sql/Example.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Sql/ReleaseNotes.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Sql/SeeAlsoLink.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="2" lean-forward="false" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Sql/InheritInterface.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Sql/Method.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="14" lean-forward="false" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Sql/ProjectClass.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="2" lean-forward="false" selection-start-line="14" selection-start-column="2" selection-end-line="14" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Plugins/ShellAuthConnector/Config/PluginConfig.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="8" column="6" lean-forward="false" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
           <folding />
         </state>
       </provider>
@@ -695,14 +514,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ShellLib/DatabaseMigration/DatabaseTableAlter.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="36" lean-forward="false" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Sql/GenericTypeMigration.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -715,47 +526,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="334">
           <caret line="171" column="0" lean-forward="true" selection-start-line="171" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
-          <folding>
-            <marker date="1522457638176" expanded="true" signature="2998:3182" ph="select TABLE... KEY_COLUMN_USAGE" />
-            <marker date="1522457638176" expanded="true" signature="4066:4146" ph="create table... if" />
-            <marker date="1522457638176" expanded="true" signature="5487:5499" ph="alter table ${strtolower($databaseTableBuilder-&gt;TableName)}... " />
-            <marker date="1522457638176" expanded="true" signature="5487:5546" ph="alter table ${strtolower($databaseTableBuilder-&gt;TableName)}... " />
-            <marker date="1522457638176" expanded="true" signature="5487:5560" ph="alter table ${strtolower($databaseTableAlter-&gt;TableName)}add... " />
-            <marker date="1522457638176" expanded="true" signature="5487:5605" ph="alter table ${strtolower($databaseTableAlter-&gt;TableName)}... " />
-            <marker date="1522457638176" expanded="true" signature="5726:5804" ph="alter table ${strtolower($databaseTableAlter-&gt;TableName)}add... " />
-            <marker date="1522457638176" expanded="true" signature="5726:5819" ph="alter table ${strtolower($databaseTableAlter-&gt;TableName)}add... " />
-            <marker date="1522457638176" expanded="true" signature="5726:5955" ph="alter table ${strtolower($databaseTableAlter-&gt;TableName)}add... " />
-            <marker date="1522457638176" expanded="true" signature="6613:6731" ph="select count... " />
-            <marker date="1522457638176" expanded="true" signature="7239:7370" ph="insert into " />
-            <marker date="1522457638176" expanded="true" signature="7742:7763" ph="drop table i... " />
-            <marker date="1522457638176" expanded="true" signature="9920:9946" ph="SELECT ${$co... ${$fromStatement}" />
-            <marker date="1522457638176" expanded="true" signature="11571:11615" ph="SELECT * FRO... ${$tableName}" />
-            <marker date="1522457638176" expanded="true" signature="12468:12522" ph="SELECT ${$pr... ${$tableName}" />
-            <marker date="1522457638176" expanded="true" signature="13216:13247" ph="SELECT * FRO... ${$tableName}" />
-            <marker date="1522457638176" expanded="true" signature="14304:14336" ph="SELECT * FRO... ${$tableName}" />
-            <marker date="1522457638176" expanded="true" signature="15169:15230" ph="SELECT count... ${$tableName}" />
-            <marker date="1522457638176" expanded="true" signature="15833:15857" ph="SELECT ${$pr... ${$tableName}" />
-            <marker date="1522457638176" expanded="true" signature="16490:16504" ph="SELECT * FRO... ${$tableName}" />
-            <marker date="1522457638176" expanded="true" signature="17584:17628" ph="DELETE FROM ${$tableName}... " />
-            <marker date="1522457638176" expanded="true" signature="18063:18075" ph="delete from ${$tableName}... " />
-            <marker date="1522457638176" expanded="true" signature="18765:18824" ph="INSERT INTO ${$tableName}... " />
-            <marker date="1522457638176" expanded="true" signature="20196:20245" ph="UPDATE ${$tableName}... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Config/Routes.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="28" lean-forward="true" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -768,26 +538,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ShellLib/Core/Core.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="968" column="0" lean-forward="true" selection-start-line="968" selection-start-column="0" selection-end-line="968" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Models/ProjectLanguage.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/DatabaseMigrations/DbCreation.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -800,10 +554,242 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Config/ApplicationConfig.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="1" lean-forward="true" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers/ClassesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers/DocumentsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers/ExamplesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers/InheritInterfacesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers/MethodsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers/ParametersController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers/ProjectCategoriesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers/ProjectLanguagesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers/ProjectsBackendController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers/PropertiesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers/ReleaseNotesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers/SeeAlsoLinksController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers/StaticBlocksController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers/TestController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="10" lean-forward="true" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers/UserController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="27" lean-forward="true" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Views/Layouts/Default.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="31" column="101" lean-forward="true" selection-start-line="31" selection-start-column="101" selection-end-line="31" selection-end-column="101" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers/GenericTypesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers/BaseController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="26" lean-forward="false" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers/BackendController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="60" lean-forward="true" selection-start-line="12" selection-start-column="60" selection-end-line="12" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers/ProjectsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="5" lean-forward="true" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Config/Routes.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="5" lean-forward="true" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ShellLib/Core/Routing.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="560">
+          <caret line="245" column="24" lean-forward="true" selection-start-line="245" selection-start-column="24" selection-end-line="245" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Plugins/ShellAuthConnector/Config/PluginConfig.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="1" lean-forward="true" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Config/DatabaseConfig.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ShellLib/DatabaseMigration/DatabaseMigrator.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="117" column="0" lean-forward="true" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
+        <state relative-caret-position="714">
+          <caret line="42" column="40" lean-forward="false" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ShellLib/DatabaseMigration/DatabaseTableAlter.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="24" lean-forward="false" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ShellLib/Core/Core.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="887">
+          <caret line="1011" column="70" lean-forward="false" selection-start-line="1011" selection-start-column="70" selection-end-line="1011" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/DatabaseMigrations/DbCreation.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="371">
+          <caret line="71" column="56" lean-forward="true" selection-start-line="71" selection-start-column="56" selection-end-line="71" selection-end-column="56" />
           <folding />
         </state>
       </provider>
