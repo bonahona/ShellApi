@@ -90,7 +90,7 @@ class DbCreation implements IDatabaseMigration
             ->AddColumn('Description', 'varchar(16384)')
             ->AddColumn('Namespace', 'varchar(256)')
             ->AddColumn('CustomModifiersId', 'int', array('not null', 'default 0'))
-            ->AddColumn('ExternalSources', 'varchar(512)', array('default 0'))
+            ->AddColumn('ExternalSource', 'varchar(512)', array('default 0'))
             ->AddColumn('IsPrimitive', 'int(1)', array('not null', 'default 0'))
             ->AddReference('projectclass', 'Id', array(), 'BaseClassId')
             ->AddReference('project', 'Id', array('not null'), 'ProjectId');
