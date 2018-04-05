@@ -8,7 +8,7 @@
 
         <div class="form-group">
             <label>Content</label>
-            <?php echo $this->Form->Area('Content', array('attributes' => array('class' => 'form-control', 'rows' => '30')));?>
+            <?php echo $this->Form->Area('Content', array('attributes' => array('class' => 'form-control summernote', 'rows' => '30')));?>
         </div>
 
         <?php echo $this->Form->Submit('Save', array('attributes' => array('class' => 'btn btn-medium btn-default')));?>

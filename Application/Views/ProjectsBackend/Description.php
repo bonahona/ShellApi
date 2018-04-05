@@ -7,7 +7,7 @@
         <?php echo $this->Form->Hidden('Id');?>
         <div class="form-group">
             <label>Description</label>
-            <?php echo $this->Form->Area('Description', array('attributes' => array('class' => 'form-control', 'rows' => '30')));?>
+            <?php echo $this->Form->Area('Description', array('attributes' => array('class' => 'form-control summernote', 'rows' => '30')));?>
         </div>
         <?php echo $this->Form->Submit('Save', array('attributes' => array('class' => 'btn btn-medium btn-default')));?>
         <?php echo $this->Form->End();?>

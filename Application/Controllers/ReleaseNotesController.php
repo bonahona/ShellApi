@@ -32,6 +32,15 @@ class ReleaseNotesController extends BackendController
             return $this->HttpNotFound();
         }
 
+        $this->EnqueueCssFiles([
+            'summernote.css',
+        ]);
+
+        $this->EnqueueJavascript([
+            'summernote.min.js',
+            'editor.js'
+        ]);
+
         if($this->IsPost() && !$this->Data->IsEmpty()){
             $releaseNotes = $this->Data->DbParse('ReleaseNotes', $this->Models->ReleaseNotes);
             $releaseNotes->Save();

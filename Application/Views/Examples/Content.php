@@ -10,7 +10,7 @@
         <?php echo $this->Form->Hidden('PropertyId');?>
         <div class="form-group">
             <label>Description</label>
-            <?php echo $this->Form->Area('ExampleText', array('attributes' => array('class' => 'form-control', 'required' => 'true', 'rows' => '10')));?>
+            <?php echo $this->Form->Area('ExampleText', array('attributes' => array('class' => 'form-control summernote', 'required' => 'true', 'rows' => '30')));?>
         </div>
         <div class="form-group">
             <label>Content</label>

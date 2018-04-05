@@ -17,7 +17,7 @@
         </div>
         <div class="form-group">
             <label>Content</label>
-            <?php echo $this->Form->Area('Content', array('attributes' => array('class' => 'form-control', 'rows' => '10')));?>
+            <?php echo $this->Form->Area('Content', array('attributes' => array('class' => 'form-control summernote', 'rows' => '10')));?>
         </div>
         <?php echo $this->Form->Submit('Save', array('attributes' => array('class' => 'btn btn-md btn-default')));?>
         <?php echo $this->Form->End();?>

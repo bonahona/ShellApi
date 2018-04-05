@@ -72,6 +72,15 @@ class DocumentsController extends BackendController
             return $this->HttpNotFound();
         }
 
+        $this->EnqueueCssFiles([
+            'summernote.css',
+        ]);
+
+        $this->EnqueueJavascript([
+            'summernote.min.js',
+            'editor.js'
+        ]);
+
         if($this->IsPost() && !$this->Data->IsEmpty()) {
             $document = $this->Data->DbParse('Document', $this->Models->Document);
             $document->Save();

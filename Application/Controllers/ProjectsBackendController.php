@@ -114,6 +114,15 @@ class ProjectsbackendController extends BackendController
             return $this->HttpNotFound();
         }
 
+        $this->EnqueueCssFiles([
+            'summernote.css',
+        ]);
+
+        $this->EnqueueJavascript([
+            'summernote.min.js',
+            'editor.js'
+        ]);
+
         if($this->IsPost() && !$this->Data->IsEmpty()){
             $project = $this->Data->DbParse('Project', $this->Models->Project);
             $project->Save();

@@ -15,6 +15,10 @@
     <?php echo $this->Html->Css('dashboard.css');?>
     <?php echo $this->Html->Css('sh_style.css');?>
 
+    <?php foreach($this->CssFiles as $cssFile):?>
+        <?php echo $this->Html->Css($cssFile);?>
+    <?php endforeach;?>
+
 </head>
 
 <body>
@@ -107,5 +111,10 @@
 <?php echo $this->Html->Js('sh_cpp.min.js');?>
 <?php echo $this->Html->Js('sh_csharp.min.js');?>
 <?php echo $this->Html->Js('sh_php.min.js');?>
+
+<?php foreach($this->JavascriptFiles as $javascriptFile):?>
+    <?php echo $this->Html->Js($javascriptFile);?>
+<?php endforeach;?>
+
 </body>
 </html>
