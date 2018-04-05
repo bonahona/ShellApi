@@ -118,4 +118,15 @@ class Method extends Model
 
         return $result;
     }
+
+    public function GetParameters()
+    {
+        $parameters = array();
+        foreach($this->Parameters as $parameter){
+            $parameters[] = $parameter->GetLink();
+        }
+
+        return '(' . implode(',', $parameters) . ')';
+    }
+
 }

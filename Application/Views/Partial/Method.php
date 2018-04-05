@@ -24,8 +24,9 @@
                             <?php if($this->IsLoggedIn()):?>
                                 <td>
                                     <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $method->ProjectClass->ClassName . '/Methods/' . $method->MethodName . $method->CreateLink();?>">
-                                        <?php echo $method->GetHeaderText($Project, $this->Html);?>
+                                        <?php echo $method->MethodName;?>
                                     </a>
+                                    <?php echo $method->GetParameters();?>
                                 </td>
                                 <td>
                                     <?php echo $method->GetReturnType();?>
@@ -39,8 +40,9 @@
                             <?php else:?>
                                 <td>
                                     <a href="<?php echo '/Projects/Details/' . $Project->ProjectName . '/Classes/' . $method->ProjectClass->ClassName . '/Methods/' . $method->MethodName . $method->CreateLink();?>">
-                                        <?php echo $method->GetHeaderText($Project, $this->Html);?>
+                                        <?php echo $method->MethodName;?>
                                     </a>
+                                    <?php echo $method->GetParameters();?>
                                 </td>
                                 <td>
                                     <?php echo $method->GetReturnType();?>
