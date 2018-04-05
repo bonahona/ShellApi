@@ -267,9 +267,14 @@ class PdoDatabase implements IDatabaseDriver
 
         $sql = $this->GetSql($sqlCollection, 0);
 
-        if(!$preparedStatement = $this->Database->prepare($sql['SqlStatement'])){
-            echo "Failed to prepare PDO statement";
-            var_dump($this->Database->errorInfo());
+        try {
+            $preparedStatement = $this->Database->prepare($sql['SqlStatement']);
+        }catch (Exception $exception){
+            echo "Failed to prepare PDO statement \n";
+            var_dump($exception->getMessage());
+            echo "\nStatement:" . $sql['SqlStatement'] . "\n";
+            var_dump($sql['Parameters']);
+            die();
         }
 
         $preparedStatement->execute($sql['Parameters']);
@@ -307,7 +312,7 @@ class PdoDatabase implements IDatabaseDriver
         $modelCollection = $sqlCollection->GetModelCollection();
 
         $tableName = $modelCollection->ModelCache['MetaData']['TableName'];
-        $columns = array_keys($modelCollection->ModelCache['Columns']);
+        $columns = $this->SafeColumnNames(array_keys($modelCollection->ModelCache['Columns']));
         $columnString = implode(', ', $columns);
 
         if($sqlCollection->SubQuery == null){
